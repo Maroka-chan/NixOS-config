@@ -9,14 +9,8 @@
   ];
 
   # Bootloader.
-  if isPath "/sys/firmware/efi/efivars" then {
-    boot.loader.systemd-boot.enable = true;
-    boot.loader.efi.canTouchEfiVariables = true;
-  } else {
-    boot.loader.grub.enable = true;
-    boot.loader.grub.version = 2;
-    boot.loader.grub.device = "/dev/disk/by-label/NIXBOOT";
-  }
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.supportedFilesystems = [ "btrfs" ];
