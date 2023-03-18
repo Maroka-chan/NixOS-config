@@ -63,6 +63,8 @@
     NIXOS.source = "/persist/etc/NIXOS";
     machine-id.source = "/persist/etc/machine-id";
     # ssh.source = "/persist/etc/ssh";
+    ssh.ssh_host_ed25519_key.source = "/persist/etc/ssh/ssh_host_ed25519_key";
+    ssh."ssh_host_ed25519_key.pub".source = "/persist/etc/ssh/ssh_host_ed25519_key.pub";
   };
   security.sudo.extraConfig = ''
     # rollback results in sudo lectures after each reboot
