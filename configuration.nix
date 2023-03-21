@@ -94,11 +94,11 @@
 
   users.mutableUsers = false;
 
-  system.activationScripts.secretsPrompt = ''
-    #!/bin/sh
-    read -p "Enter password for user 'maroka':" -s maroka_pass
-    agenix -e maroka_pass.age
-  '';
+  # system.activationScripts.secretsPrompt = ''
+  #   #!/bin/sh
+  #   read -p "Enter password for user 'maroka':" -s maroka_pass
+  #   agenix -e maroka_pass.age
+  # '';
 
   age.secrets.maroka_pass.file = ".secrets/maroka_pass.age";
 
