@@ -7,7 +7,7 @@
     arion.url = "github:hercules-ci/arion";
     arion.inputs.nixpkgs.follows = "nixpkgs";
   };
-  outputs = { self, nixpkgs, agenix, arion }: {
+  outputs = { self, nixpkgs, agenix, arion }:
     let
         pkgs = import <nixpkgs> {config = {allowUnfree = true;};};
     in {
@@ -25,5 +25,4 @@
             };
         };
     };
-  };
 }
