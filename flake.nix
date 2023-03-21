@@ -8,18 +8,22 @@
     arion.inputs.nixpkgs.follows = "nixpkgs";
   };
   outputs = { self, nixpkgs, agenix, arion }: {
-    nixosConfigurations = {
-      my-nixos = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        modules = [
-          ./configuration.nix
-        ];
-        # Add agenix and arion to the system
-        environment.systemPackages = with pkgs; [
-          agenix
-          arion
-        ];
-      };
+    let
+        pkgs = import <nixpkgs> {config = {allowUnfree = true;};};
+    in {
+        nixosConfigurations = {
+            my-nixos = nixpkgs.lib.nixosSystem {
+                system = "x86_64-linux";
+                modules = [
+                    ./configuration.nix
+                ];
+                # Add agenix and arion to the system
+                environment.systemPackages = with pkgs; [
+                    agenix
+                    arion
+                ];
+            };
+        };
     };
   };
 }
