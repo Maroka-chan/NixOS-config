@@ -1,7 +1,7 @@
 {
   description = "My NixOS configuration";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-small";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11-small";
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "nixpkgs";
     arion.url = "github:hercules-ci/arion";
