@@ -94,7 +94,13 @@
 
   users.mutableUsers = false;
 
-  age.secrets.maroka_pass.file = "./.secrets/maroka_pass.age";
+  system.activationScripts.secretsPrompt = ''
+    #!/bin/sh
+    read -p "Enter password for user 'maroka':" -s maroka_pass
+    agenix -e maroka_pass.age
+  '';
+
+  age.secrets.maroka_pass.file = ".secrets/maroka_pass.age";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.maroka = {
