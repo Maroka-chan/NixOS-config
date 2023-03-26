@@ -2,25 +2,19 @@
   description = "My NixOS configuration";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11-small";
-    agenix.url = "github:ryantm/agenix";
-    agenix.inputs.nixpkgs.follows = "nixpkgs";
+    sops-nix.url = "github:Mic92/sops-nix";
+    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
     arion.url = "github:hercules-ci/arion";
     arion.inputs.nixpkgs.follows = "nixpkgs";
   };
-  outputs = { self, nixpkgs, agenix, arion }:
-    let
-        pkgs = import <nixpkgs> {config = {allowUnfree = true;};};
-    in {
+  outputs = { self, nixpkgs, sops-nix, arion }:
+    {
         nixosConfigurations = {
             my-nixos = nixpkgs.lib.nixosSystem {
                 system = "x86_64-linux";
                 modules = [
                     ./configuration.nix
-                ];
-                # Add agenix and arion to the system
-                environment.systemPackages = with pkgs; [
-                    agenix
-                    arion
+                    sops-nix.nixosModules.sops
                 ];
             };
         };

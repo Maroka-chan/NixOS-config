@@ -2,11 +2,22 @@
 {
   imports =
   [
-    "${builtins.fetchTarball "https://github.com/hercules-ci/arion/tarball/master"}/nixos-module.nix"
-    "${builtins.fetchTarball "https://github.com/ryantm/agenix/archive/main.tar.gz"}/modules/age.nix"
+    <sops-nix/modules/sops>
+    "${builtins.fetchTarball {
+      url = "https://github.com/hercules-ci/arion/tarball/master";
+      sha256 = "0k5ys39651wnn6a7mjxr2zlqp3cm6wa98k35z5972g5jnxny5dad";
+    }}/nixos-module.nix"
     ./deployments/jellyfin
-    ./hardware-configuration.nix  # Include the results of the hardware scan.
+    ./filesystem.nix  # Include the results of the hardware scan.
   ];
+
+  sops.defaultSopsFile = ./.secrets/akebi.yaml;
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  sops.age.keyFile = "/var/lib/sops-nix/key.txt";
+  sops.age.generateKey = true;
+
+  sops.secrets.user_pass.neededForUsers = true;
+
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -94,19 +105,11 @@
 
   users.mutableUsers = false;
 
-  # system.activationScripts.secretsPrompt = ''
-  #   #!/bin/sh
-  #   read -p "Enter password for user 'maroka':" -s maroka_pass
-  #   agenix -e maroka_pass.age
-  # '';
-
-  age.secrets.maroka_pass.file = ".secrets/maroka_pass.age";
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.maroka = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
-    passwordFile = config.age.secrets.maroka_pass.path;
+    passwordFile = config.sops.secrets.user_pass.path;
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMLXkO6gEHyTSm+CJuhWPQRMJTM7psG2JzBROSTbK8op maroka@Arch-Desktop" ];
     packages = with pkgs; [];
   };
