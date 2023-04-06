@@ -10,7 +10,7 @@
   outputs = { self, nixpkgs, sops-nix, arion }:
     {
         nixosConfigurations = {
-            my-nixos = nixpkgs.lib.nixosSystem {
+            akebi = nixpkgs.lib.nixosSystem {
                 system = "x86_64-linux";
                 modules = [
                     ./configuration.nix
