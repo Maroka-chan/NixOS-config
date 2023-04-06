@@ -2,7 +2,6 @@
 {
   imports =
   [
-    <sops-nix/modules/sops>
     "${builtins.fetchTarball {
       url = "https://github.com/hercules-ci/arion/tarball/master";
       sha256 = "0k5ys39651wnn6a7mjxr2zlqp3cm6wa98k35z5972g5jnxny5dad";
