@@ -34,6 +34,6 @@ EOL
 [ ! -d $SECRETS_DIR ] && mkdir $SECRETS_DIR
 
 
-sudo nix-shell -p sops --run "EDITOR=$EDITOR sops ${SECRETS_DIR}/${HOSTNAME}.yaml"
+sudo nix-shell -p sops --run "EDITOR=$EDITOR SOPS_AGE_KEY_FILE=$SOPS_KEYS sops ${SECRETS_DIR}/${HOSTNAME}.yaml"
 
 popd || exit
