@@ -1,7 +1,11 @@
 { config, pkgs, ... }:
+let
+  impermanence = builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz";
+in
 {
   imports =
   [
+    "${impermanence}/nixos.nix"
     "${builtins.fetchTarball {
       url = "https://github.com/hercules-ci/arion/tarball/master";
       sha256 = "0k5ys39651wnn6a7mjxr2zlqp3cm6wa98k35z5972g5jnxny5dad";
@@ -11,7 +15,7 @@
     ./hardware-configuration.nix # Include the results of the hardware scan.
   ];
 
-  sops.defaultSopsFile = ./.secrets/akebi.yaml;
+  sops.defaultSopsFile = /var/lib/sops/.secrets/akebi.yaml;
   sops.age.sshKeyPaths = [];
   sops.age.keyFile = "/var/lib/sops/keys.txt";
   sops.age.generateKey = true;
@@ -67,16 +71,20 @@
 
 
   # State to persist.
-  # On reboot the system restores the blank btrfs root snapshot
-  environment.etc = {
-    nixos.source = "/persist/etc/nixos";
-    # adjtime.source = "/persist/etc/adjtime";
-    NIXOS.source = "/persist/etc/NIXOS";
-    machine-id.source = "/persist/etc/machine-id";
-    # ssh.source = "/persist/etc/ssh";
-    ssh.ssh_host_ed25519_key.source = "/persist/etc/ssh/ssh_host_ed25519_key";
-    ssh."ssh_host_ed25519_key.pub".source = "/persist/etc/ssh/ssh_host_ed25519_key.pub";
+  environment.persistence."/persist" = {
+    directories = [
+      "/etc/nixos"
+      "/var/lib/sops"
+    ];
+    files = [
+      "/etc/NIXOS"
+      "/etc/machine-id"
+      "/etc/ssh/ssh_host_ed25519_key"
+      "/etc/ssh/ssh_host_ed25519_key.pub"
+    ];
   };
+
+
   security.sudo.extraConfig = ''
     # rollback results in sudo lectures after each reboot
     Defaults lecture = never
