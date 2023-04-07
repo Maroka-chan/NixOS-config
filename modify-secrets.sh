@@ -3,7 +3,7 @@
 pushd ~/.dotfiles || exit
 
 SECRETS_DIR=.secrets
-SOPS_KEYS_DIR=/root/.config/sops/age
+SOPS_KEYS_DIR=/var/lib/sops
 SOPS_KEYS="$SOPS_KEYS_DIR"/keys.txt
 EDITOR=${EDITOR:-nvim}
 
