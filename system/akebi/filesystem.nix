@@ -20,6 +20,7 @@
             device  = "/dev/disk/by-label/NIXOS";
             fsType  = "btrfs";
             options = [ "noatime" "compress=zstd" "autodefrag" "ssd" "space_cache" "subvol=persist" ];
+            neededForBoot = true;
         };
         "/var/log" = {
             device  = "/dev/disk/by-label/NIXOS";
