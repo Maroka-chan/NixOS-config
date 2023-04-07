@@ -7,12 +7,13 @@
       sha256 = "0k5ys39651wnn6a7mjxr2zlqp3cm6wa98k35z5972g5jnxny5dad";
     }}/nixos-module.nix"
     ./deployments/jellyfin
-    ./filesystem.nix  # Include the results of the hardware scan.
+    ./filesystem.nix
+    ./hardware-configuration.nix # Include the results of the hardware scan.
   ];
 
   sops.defaultSopsFile = ./.secrets/akebi.yaml;
-  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-  sops.age.keyFile = "/var/lib/sops-nix/key.txt";
+  sops.age.sshKeyPaths = [];
+  sops.age.keyFile = "/var/lib/sops/keys.txt";
   sops.age.generateKey = true;
 
   sops.secrets.user_pass.neededForUsers = true;
@@ -27,7 +28,7 @@
   hardware.enableAllFirmware = true;
 
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "akebi"; # Define your hostname.
 
   # Set your time zone.
   time.timeZone = "Europe/Copenhagen";
