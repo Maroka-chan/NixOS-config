@@ -2,7 +2,7 @@
 
 pushd ~/.dotfiles || exit
 
-SOPS_KEYS_DIR=/var/lib/sops
+SOPS_KEYS_DIR=/persist/var/lib/sops
 SECRETS_DIR="$SOPS_KEYS_DIR"/.secrets
 SOPS_KEYS="$SOPS_KEYS_DIR"/keys.txt
 EDITOR=${EDITOR:-nvim}
