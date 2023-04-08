@@ -1,39 +1,23 @@
 #!/usr/bin/env bash
 
-pushd ~/.dotfiles || exit
-
 SOPS_KEYS_DIR=/persist/var/lib/sops
 SECRETS_DIR="$SOPS_KEYS_DIR"/.secrets
 SOPS_KEYS="$SOPS_KEYS_DIR"/keys.txt
 EDITOR=${EDITOR:-nvim}
+DEFAULT_SECRETS_FILE=${SECRETS_DIR}/${HOSTNAME}.yaml
 
-[ -d $SECRETS_DIR ] && sudo test ! -f $SOPS_KEYS &&
-        echo "Secrets exist, but no key found for decryption." && exit
+./generate-age-keys.sh
 
-# Generate age keys if not present
-if sudo test ! -f $SOPS_KEYS; then
-        sudo mkdir -p $SOPS_KEYS_DIR
-        sudo nix-shell -p age --run "age-keygen -o $SOPS_KEYS" ||
-                ( echo "Failed to generate age keys"; exit )
-fi
+[ ! -f "$DEFAULT_SECRETS_FILE" ] && sudo touch "$DEFAULT_SECRETS_FILE"
 
-PUB_KEY=$(sudo nix-shell -p age --run "age-keygen -y $SOPS_KEYS")
+pushd "$SECRETS_DIR" &>/dev/null || exit 1
+SECRETS_FILES=(*)
+popd &>/dev/null || exit 1
 
-cat >.sops.yaml <<EOL
-keys:
-        - &${HOSTNAME} ${PUB_KEY}
-creation_rules:
-        - path_regex: ${SECRETS_DIR}/[^/]+\.yaml\$
-          key_groups:
-          - age:
-                - *${HOSTNAME}
-EOL
+for ((i = 0; i < "${#SECRETS_FILES[@]}"; ++i)); do
+        echo "$i: ${SECRETS_FILES[i]}"
+done
 
+read -rp "Choose a secrets file to modify: " secrets_file
 
-# Generate secrets directory if not present
-[ ! -d $SECRETS_DIR ] && sudo mkdir $SECRETS_DIR
-
-
-sudo nix-shell -p sops --run "EDITOR=$EDITOR SOPS_AGE_KEY_FILE=$SOPS_KEYS sops ${SECRETS_DIR}/${HOSTNAME}.yaml"
-
-popd || exit
+sudo nix-shell -p sops --run "EDITOR=$EDITOR SOPS_AGE_KEY_FILE=$SOPS_KEYS sops ${SECRETS_DIR}/${secrets_file}.yaml"
