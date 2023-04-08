@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-SOPS_KEYS_DIR=/persist/var/lib/sops
-SECRETS_DIR="$SOPS_KEYS_DIR"/.secrets
+pushd ~/.dotfiles &>/dev/null || exit 1
+
+SOPS_KEYS_DIR=/var/lib/sops
+SECRETS_DIR=system/"$HOSTNAME"/.secrets
 SOPS_KEYS="$SOPS_KEYS_DIR"/keys.txt
 
 [ -d $SECRETS_DIR ] && sudo test ! -f $SOPS_KEYS &&
@@ -28,3 +30,5 @@ EOL
 
 # Generate secrets directory if not present
 [ ! -d $SECRETS_DIR ] && sudo mkdir $SECRETS_DIR
+
+popd &>/dev/null || exit 1
