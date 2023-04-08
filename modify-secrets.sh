@@ -18,6 +18,6 @@ for ((i = 0; i < "${#SECRETS_FILES[@]}"; ++i)); do
         echo "$i: ${SECRETS_FILES[i]}"
 done
 
-read -rp "Choose a secrets file to modify: " secrets_file
+read -rp "Choose a secrets file to modify: " chosen_file
 
-sudo nix-shell -p sops --run "EDITOR=$EDITOR SOPS_AGE_KEY_FILE=$SOPS_KEYS sops ${SECRETS_DIR}/${secrets_file}.yaml"
+sudo nix-shell -p sops --run "EDITOR=$EDITOR SOPS_AGE_KEY_FILE=$SOPS_KEYS sops ${SECRETS_DIR}/${SECRETS_FILES[chosen_file]}.yaml"
