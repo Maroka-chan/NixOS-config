@@ -3,7 +3,7 @@
 PERSIST_DIR=/persist
 
 sudo mkdir -p ${PERSIST_DIR}/etc/ssh
-sudo mkdir -p ${PERSIST_DIR}/var/lib
+# sudo mkdir -p ${PERSIST_DIR}/var/lib
 
 # sudo cp {,/persist}/etc/nixos
 # sudo cp {,/persist}/var/lib/sops
