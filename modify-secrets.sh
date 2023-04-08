@@ -20,4 +20,4 @@ done
 
 read -rp "Choose a secrets file to modify: " chosen_file
 
-sudo nix-shell -p sops --run "EDITOR=$EDITOR SOPS_AGE_KEY_FILE=$SOPS_KEYS sops ${SECRETS_DIR}/${SECRETS_FILES[chosen_file]}.yaml"
+sudo nix-shell -p sops --run "EDITOR=$EDITOR SOPS_AGE_KEY_FILE=$SOPS_KEYS sops ${SECRETS_DIR}/${SECRETS_FILES[chosen_file]}"
