@@ -7,7 +7,8 @@ SOPS_KEYS=/var/lib/sops/keys.txt
 EDITOR=${EDITOR:-nvim}
 SECRETS_FILE=${SECRETS_DIR}/${HOSTNAME}.yaml
 
-./generate-age-keys.sh
+./scripts/nixos/generate-age-keys.sh
+./scripts/nixos/create-secrets-file.sh
 
 read -rp "Username: " USERNAME
 read -srp "Password: " PASSWORD
