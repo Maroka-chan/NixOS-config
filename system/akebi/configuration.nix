@@ -14,14 +14,15 @@ in
       sha256 = "0k5ys39651wnn6a7mjxr2zlqp3cm6wa98k35z5972g5jnxny5dad";
     }}/nixos-module.nix"
     ./deployments/jellyfin
-    ./filesystem.nix
+    # ./filesystem.nix
     ./hardware-configuration.nix # Include the results of the hardware scan.
   ];
 
   sops.defaultSopsFile = /persist/var/lib/sops/.secrets/akebi.yaml;
   sops.age.sshKeyPaths = [];
   sops.age.keyFile = "/persist/var/lib/sops/keys.txt";
-  sops.age.generateKey = true;
+  # sops.age.generateKey = true;
+  sops.gnupg.sshKeyPaths = [];
 
   sops.secrets.user_pass.neededForUsers = true;
 
@@ -58,7 +59,6 @@ in
   environment.systemPackages = with pkgs; [
     arion
     neovim
-    (pkgs.callPackage "${builtins.fetchTarball "https://github.com/ryantm/agenix/archive/main.tar.gz"}/pkgs/agenix.nix" {})
   ];
   
 
@@ -76,8 +76,8 @@ in
   # State to persist.
   environment.persistence."/persist" = {
     directories = [
-      "/etc/nixos"
-      "/var/lib/sops"
+      #"/etc/nixos"
+      #"/var/lib/sops"
     ];
     files = [
       "/etc/NIXOS"
@@ -143,7 +143,7 @@ in
 
   # Automatic Updates
   system.autoUpgrade = {
-  	enable = true;
+    enable = true;
     allowReboot = true;
     channel = "https://nixos.org/channels/nixos-22.11-small";
   };
