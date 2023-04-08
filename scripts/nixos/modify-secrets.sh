@@ -7,11 +7,8 @@ SOPS_KEYS=/var/lib/sops/keys.txt
 EDITOR=${EDITOR:-nvim}
 SECRETS_FILE=${SECRETS_DIR}/${HOSTNAME}.yaml
 
-./generate-age-keys.sh
-
-[ ! -f "$SECRETS_FILE" ] &&
-        echo "example: value" | sudo tee "$SECRETS_FILE" &>/dev/null &&
-        sudo nix-shell -p sops --run "SOPS_AGE_KEY_FILE=$SOPS_KEYS sops -e -i ${SECRETS_FILE}"
+./scripts/nixos/generate-age-keys.sh
+./scripts/nixos/create-secrets-file.sh
 
 pushd "$SECRETS_DIR" &>/dev/null || exit 1
 SECRETS_FILES=(*)
