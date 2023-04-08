@@ -21,7 +21,7 @@ in
 
   sops.defaultSopsFile = secrets_path + "/akebi.yaml";
   sops.age.sshKeyPaths = [];
-  sops.age.keyFile = "/var/lib/sops/keys.txt";
+  sops.age.keyFile = "/persist/var/lib/sops/keys.txt";
   sops.gnupg.sshKeyPaths = [];
 
   sops.secrets.maroka-password = {
@@ -45,7 +45,7 @@ in
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
-  networking.defaultGateway = "192.168.0.1";
+  # networking.defaultGateway = "192.168.0.1";
 
   networking = {
     nameservers = [ "1.1.1.1" "8.8.8.8" ];
