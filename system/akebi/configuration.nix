@@ -4,6 +4,7 @@ let
     url = "https://github.com/nix-community/impermanence/archive/master.tar.gz";
     sha256 = "0hpp8y80q688mvnq8bhvksgjb6drkss5ir4chcyyww34yax77z0l";
   };
+  secrets_path = ./.secrets;
 in
 {
   imports =
@@ -18,14 +19,14 @@ in
     ./hardware-configuration.nix # Include the results of the hardware scan.
   ];
 
-  sops.defaultSopsFile = /persist/var/lib/sops/.secrets/akebi.yaml;
+  sops.defaultSopsFile = secrets_path + "/akebi.yaml";
   sops.age.sshKeyPaths = [];
-  sops.age.keyFile = "/persist/var/lib/sops/keys.txt";
-  # sops.age.generateKey = true;
+  sops.age.keyFile = "/var/lib/sops/keys.txt";
   sops.gnupg.sshKeyPaths = [];
 
-  sops.secrets.user_pass.neededForUsers = true;
-
+  sops.secrets.maroka-password = {
+    neededForUsers = true;
+  };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -76,11 +77,9 @@ in
   # State to persist.
   environment.persistence."/persist" = {
     directories = [
-      #"/etc/nixos"
-      #"/var/lib/sops"
+      "/var/lib/sops"
     ];
     files = [
-      "/etc/NIXOS"
       "/etc/machine-id"
       "/etc/ssh/ssh_host_ed25519_key"
       "/etc/ssh/ssh_host_ed25519_key.pub"
@@ -120,11 +119,10 @@ in
   users.users.maroka = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
-    passwordFile = config.sops.secrets.user_pass.path;
+    passwordFile = config.sops.secrets.maroka-password.path;
     openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMLXkO6gEHyTSm+CJuhWPQRMJTM7psG2JzBROSTbK8op maroka@Arch-Desktop" ];
     packages = with pkgs; [];
   };
-
 
   # List services that you want to enable:
 
