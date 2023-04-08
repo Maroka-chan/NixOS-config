@@ -8,7 +8,9 @@ DEFAULT_SECRETS_FILE=${SECRETS_DIR}/${HOSTNAME}.yaml
 
 ./generate-age-keys.sh
 
-[ ! -f "$DEFAULT_SECRETS_FILE" ] && sudo touch "$DEFAULT_SECRETS_FILE"
+[ ! -f "$DEFAULT_SECRETS_FILE" ] &&
+        echo "example: value" | sudo tee "$DEFAULT_SECRETS_FILE" &>/dev/null &&
+        sudo nix-shell -p sops --run "SOPS_AGE_KEY_FILE=$SOPS_KEYS sops -e -i ${DEFAULT_SECRETS_FILE}"
 
 pushd "$SECRETS_DIR" &>/dev/null || exit 1
 SECRETS_FILES=(*)
