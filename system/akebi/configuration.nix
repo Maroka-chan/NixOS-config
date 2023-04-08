@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 let
-  impermanence = builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz";
+  impermanence = builtins.fetchTarball {
+    url = "https://github.com/nix-community/impermanence/archive/master.tar.gz"};
+    sha256 = "0hpp8y80q688mvnq8bhvksgjb6drkss5ir4chcyyww34yax77z0l";
+  };
 in
 {
   imports =
@@ -15,9 +18,9 @@ in
     ./hardware-configuration.nix # Include the results of the hardware scan.
   ];
 
-  sops.defaultSopsFile = /var/lib/sops/.secrets/akebi.yaml;
+  sops.defaultSopsFile = /persist/var/lib/sops/.secrets/akebi.yaml;
   sops.age.sshKeyPaths = [];
-  sops.age.keyFile = "/var/lib/sops/keys.txt";
+  sops.age.keyFile = "/persist/var/lib/sops/keys.txt";
   sops.age.generateKey = true;
 
   sops.secrets.user_pass.neededForUsers = true;
