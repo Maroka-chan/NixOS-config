@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+pushd "$(dirname -- "${BASH_SOURCE[0]}")"/../../ &>/dev/null || exit 1
+
 pushd ../../ &>/dev/null || exit 1
 
 SECRETS_DIR=system/"$HOSTNAME"/.secrets

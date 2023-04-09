@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-pushd ../../ &>/dev/null || exit 1
+pushd "$(dirname -- "${BASH_SOURCE[0]}")"/../../ &>/dev/null || exit 1
 
 home-manager switch -f ./users/maroka/home.nix
 

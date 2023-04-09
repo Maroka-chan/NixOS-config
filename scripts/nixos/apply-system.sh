@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-pushd ../../ &>/dev/null || exit 1
+pushd "$(dirname -- "${BASH_SOURCE[0]}")"/../../ &>/dev/null || exit 1
 
 sudo nixos-rebuild switch --flake ./system/"$HOSTNAME"
 
