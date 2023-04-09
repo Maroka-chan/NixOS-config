@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-pushd ../../ &>/dev/null || exit 1
+pushd "$(dirname -- "${BASH_SOURCE[0]}")"/../../ &>/dev/null || exit 1
 
 SOPS_KEYS_DIR=/var/lib/sops
 SECRETS_DIR=system/"$HOSTNAME"/.secrets
