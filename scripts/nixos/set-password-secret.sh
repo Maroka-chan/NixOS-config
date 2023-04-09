@@ -6,7 +6,6 @@ SECRETS_DIR=system/"$HOSTNAME"/.secrets
 SOPS_KEYS=/persist/var/lib/sops/keys.txt
 EDITOR=${EDITOR:-nvim}
 SECRETS_FILE=${SECRETS_DIR}/${HOSTNAME}.yaml
-PUB_KEY=$(sudo nix-shell -p age --run "age-keygen -y $SOPS_KEYS")
 
 ./scripts/nixos/generate-age-keys.sh
 ./scripts/nixos/create-secrets-file.sh
@@ -14,6 +13,8 @@ PUB_KEY=$(sudo nix-shell -p age --run "age-keygen -y $SOPS_KEYS")
 read -rp "Username: " USERNAME
 read -srp "Password: " PASSWORD
 PASSWORD=$(sudo mkpasswd -m sha-512 "$PASSWORD")
+
+PUB_KEY=$(sudo nix-shell -p age --run "age-keygen -y $SOPS_KEYS")
 
 [ ! -f "$SECRETS_FILE" ] && sudo touch "$SECRETS_FILE"
 sudo nix-shell -p sops --run "SOPS_AGE_KEY_FILE=$SOPS_KEYS sops -d -i $SECRETS_FILE"
