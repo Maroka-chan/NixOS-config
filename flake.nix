@@ -13,7 +13,7 @@
             akebi = nixpkgs.lib.nixosSystem {
                 system = "x86_64-linux";
                 modules = [
-                    ./configuration.nix
+                    ./system/akebi/configuration.nix
                     sops-nix.nixosModules.sops
                 ];
             };
