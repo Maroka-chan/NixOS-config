@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
-pushd ~/.dotfiles &>/dev/null || exit
+pushd ../../ &>/dev/null || exit 1
+
 home-manager switch -f ./users/maroka/home.nix
-popd &>/dev/null || exit
+
+popd &>/dev/null || exit 1

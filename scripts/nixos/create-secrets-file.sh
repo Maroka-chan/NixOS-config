@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-pushd ~/.dotfiles &>/dev/null || exit 1
+pushd ../../ &>/dev/null || exit 1
 
 SECRETS_DIR=system/"$HOSTNAME"/.secrets
 SOPS_KEYS=/var/lib/sops/keys.txt
