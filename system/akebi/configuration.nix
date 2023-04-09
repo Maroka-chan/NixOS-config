@@ -77,7 +77,6 @@ in
   # State to persist.
   environment.persistence."/persist" = {
     directories = [
-      "/var/lib/sops"
     ];
     files = [
       "/etc/machine-id"
