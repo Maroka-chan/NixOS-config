@@ -7,6 +7,7 @@
     ./firewall.nix
     ./impermanence.nix
     ./users.nix
+    ./deployments/jellyfin.nix
     ./hardware-configuration.nix
   ];
 
