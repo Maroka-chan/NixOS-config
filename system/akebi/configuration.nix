@@ -2,16 +2,11 @@
 {
   imports =
   [
-    "${builtins.fetchTarball {
-      url = "https://github.com/hercules-ci/arion/tarball/master";
-      sha256 = "0k5ys39651wnn6a7mjxr2zlqp3cm6wa98k35z5972g5jnxny5dad";
-    }}/nixos-module.nix"
     ./sops.nix
     ./bootloader.nix
     ./firewall.nix
     ./impermanence.nix
     ./users.nix
-    ./deployments/jellyfin
     ./hardware-configuration.nix
   ];
 
@@ -27,14 +22,13 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    arion
     neovim
   ];
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
-  
+
   security.sudo.extraConfig = ''
     # rollback results in sudo lectures after each reboot
     Defaults lecture = never
