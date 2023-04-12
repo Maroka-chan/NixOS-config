@@ -2,8 +2,9 @@
 
 pushd "$(dirname -- "${BASH_SOURCE[0]}")"/../../ &>/dev/null || exit 1
 
-SECRETS_DIR=system/"$HOSTNAME"/.secrets
-SOPS_KEYS=/persist/var/lib/sops/keys.txt
+SOPS_DIR=/persist/var/lib/sops
+SECRETS_DIR="$SOPS_DIR"/.secrets
+SOPS_KEYS="$SOPS_DIR"/keys.txt
 EDITOR=${EDITOR:-nvim}
 SECRETS_FILE=${SECRETS_DIR}/${HOSTNAME}.yaml
 
