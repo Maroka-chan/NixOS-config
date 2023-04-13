@@ -2,6 +2,7 @@
 {
     users.mutableUsers = false;
 
+    # Adds the user Maroka
     users.users.maroka = {
         isNormalUser = true;
         extraGroups = [ "wheel" ];
