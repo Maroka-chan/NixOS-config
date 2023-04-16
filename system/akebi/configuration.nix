@@ -27,8 +27,11 @@
   ];
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-
+  services.openssh = {
+    enable = true;
+    passwordAuthentication = false;
+    kbdInteractiveAuthentication = false;
+  };
 
   security.sudo.extraConfig = ''
     # rollback results in sudo lectures after each reboot
