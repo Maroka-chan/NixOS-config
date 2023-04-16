@@ -1,19 +1,29 @@
 {
-  description = "My NixOS configuration";
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11-small";
-    sops-nix.url = "github:Mic92/sops-nix";
-    sops-nix.inputs.nixpkgs.follows = "nixpkgs";
-  };
-  outputs = { self, nixpkgs, sops-nix }:
+    description = "My NixOS configuration";
+
+    inputs = {
+        nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11-small";
+    };
+
+    outputs = { self, nixpkgs, ... }:
     {
-        nixosConfigurations = {
-            akebi = nixpkgs.lib.nixosSystem {
-                system = "x86_64-linux";
-                modules = [
+        colmena = {
+            meta = {
+                nixpkgs = import nixpkgs {
+                    system = "x86_64-linux";
+                    overlays = [];
+                };
+            };
+
+            akebi = { name, nodes, pkgs, ... }: {
+                imports = [
+                    ./system/akebi/hardware-configuration.nix
                     ./system/akebi/configuration.nix
-                    sops-nix.nixosModules.sops
                 ];
+
+                deployment.targetHost = "akebi";
+                deployment.targetUser = "deploy";
+                deployment.buildOnTarget = true;
             };
         };
     };
