@@ -2,11 +2,13 @@
 {
   imports =
   [
+    ./hardware-configuration.nix
     ./bootloader.nix
     ./firewall.nix
     ./impermanence.nix
     ./users.nix
-    ./hardware-configuration.nix
+    ./podman.nix
+    ./jellyfin.nix
   ];
 
   networking.hostName = "akebi";
