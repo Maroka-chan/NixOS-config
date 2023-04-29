@@ -47,6 +47,12 @@
       neededForBoot = true;
     };
 
+  fileSystems."/data" =
+    { device = "/dev/disk/by-uuid/c986bd00-49e2-48a4-a323-5a32afc550d2";
+      fsType = "btrfs";
+      options = [ "subvol=data" "compress=zstd" "noatime" ];
+    };
+
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/5422-0F0B";
       fsType = "vfat";
