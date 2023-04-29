@@ -2,7 +2,6 @@
 {
   imports =
   [
-    ./hardware-configuration.nix
     ./bootloader.nix
     ./firewall.nix
     ./impermanence.nix
