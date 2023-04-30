@@ -14,7 +14,7 @@
 Copy files that needs to be persisted to the `persist` subvolume.
 
 ```bash
-bash <(curl -s https://github.com/Maroka-chan/NixOS-config/scripts/nixos/persist-files.sh)
+bash <(curl -s https://raw.githubusercontent.com/Maroka-chan/NixOS-config/master/scripts/nixos/persist-files.sh)
 ```
 
 Need to find a better way to do this.
