@@ -1,32 +1,70 @@
 # NixOS-config
 
-## Setting up a NixOS system
+## Setting up the NixOS server
 
-Make sure that the `$HOSTNAME` has been set correctly, and that the filesystem is set up properly.
+### Set up the filesystem
 
-1. Clone the repository to `$HOME`
-2. Set user passwords that will persist
+- Set up the paritions with labels.
+- Format the NixOS partition as a btrfs filesystem.
+- Create the btrfs subvolumes.
+- Install NixOS.
 
-```bash
-./scripts/nixos/set-password-secret.sh
-```
+### Persist files
 
-3. Add other secrets
-
-```bash
-./scripts/nixos/modify-secrets.sh
-```
-
-4. Copy files that needs to be persistent from root to `/persist`
+Copy files that needs to be persisted to the `persist` subvolume.
 
 ```bash
-./scripts/nixos/persist-files.sh
+bash <(curl -s https://github.com/Maroka-chan/NixOS-config/scripts/nixos/persist-files.sh)
 ```
 
-5. Build the system and add it to the boot menu
+Need to find a better way to do this.
+nixos-generators may be able to automate most of the set up process.
+
+### Edit the default Nix configuration
+
+- Set the hostname.
+- Declare the deployment user w/ SSH key.
+- Enable SSH.
+- Apply the configuration.
+
+The first [deployment](#deployment) has to use the `boot` goal.
 
 ```bash
-sudo nixos-rebuild boot --flake ./system/$HOSTNAME
+colmena apply boot
 ```
 
-6. Reboot
+Lastly, the server needs to be rebooted for the configuration to take effect.
+
+```bash
+colmena exec reboot
+```
+
+## Deployment
+
+### Start a shell with Colmena
+
+```bash
+nix-shell -E '{pkgs ? import <nixpkgs> {}}: let colmena = import (fetchTarball "https://github.com/zhaofengli/colmena/archive/master.tar.gz"); in  pkgs.mkShell { buildInputs = [ colmena ]; }'
+```
+
+### Apply the configuration
+
+```bash
+colmena apply
+```
+
+## Secrets
+
+[pass](https://www.passwordstore.org/) is used on the deployment machine to manage secrets.
+
+### Add secrets
+
+```bash
+pass insert <hierarchical name>
+```
+
+To add a user password, use the output of:
+
+```bash
+mkpasswd -m sha-512
+```
