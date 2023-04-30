@@ -7,7 +7,7 @@
 - Set up the paritions with labels.
 - Format the NixOS partition as a btrfs filesystem.
 - Create the btrfs subvolumes.
-- Install NixOS.
+- Generate NixOS configuration.
 
 ### Persist files
 
@@ -23,7 +23,8 @@ nixos-generators may be able to automate most of the set up process.
 ### Edit the default Nix configuration
 
 - Set the hostname.
-- Declare the deployment user w/ SSH key.
+- Declare the deploy user w/ SSH key.
+- Define sudo rules to make the deploy user non-interactive.
 - Enable SSH.
 - Apply the configuration.
 
