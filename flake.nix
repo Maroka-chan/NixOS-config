@@ -7,6 +7,10 @@
             url = "github:nix-community/nixos-generators";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        impermanence = {
+            url = "github:nix-community/impermanence";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
     };
 
     outputs = { self, nixpkgs, nixos-generators, impermanence, ... }:
@@ -33,6 +37,8 @@
                 imports = [
                     ./system/akebi/hardware-configuration.nix
                     ./system/akebi/configuration.nix
+                    impermanence.nixosModules.impermanence
+                    ./system/akebi/impermanence.nix
                 ];
 
                 deployment.targetHost = "akebi";
