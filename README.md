@@ -69,3 +69,20 @@ To add a user password, use the output of:
 ```bash
 mkpasswd -m sha-512
 ```
+
+## Test the configuration in a VM
+
+You can build and run the virtual machine specified in `flake.nix` to test the configuration.
+
+Note: the hardware configuration and impermanence is not used with the VM.
+
+```bash
+nixos-rebuild build-vm --flake .#akebi-vm
+./result/bin/run-nixos-vm
+```
+
+For a non-nixos system you will first need to start a shell with `nixos-rebuild`.
+
+```bash
+nix-shell -p nixos-rebuild
+```
