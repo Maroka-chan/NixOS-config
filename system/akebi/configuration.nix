@@ -4,8 +4,7 @@
   [
     ./bootloader.nix
     ./firewall.nix
-    ./impermanence.nix
-    ./users.nix
+    ./deployment-user.nix
     ./podman.nix
     ./jellyfin.nix
   ];
@@ -15,6 +14,9 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
+
+  # Set users to be immutable
+  users.mutableUsers = false;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;

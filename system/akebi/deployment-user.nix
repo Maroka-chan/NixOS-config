@@ -3,8 +3,6 @@ let
     deployment_user = "deploy";
 in
 {
-    users.mutableUsers = false;
-
     users.users."${deployment_user}" = {
         isNormalUser = true;
         extraGroups = [ "wheel" ];
