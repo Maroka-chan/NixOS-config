@@ -1,0 +1,21 @@
+version: "3.9"
+
+volumes:
+  config: {}
+  data: {}
+
+services:
+  jellyfin:
+    image: ghcr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    hostname: jellyfin
+    ports:
+      - 8096:8096/tcp
+      - 8920:8920/tcp
+    volumes:
+      - config:/config
+      - data:/data
+    environment:
+      TZ: 'Europe/Copenhagen'
+    labels:
+      io.containers.autoupdate: "registry"

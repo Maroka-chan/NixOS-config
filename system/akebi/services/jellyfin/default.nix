@@ -2,10 +2,12 @@
 let
   user = "jellyfin";
   group = "jellyfin";
-  container = "jellyfin-podman";
+  service_name = "jellyfin-podman";
+  compose_file = ./. + "/docker-compose.yml";
+  docker_compose = "${pkgs.podman-compose}/bin/podman-compose -f ${compose_file}";
 in {
-  systemd.services.${container} = {
-    path = [ "/run/wrappers" ];
+  systemd.services."${service_name}" = {
+    path = [ "/run/wrappers" pkgs.podman ];
     serviceConfig = {
       User = user;
       Group = group;
@@ -13,15 +15,8 @@ in {
       Restart = "on-failure";
       TimeoutStopSec = 70;
     };
-    script = ''${pkgs.podman}/bin/podman run \
-          --rm \
-          --name ${container} \
-          --label io.containers.autoupdate=registry \
-          --replace \
-          --publish=8096:8096/tcp \
-          --publish=8920:8920/tcp \
-          -d ghcr.io/linuxserver/jellyfin:latest'';
-    preStop = "${pkgs.podman}/bin/podman stop ${container}";
+    script = "${docker_compose} up -d";
+    preStop = "${docker_compose} down";
 
     after = [ "network-online.target" ];
     wantedBy = [ "network-online.target" ];

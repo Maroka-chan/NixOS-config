@@ -6,7 +6,7 @@
     ./firewall.nix
     ./deployment-user.nix
     ./podman.nix
-    ./jellyfin.nix
+    ./services/jellyfin
   ];
 
   networking.hostName = "akebi";
