@@ -78,7 +78,7 @@ Note: the hardware configuration and impermanence is not used with the VM.
 
 ```bash
 nixos-rebuild build-vm --flake .#akebi-vm
-./result/bin/run-nixos-vm
+./result/bin/run-akebi-vm
 ```
 
 For a non-nixos system you will first need to start a shell with `nixos-rebuild`.
