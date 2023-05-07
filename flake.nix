@@ -7,15 +7,25 @@
             url = "github:nix-community/nixos-generators";
             inputs.nixpkgs.follows = "nixpkgs";
         };
-        impermanence = {
-            url = "github:nix-community/impermanence";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
+        impermanence.url = "github:nix-community/impermanence";
     };
 
     outputs = { self, nixpkgs, nixos-generators, impermanence, ... }:
+    let
+        akebi-path = "./system/akebi";
+        akebi-modules = [
+            "${akebi-path}"/hardware-configuration.nix
+            "${akebi-path}"/configuration.nix
+            impermanence.nixosModules.impermanence
+            "${akebi-path}"/impermanence.nix
+        ];
+    in
     {
         nixosConfigurations = {
+            akebi = nixpkgs.lib.nixosSystem {
+                system = "x86_64-linux";
+                modules = akebi-modules;
+            };
             akebi-vm = nixpkgs.lib.nixosSystem {
                 system = "x86_64-linux";
                 modules = [
@@ -24,6 +34,7 @@
                 ];
             };
         };
+
         colmena = {
             meta = {
                 nixpkgs = import nixpkgs {
@@ -34,12 +45,7 @@
 
             akebi = { name, nodes, pkgs, ... }: 
             {
-                imports = [
-                    ./system/akebi/hardware-configuration.nix
-                    ./system/akebi/configuration.nix
-                    impermanence.nixosModules.impermanence
-                    ./system/akebi/impermanence.nix
-                ];
+                imports = akebi-modules;
 
                 deployment.targetHost = "akebi";
                 deployment.targetUser = "deploy";
@@ -48,7 +54,7 @@
         };
 
         packages.x86_64-linux = {
-            akebi_iso = nixos-generators.nixosGenerate {
+            akebi-iso = nixos-generators.nixosGenerate {
                 system = "x86_64-linux";
                 modules = [
                     ./system/akebi/iso.nix
