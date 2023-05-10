@@ -14,7 +14,7 @@
     boot.initrd.postDeviceCommands = pkgs.lib.mkBefore ''
         mkdir -p /mnt
 
-        mount -t btrfs /dev/mapper/enc /mnt
+        mount -t btrfs /dev/mapper/crypt-nixos /mnt
 
         btrfs subvolume list -o /mnt/root |
         cut -f9 -d' ' |
