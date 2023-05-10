@@ -12,7 +12,7 @@ let
 
         # Install NixOS
         echo "Installing NixOS"
-        sudo nixos-install --flake "git+https://github.com/Maroka-chan/NixOS-config?ref=deployment#akebi"
+        sudo nixos-install --flake "git+https://github.com/Maroka-chan/NixOS-config#akebi"
     '';
 in
 {
