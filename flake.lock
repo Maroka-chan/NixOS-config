@@ -1,0 +1,80 @@
+{
+  "nodes": {
+    "impermanence": {
+      "locked": {
+        "lastModified": 1682268411,
+        "narHash": "sha256-ICDKQ7tournRVtfM8C2II0qHiOZOH1b3dXVOCsgr11o=",
+        "owner": "nix-community",
+        "repo": "impermanence",
+        "rev": "df1692e2d9f1efc4300b1ea9201831730e0b817d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "impermanence",
+        "type": "github"
+      }
+    },
+    "nixlib": {
+      "locked": {
+        "lastModified": 1681001314,
+        "narHash": "sha256-5sDnCLdrKZqxLPK4KA8+f4A3YKO/u6ElpMILvX0g72c=",
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "rev": "367c0e1086a4eb4502b24d872cea2c7acdd557f4",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "type": "github"
+      }
+    },
+    "nixos-generators": {
+      "inputs": {
+        "nixlib": "nixlib",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1683530131,
+        "narHash": "sha256-R0RSqj6JdZfru2x/cM19KJMHsU52OjtyxI5cccd+uFc=",
+        "owner": "nix-community",
+        "repo": "nixos-generators",
+        "rev": "10079333313ff62446e6f2b0e7c5231c7431d269",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixos-generators",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1683627095,
+        "narHash": "sha256-8u9SejRpL2TrMuHBdhYh4FKc1OGPDLyWTpIbNTtoHsA=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "a08e061a4ee8329747d54ddf1566d34c55c895eb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-22.11-small",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "impermanence": "impermanence",
+        "nixos-generators": "nixos-generators",
+        "nixpkgs": "nixpkgs"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
