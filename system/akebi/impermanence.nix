@@ -1,13 +1,5 @@
 { config, pkgs, ... }:
-let
-    impermanence = builtins.fetchTarball {
-        url = "https://github.com/nix-community/impermanence/archive/master.tar.gz";
-        sha256 = "0hpp8y80q688mvnq8bhvksgjb6drkss5ir4chcyyww34yax77z0l";
-    };
-in
 {
-    imports = [ "${impermanence}/nixos.nix" ];
-
     # State to persist.
     environment.persistence."/persist" = {
         directories = [ ];
@@ -17,4 +9,25 @@ in
             "/etc/ssh/ssh_host_ed25519_key.pub"
         ];
     };
+
+    # Wipe the root subvolume on boot.
+    boot.initrd.postDeviceCommands = pkgs.lib.mkBefore ''
+        mkdir -p /mnt
+
+        mount -t btrfs /dev/mapper/crypt-nixos /mnt
+
+        btrfs subvolume list -o /mnt/root |
+        cut -f9 -d' ' |
+        while read subvolume; do
+        echo "deleting /$subvolume subvolume..."
+        btrfs subvolume delete "/mnt/$subvolume"
+        done &&
+        echo "deleting /root subvolume..." &&
+        btrfs subvolume delete /mnt/root
+
+        echo "restoring blank /root subvolume..."
+        btrfs subvolume snapshot /mnt/root-blank /mnt/root
+
+        umount /mnt
+    '';
 }

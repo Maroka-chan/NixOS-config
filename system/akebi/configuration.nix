@@ -2,13 +2,11 @@
 {
   imports =
   [
-    ./sops.nix
     ./bootloader.nix
     ./firewall.nix
-    ./impermanence.nix
-    ./users.nix
-    ./deployments/jellyfin.nix
-    ./hardware-configuration.nix
+    ./deployment-user.nix
+    ./podman.nix
+    ./services/jellyfin
   ];
 
   networking.hostName = "akebi";
@@ -16,6 +14,9 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
+
+  # Set users to be immutable
+  users.mutableUsers = false;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -27,35 +28,17 @@
   ];
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-
+  services.openssh = {
+    enable = true;
+    permitRootLogin = "no";
+    passwordAuthentication = false;
+    kbdInteractiveAuthentication = false;
+  };
 
   security.sudo.extraConfig = ''
     # rollback results in sudo lectures after each reboot
     Defaults lecture = never
   '';
-
-  # Note `lib.mkBefore` is used instead of `lib.mkAfter` here.
-  boot.initrd.postDeviceCommands = pkgs.lib.mkBefore ''
-    mkdir -p /mnt
-
-    mount -t btrfs /dev/mapper/enc /mnt
-
-    btrfs subvolume list -o /mnt/root |
-    cut -f9 -d' ' |
-    while read subvolume; do
-      echo "deleting /$subvolume subvolume..."
-      btrfs subvolume delete "/mnt/$subvolume"
-    done &&
-    echo "deleting /root subvolume..." &&
-    btrfs subvolume delete /mnt/root
-
-    echo "restoring blank /root subvolume..."
-    btrfs subvolume snapshot /mnt/root-blank /mnt/root
-
-    umount /mnt
-  '';
-
 
   # Automatic Updates
   system.autoUpgrade = {
