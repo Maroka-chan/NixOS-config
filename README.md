@@ -2,45 +2,35 @@
 
 ## Setting up the NixOS server
 
-### Set up the filesystem
-
-- Set up the paritions with labels.
-- Format the NixOS partition as a btrfs filesystem.
-- Create the btrfs subvolumes.
-- Generate NixOS configuration.
-
-### Persist files
-
-Copy files that needs to be persisted to the `persist` subvolume.
+### Build the ISO
 
 ```bash
-bash <(curl -s https://raw.githubusercontent.com/Maroka-chan/NixOS-config/master/scripts/nixos/persist-files.sh)
+nix build .#akebi-iso
 ```
 
-Need to find a better way to do this.
-nixos-generators may be able to automate most of the set up process.
+### Boot into the ISO on the server
 
-### Edit the default Nix configuration
-
-- Set the hostname.
-- Declare the deploy user w/ SSH key.
-- Define sudo rules to make the deploy user non-interactive.
-- Enable SSH.
-- Apply the configuration.
-
-The first [deployment](#deployment) has to use the `boot` goal.
+Run the setup script.
 
 ```bash
-colmena apply boot
+nixsetup
 ```
 
-Lastly, the server needs to be rebooted for the configuration to take effect.
+The setup script will do the following:
+- Set up partitions
+- Encrypt the drive
+- Set up the btrfs filesystem
+- Persist files
+- Fetch the #akebi flake with git and install NixOS
 
-```bash
-colmena exec reboot
-```
+#NOTE The script will set up a predefined system without prompts and will need to be modified if the physical hardware or its configuration is changed.
 
-## Deployment
+After rebooting, the system will be ready to receive [deployments](#deploying).
+
+### Persisting files
+
+
+## Deploying
 
 ### Start a shell with Colmena
 
@@ -54,7 +44,7 @@ nix-shell -E '{pkgs ? import <nixpkgs> {}}: let colmena = import (fetchTarball "
 colmena apply
 ```
 
-## Secrets
+## Setting up Secrets
 
 [pass](https://www.passwordstore.org/) is used on the deployment machine to manage secrets.
 
@@ -70,7 +60,7 @@ To add a user password, use the output of:
 mkpasswd -m sha-512
 ```
 
-## Test the configuration in a VM
+## Testing the configuration in a VM
 
 You can build and run the virtual machine specified in `flake.nix` to test the configuration.
 
