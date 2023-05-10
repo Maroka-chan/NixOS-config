@@ -44,12 +44,6 @@
       neededForBoot = true;
     };
 
-  fileSystems."/data" =
-    { device = "/dev/disk/by-label/NIXOS";
-      fsType = "btrfs";
-      options = [ "subvol=data" "compress=zstd" "noatime" ];
-    };
-
   fileSystems."/boot" =
     { device = "/dev/disk/by-label/BOOT";
       fsType = "vfat";
