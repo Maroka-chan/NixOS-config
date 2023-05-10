@@ -12,12 +12,12 @@
 
     outputs = { self, nixpkgs, nixos-generators, impermanence, ... }:
     let
-        akebi-path = ./system/akebi;
+        akebi-path = ./. + "/system/akebi";
         akebi-modules = [
-            "${akebi-path}"/hardware-configuration.nix
-            "${akebi-path}"/configuration.nix
+            "${akebi-path}/hardware-configuration.nix"
+            "${akebi-path}/configuration.nix"
             impermanence.nixosModules.impermanence
-            "${akebi-path}"/impermanence.nix
+            "${akebi-path}/impermanence.nix"
         ];
     in
     {
@@ -29,8 +29,8 @@
             akebi-vm = nixpkgs.lib.nixosSystem {
                 system = "x86_64-linux";
                 modules = [
-                    ./system/akebi/configuration.nix
-                    ./system/akebi/vm.nix
+                    "${akebi-path}/configuration.nix"
+                    "${akebi-path}/vm.nix"
                 ];
             };
         };
@@ -57,7 +57,7 @@
             akebi-iso = nixos-generators.nixosGenerate {
                 system = "x86_64-linux";
                 modules = [
-                    ./system/akebi/iso.nix
+                    "${akebi-path}/iso.nix"
                 ];
 
                 format = "install-iso";
