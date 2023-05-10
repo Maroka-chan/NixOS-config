@@ -12,7 +12,7 @@
 
     outputs = { self, nixpkgs, nixos-generators, impermanence, ... }:
     let
-        akebi-path = "./system/akebi";
+        akebi-path = ./system/akebi;
         akebi-modules = [
             "${akebi-path}"/hardware-configuration.nix
             "${akebi-path}"/configuration.nix
