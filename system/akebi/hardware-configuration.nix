@@ -14,7 +14,7 @@
     crypt-template = {
       allowDiscards = true;
       keyFileSize = 4096;
-      keyFile = "/etc/cryptkey";
+      keyFile = "/persist/etc/cryptkey";
     };
   in
   {
