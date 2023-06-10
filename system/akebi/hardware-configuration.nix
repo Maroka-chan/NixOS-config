@@ -76,6 +76,7 @@
   fileSystems."/media/cryptpasskey" =
     { device = "/dev/disk/by-label/CRYPTKEY";
       fsType = "vfat";
+      neededForBoot = true;
     };
 
   fileSystems."/swap" =
