@@ -14,7 +14,7 @@
     crypt-template = {
       allowDiscards = true;
       keyFileSize = 4096;
-      keyFile = "/etc/cryptkey";
+      keyFile = "/mnt/cryptpasskey/cryptkey";
     };
   in
   {
@@ -73,7 +73,7 @@
       fsType = "vfat";
     };
 
-  fileSystems."/media/cryptpasskey" =
+  fileSystems."/mnt/cryptpasskey" =
     { device = "/dev/disk/by-label/CRYPTKEY";
       fsType = "vfat";
       neededForBoot = true;
