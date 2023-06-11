@@ -5,8 +5,8 @@
   #   ];
 
   boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" "usb_storage" ];
+  boot.initrd.kernelModules = [ "usb_storage" ];
+  boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
   boot.initrd.luks.devices = 
