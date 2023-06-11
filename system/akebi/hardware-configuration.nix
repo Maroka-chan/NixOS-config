@@ -14,7 +14,7 @@
     crypt-template = {
       allowDiscards = true;
       keyFileSize = 4096;
-      keyFile = "/dev/disk/by-label/CRYPTKEY";
+      keyFile = "/dev/sdb";
     };
   in
   {
