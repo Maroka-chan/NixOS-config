@@ -6,7 +6,7 @@
 
   boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-intel" "usb_storage" ];
   boot.extraModulePackages = [ ];
 
   boot.initrd.luks.devices = 
@@ -14,7 +14,7 @@
     crypt-template = {
       allowDiscards = true;
       keyFileSize = 4096;
-      keyFile = "/mnt/cryptpasskey/cryptkey";
+      keyFile = "/dev/disk/by-label/CRYPTKEY";
     };
   in
   {
@@ -71,12 +71,6 @@
   fileSystems."/boot" =
     { device = "/dev/disk/by-label/BOOT";
       fsType = "vfat";
-    };
-
-  fileSystems."/mnt/cryptpasskey" =
-    { device = "/dev/disk/by-label/CRYPTKEY";
-      fsType = "vfat";
-      neededForBoot = true;
     };
 
   fileSystems."/swap" =
