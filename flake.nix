@@ -18,6 +18,9 @@
             "${akebi-path}/configuration.nix"
             impermanence.nixosModules.impermanence
             "${akebi-path}/impermanence.nix"
+            "${akebi-path}/podman.nix"
+            "${akebi-path}/services/jellyfin"
+            "${akebi-path}/services/transmission"
         ];
     in
     {
@@ -31,6 +34,13 @@
                 modules = [
                     "${akebi-path}/configuration.nix"
                     "${akebi-path}/vm.nix"
+                ];
+            };
+            akebi-base = nixpkgs.lib.nixosSystem {
+                system = "x86_64-linux";
+                modules = [
+                    "${akebi-path}/configuration.nix"
+                    "${akebi-path}/hardware-configuration.nix"
                 ];
             };
         };

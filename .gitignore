@@ -1,6 +1,9 @@
 # Directory for VM builds
 result
 
+# Directory for test VMs
+testvm/root/
+
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json

@@ -12,7 +12,7 @@
   boot.initrd.luks.devices = 
   let
     crypt-template = {
-      allowDiscards = true;
+      #allowDiscards = true;
       keyFileSize = 4096;
       keyFile = "/dev/sdb";
     };

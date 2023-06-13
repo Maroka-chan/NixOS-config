@@ -9,6 +9,7 @@
                 { from = "host"; host.port = 2222; guest.port = 22; }
                 { from = "host"; host.port = 8096; guest.port = 8096; }
                 { from = "host"; host.port = 8920; guest.port = 8920; }
+                { from = "host"; host.port = 9091; guest.port = 9091; }
             ];
         };
     };
