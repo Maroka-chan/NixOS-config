@@ -20,28 +20,51 @@
   };
 
   fileSystems."/" =
-    { device = "none";
-      fsType = "tmpfs";
-      options = [ "size=3G" "mode=755" ]; # mode=755 so only root can write to those files
-    };
-  fileSystems."/home/maroka" =
-    { device = "none";
-      fsType = "tmpfs";  # Can be stored on normal drive or on tmpfs as well
-      options = [ "size=4G" "mode=777" ]; 
-    };
-  fileSystems."/nix" =  # can be LUKS encrypted
     { device = "/dev/disk/by-label/NIXOS";
-      fsType = "ext4";
+      fsType = "btrfs";
+      options = [ "subvol=root" "compress=zstd" "noatime" "ssd" "autodefrag" "discard=async" ];
     };
+
+  fileSystems."/home" =
+    { device = "/dev/disk/by-label/NIXOS";
+      fsType = "btrfs";
+      options = [ "subvol=home" "compress=zstd" "noatime" "ssd" "autodefrag" "discard=async" ];
+      neededForBoot = true;
+    };
+
+  fileSystems."/nix" =
+    { device = "/dev/disk/by-label/NIXOS";
+      fsType = "btrfs";
+      options = [ "subvol=nix" "compress=zstd" "noatime" "ssd" "autodefrag" "discard=async" ];
+    };
+
+  fileSystems."/persist" =
+    { device = "/dev/disk/by-label/NIXOS";
+      fsType = "btrfs";
+      options = [ "subvol=persist" "compress=zstd" "noatime" "ssd" "autodefrag" "discard=async" ];
+      neededForBoot = true;
+    };
+
+  fileSystems."/var/log" =
+    { device = "/dev/disk/by-label/NIXOS";
+      fsType = "btrfs";
+      options = [ "subvol=log" "compress=zstd" "noatime" "ssd" "autodefrag" "discard=async" ];
+      neededForBoot = true;
+    };
+
   fileSystems."/boot" =
     { device = "/dev/disk/by-label/BOOT";
       fsType = "vfat";
     };
 
-  swapDevices = [ {
-    device = "/nix/swapfile";
-    size = 16*1024;
-  } ];
+  fileSystems."/swap" =
+    { device = "/dev/disk/by-label/NIXOS";
+      fsType = "btrfs";
+      options = [ "subvol=swap" "noatime" ];
+      neededForBoot = true;
+    };
+
+  swapDevices = [ { device = "/swap/swapfile"; } ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's

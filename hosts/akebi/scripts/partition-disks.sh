@@ -148,7 +148,7 @@ sudo truncate -s 0 /mnt/swap/swapfile
 sudo chattr +C /mnt/swap/swapfile
 sudo btrfs property set /mnt/swap/swapfile compression none
 sudo dd if=/dev/zero of=/mnt/swap/swapfile bs=1M count=4096
-sudo chmod 600 /mnt/swap/swapfile
+sudo chmod 0600 /mnt/swap/swapfile
 sudo mkswap -L SWAP /mnt/swap/swapfile
 
 # As of btrfs-progs 6.1, it is possible to create the swapfile in a single command:

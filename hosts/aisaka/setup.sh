@@ -27,19 +27,59 @@ ROOT_DISK=/dev/mapper/crypt-nixos
 # Format partitions
 echo "Formatting partitions"
 sudo mkfs.vfat -n BOOT "$NIXOS_DISK"1
-sudo mkfs.ext4 -L NIXOS "$ROOT_DISK"
+sudo mkfs.btrfs -L NIXOS "$ROOT_DISK"
 
 # Mount partitions
 echo "Mounting partitions"
+sudo mount -t btrfs "$ROOT_DISK" /mnt
 sudo mount "$NIXOS_DISK"1 /mnt/boot
-sudo mount "$ROOT_DISK" /mnt/nix
+
+# Create subvolumes
+echo "Creating subvolumes"
+sudo btrfs subvolume create /mnt/root
+sudo btrfs subvolume create /mnt/nix
+sudo btrfs subvolume create /mnt/persist
+sudo btrfs subvolume create /mnt/log
+
+# Subvolume for swapfile
+echo "Creating swap subvolume"
+sudo btrfs subvolume create /mnt/swap
+
+# Create a blank *readonly* snapshot of the root subvolume,
+# which we will rollback to on every boot
+echo "Creating blank root snapshot"
+sudo btrfs subvolume snapshot -r /mnt/root /mnt/root-blank
+
+echo "Unmounting root partition"
+sudo umount /mnt
+
+# Mount subvolumes
+echo "Mounting subvolumes"
+sudo mount -o subvol=root,compress=zstd,noatime,ssd,autodefrag,discard=async "$ROOT_DISK" /mnt
+
+sudo mkdir -p /mnt/{boot,swap,nix,persist,var/log}
+
+sudo mount -o subvol=nix,compress=zstd,noatime,ssd,autodefrag,discard=async "$ROOT_DISK" /mnt/nix
+sudo mount -o subvol=persist,compress=zstd,noatime,ssd,autodefrag,discard=async "$ROOT_DISK" /mnt/persist
+sudo mount -o subvol=log,compress=zstd,noatime,ssd,autodefrag,discard=async "$ROOT_DISK" /mnt/var/log
+
 
 # Set up swapfile
+# btrfs filesystem mkswapfile --size 4G swapfile
 echo "Setting up swapfile"
-sudo dd if=/dev/zero of=/mnt/nix/swapfile bs=1M count=16k status=progress
-sudo chmod 0600 /mnt/nix/swapfile
-sudo mkswap -U clear /mnt/nix/swapfile
-sudo swapon /mnt/nix/swapfile
+sudo mount -o subvol=swap "$ROOT_DISK" /mnt/swap
+sudo truncate -s 0 /mnt/swap/swapfile
+sudo chattr +C /mnt/swap/swapfile
+sudo btrfs property set /mnt/swap/swapfile compression none
+sudo dd if=/dev/zero of=/mnt/swap/swapfile bs=1M count=4096
+sudo chmod 0600 /mnt/swap/swapfile
+sudo mkswap -L SWAP /mnt/swap/swapfile
+
+sudo swapon /mnt/swap/swapfile
+
+# Mount boot partition
+echo "Mounting boot partition"
+sudo mount "$NIXOS_DISK"1 /mnt/boot
 
 # Generate NixOS Configuration
 echo "Generating NixOS config"

@@ -8,7 +8,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.supportedFilesystems = [ "ext4" ];
+  boot.supportedFilesystems = [ "btrfs" ];
   hardware.enableAllFirmware = true;
 
   networking.hostName = "aisaka";
