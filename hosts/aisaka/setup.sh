@@ -64,7 +64,6 @@ sudo mount -o subvol=log,compress=zstd,noatime,ssd,autodefrag,discard=async "$RO
 
 
 # Set up swapfile
-# btrfs filesystem mkswapfile --size 4G swapfile
 echo "Setting up swapfile"
 sudo mount -o subvol=swap "$ROOT_DISK" /mnt/swap
 sudo truncate -s 0 /mnt/swap/swapfile

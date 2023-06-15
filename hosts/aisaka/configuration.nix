@@ -22,6 +22,7 @@ in
 
   # Secrets
   sops.defaultSopsFile = secrets_path + "/secrets.yaml";
+  sops.validateSopsFiles = false;
   sops.age.sshKeyPaths = [];
   sops.age.keyFile = secrets_path + "/keys.txt";
   sops.gnupg.sshKeyPaths = [];
