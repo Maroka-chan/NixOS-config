@@ -18,6 +18,7 @@ in
   time.timeZone = "Europe/Copenhagen";
   i18n.defaultLocale = "en_US.UTF-8";
 
+  networking.networkmanager.enable = true;
   networking.nameservers = [ "1.1.1.2" "1.0.0.2" ];
 
   # Secrets

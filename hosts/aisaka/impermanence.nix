@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 {
-    environment.persistence."/nix/persist" = {
+    environment.persistence."/persist" = {
         directories = [
             "/etc/NetworkManager"
             "/etc/nixos/sops"
