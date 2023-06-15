@@ -25,13 +25,6 @@
       options = [ "subvol=root" "compress=zstd" "noatime" "ssd" "autodefrag" "discard=async" ];
     };
 
-  fileSystems."/home" =
-    { device = "/dev/disk/by-label/NIXOS";
-      fsType = "btrfs";
-      options = [ "subvol=home" "compress=zstd" "noatime" "ssd" "autodefrag" "discard=async" ];
-      neededForBoot = true;
-    };
-
   fileSystems."/nix" =
     { device = "/dev/disk/by-label/NIXOS";
       fsType = "btrfs";
