@@ -12,7 +12,8 @@
 
     outputs = { self, nixpkgs, nixos-generators, impermanence, ... }:
     let
-        akebi-path = ./. + "/system/akebi";
+        akebi-path = ./. + "/hosts/akebi";
+        aisaka-path = ./. + "/hosts/aisaka";
         akebi-modules = [
             "${akebi-path}/hardware-configuration.nix"
             "${akebi-path}/configuration.nix"
@@ -34,13 +35,6 @@
                 modules = [
                     "${akebi-path}/configuration.nix"
                     "${akebi-path}/vm.nix"
-                ];
-            };
-            akebi-base = nixpkgs.lib.nixosSystem {
-                system = "x86_64-linux";
-                modules = [
-                    "${akebi-path}/configuration.nix"
-                    "${akebi-path}/hardware-configuration.nix"
                 ];
             };
         };
@@ -68,6 +62,14 @@
                 system = "x86_64-linux";
                 modules = [
                     "${akebi-path}/iso.nix"
+                ];
+
+                format = "install-iso";
+            };
+            aisaka-iso = nixos-generators.nixosGenerate {
+                system = "x86_64-linux";
+                modules = [
+                    "${aisaka-path}/iso.nix"
                 ];
 
                 format = "install-iso";

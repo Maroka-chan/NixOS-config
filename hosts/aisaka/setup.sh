@@ -18,7 +18,7 @@ type=linux
 EOF
 
 # Create LUKS partitions for root
-sudo cryptsetup -v -h sha512 -s 512 --iter-time 5000 --verify-password luksFormat "$NIXOS_DISK"2
+sudo cryptsetup -v -h sha512 -s 512 --iter-time 5000 --verify-passphrase luksFormat "$NIXOS_DISK"2
 sudo cryptsetup luksHeaderBackup --header-backup-file "$NIXOS_DISK"2.luksheader "$NIXOS_DISK"2
 sudo cryptsetup config "$NIXOS_DISK"2 --label CRYPT_NIXOS
 sudo cryptsetup open "$NIXOS_DISK"2 crypt-nixos
@@ -32,7 +32,6 @@ sudo mkfs.btrfs -L NIXOS "$ROOT_DISK"
 # Mount partitions
 echo "Mounting partitions"
 sudo mount -t btrfs "$ROOT_DISK" /mnt
-sudo mount "$NIXOS_DISK"1 /mnt/boot
 
 # Create subvolumes
 echo "Creating subvolumes"
