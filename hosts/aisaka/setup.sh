@@ -82,7 +82,7 @@ sudo mount "$NIXOS_DISK"1 /mnt/boot
 # Create Secrets
 echo "Creating secrets"
 
-SOPS_DIR=/mnt/etc/nixos/secrets
+SOPS_DIR=/mnt/persist/etc/nixos/secrets
 SECRETS_FILE="$SOPS_DIR"/secrets.yaml
 SOPS_KEYS="$SOPS_DIR"/keys.txt
 
@@ -113,7 +113,3 @@ done
 
 # Encrypt Secrets File
 sudo nix-shell -p sops --run "sops --age $PUB_KEY -e -i $SECRETS_FILE"
-
-# Generate NixOS Configuration
-echo "Generating NixOS config"
-sudo nixos-generate-config --root /mnt
