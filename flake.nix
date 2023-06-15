@@ -11,7 +11,7 @@
         sops-nix.url = "github:Mic92/sops-nix";
     };
 
-    outputs = { self, nixpkgs, nixos-generators, impermanence, ... }:
+    outputs = { self, nixpkgs, nixos-generators, impermanence, sops-nix, ... }:
     let
         akebi-path = ./. + "/hosts/akebi";
         aisaka-path = ./. + "/hosts/aisaka";
