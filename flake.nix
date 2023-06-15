@@ -8,6 +8,7 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
         impermanence.url = "github:nix-community/impermanence";
+        sops-nix.url = "github:Mic92/sops-nix";
     };
 
     outputs = { self, nixpkgs, nixos-generators, impermanence, ... }:
@@ -43,6 +44,7 @@
                     "${aisaka-path}/configuration.nix"
                     "${aisaka-path}/hardware-configuration.nix"
                     impermanence.nixosModules.impermanence
+                    sops-nix.nixosModules.sops
                 ];
             };
         };
