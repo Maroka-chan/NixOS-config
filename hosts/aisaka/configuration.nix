@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 {
   imports = [
-    impermanence.nix
+    ./impermanence.nix
   ];
 
   boot.loader.systemd-boot.enable = true;
