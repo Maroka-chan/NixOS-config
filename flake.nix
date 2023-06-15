@@ -37,6 +37,14 @@
                     "${akebi-path}/vm.nix"
                 ];
             };
+            aisaka = nixpkgs.lib.nixosSystem {
+                system = "x86_64-linux";
+                modules = [
+                    "${aisaka-path}/configuration.nix"
+                    "${aisaka-path}/hardware-configuration.nix"
+                    impermanence.nixosModules.impermanence
+                ];
+            };
         };
 
         colmena = {
