@@ -101,9 +101,8 @@ sudo tee "$SECRETS_FILE" > /dev/null <<EOT
 maroka-password: 
 EOT
 
-sudo nix-shell -p sops --run "sops --age $PUB_KEY -e -i $SECRETS_FILE"
-
 # Set Passwords
+sudo nix-shell -p vim --run "vim $SECRETS_FILE"
 KEYS=$(sudo nix-shell -p yq-go --run "yq '.[] | key' $SECRETS_FILE")
 
 for KEY in $KEYS
@@ -113,6 +112,8 @@ do
     sudo nix-shell -p yq-go --run "yq -i '.${KEY} = \"${PASSWORD}\"' $SECRETS_FILE"
 done
 
+# Encrypt Secrets File
+sudo nix-shell -p sops --run "sops --age $PUB_KEY -e -i $SECRETS_FILE"
 
 # Generate NixOS Configuration
 echo "Generating NixOS config"
