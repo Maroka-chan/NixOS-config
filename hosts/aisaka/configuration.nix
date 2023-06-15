@@ -1,4 +1,7 @@
 { config, pkgs, ... }:
+let
+  secrets_path = /etc/nixos/secrets;
+in
 {
   imports = [
     ./impermanence.nix
@@ -17,6 +20,16 @@
 
   networking.nameservers = [ "1.1.1.2" "1.0.0.2" ];
 
+  # Secrets
+  sops.defaultSopsFile = secrets_path + "/secrets.yaml";
+  sops.age.sshKeyPaths = [];
+  sops.age.keyFile = secrets_path + "/keys.txt";
+  sops.gnupg.sshKeyPaths = [];
+
+  sops.secrets.maroka-password = {
+      neededForUsers = true;
+  };
+
   # Set users to be immutable
   users.mutableUsers = false;
 
@@ -33,6 +46,13 @@
   environment.systemPackages = with pkgs; [
     neovim
   ];
+
+  users.users.maroka = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" ];
+    passwordFile = config.sops.secrets.maroka-password.path;
+    packages = with pkgs; [];
+  };
 
   security.sudo.extraConfig = ''
     # rollback results in sudo lectures after each reboot

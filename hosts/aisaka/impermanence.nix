@@ -3,6 +3,7 @@
     environment.persistence."/nix/persist" = {
         directories = [
             "/etc/NetworkManager"
+            "/etc/nixos/sops"
         ];
         files = [
             "/etc/machine-id"

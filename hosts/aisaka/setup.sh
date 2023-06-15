@@ -80,6 +80,40 @@ sudo swapon /mnt/swap/swapfile
 echo "Mounting boot partition"
 sudo mount "$NIXOS_DISK"1 /mnt/boot
 
+# Create Secrets
+echo "Creating secrets"
+
+SOPS_DIR=/mnt/etc/nixos/secrets
+SECRETS_FILE="$SOPS_DIR"/secrets.yaml
+SOPS_KEYS="$SOPS_DIR"/keys.txt
+
+sudo mkdir -p "$SOPS_DIR"
+
+# Generate age key
+echo "Generating age key"
+sudo nix-shell -p age --run "age-keygen -o $SOPS_KEYS"
+
+PUB_KEY=$(sudo nix-shell -p age --run "age-keygen -y $SOPS_KEYS")
+
+# Generate Secrets File
+echo "Generating secrets file"
+sudo tee "$SECRETS_FILE" > /dev/null <<EOT
+maroka-password: 
+EOT
+
+sudo nix-shell -p sops --run "sops --age $PUB_KEY -e -i $SECRETS_FILE"
+
+# Set Passwords
+KEYS=$(sudo nix-shell -p yq-go --run "yq '.[] | key' $SECRETS_FILE")
+
+for KEY in $KEYS
+do
+    PASSWORD=$(sudo nix-shell -p yq-go --run "yq '.${KEY}' $SECRETS_FILE")
+    PASSWORD=$(sudo nix-shell -p mkpasswd --run "mkpasswd -m sha-512 $PASSWORD")
+    sudo nix-shell -p yq-go --run "yq -i '.${KEY} = \"${PASSWORD}\"' $SECRETS_FILE"
+done
+
+
 # Generate NixOS Configuration
 echo "Generating NixOS config"
 sudo nixos-generate-config --root /mnt
