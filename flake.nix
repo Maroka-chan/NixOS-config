@@ -2,9 +2,8 @@
     description = "My NixOS configuration";
 
     inputs = {
-        nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
+        nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
         nixpkgs-small.url = "github:NixOS/nixpkgs/nixos-23.05-small";
-        nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
         nixos-generators = {
             url = "github:nix-community/nixos-generators";
             inputs.nixpkgs.follows = "nixpkgs";
@@ -17,7 +16,7 @@
         };
     };
 
-    outputs = { self, nixpkgs-small, nixpkgs-unstable, nixos-generators, impermanence, sops-nix, home-manager, ... }:
+    outputs = { self, nixpkgs, nixpkgs-small, nixos-generators, impermanence, sops-nix, home-manager, ... }:
     let
         akebi-path = ./. + "/hosts/akebi";
         aisaka-path = ./. + "/hosts/aisaka";
@@ -44,7 +43,7 @@
                     "${akebi-path}/vm.nix"
                 ];
             };
-            aisaka = nixpkgs-unstable.lib.nixosSystem {
+            aisaka = nixpkgs.lib.nixosSystem {
                 system = "x86_64-linux";
                 modules = [
                     "${aisaka-path}/configuration.nix"
