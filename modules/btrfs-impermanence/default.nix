@@ -48,7 +48,7 @@ in {
     environment.systemPackages = 
     let
       # Tools
-      fs-diff-script = ./. + "/setup.sh";
+      fs-diff-script = ./. + "/fs-diff.sh";
       fs-diff = pkgs.writeScriptBin "fs-diff" "${fs-diff-script}";
     in
       with pkgs; [
