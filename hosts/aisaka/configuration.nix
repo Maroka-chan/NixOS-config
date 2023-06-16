@@ -4,9 +4,10 @@ let
 in
 {
   imports = [
-    ./impermanence.nix
+    ../../modules/btrfs-impermanence.nix
   ];
 
+  # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -14,9 +15,11 @@ in
   boot.supportedFilesystems = [ "btrfs" ];
   hardware.enableAllFirmware = true;
 
+  # Networking and System Settings
   networking.hostName = "aisaka";
   time.timeZone = "Europe/Copenhagen";
   i18n.defaultLocale = "en_US.UTF-8";
+  users.mutableUsers = false;
 
   networking.networkmanager.enable = true;
   networking.nameservers = [ "1.1.1.2" "1.0.0.2" ];
@@ -32,9 +35,6 @@ in
       neededForUsers = true;
   };
 
-  # Set users to be immutable
-  users.mutableUsers = false;
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -49,6 +49,7 @@ in
     neovim
   ];
 
+  # Users
   users.users.maroka = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
@@ -56,10 +57,25 @@ in
     packages = with pkgs; [];
   };
 
+  # Remove sudo lectures
   security.sudo.extraConfig = ''
     # rollback results in sudo lectures after each reboot
     Defaults lecture = never
   '';
+
+  # Impermanence
+  btrfs-impermanence.enable = true;
+
+  # Files to persist
+  environment.persistence."/persist" = {
+    directories = [
+      "/etc/NetworkManager"
+    ];
+    files = [
+      "/etc/machine-id"
+      "/etc/nix/id_rsa"
+    ];
+  };
 
   # Automatic Updates
   system.autoUpgrade = {
