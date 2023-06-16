@@ -2,6 +2,7 @@
     description = "My NixOS configuration";
 
     inputs = {
+        nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.05";
         nixpkgs-small.url = "github:NixOS/nixpkgs/nixos-23.05-small";
         nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
         nixos-generators = {
