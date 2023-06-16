@@ -3,7 +3,6 @@
     environment.persistence."/persist" = {
         directories = [
             "/etc/NetworkManager"
-            "/etc/nixos/secrets"
         ];
         files = [
             "/etc/machine-id"

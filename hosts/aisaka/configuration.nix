@@ -1,6 +1,6 @@
 { config, pkgs, ... }:
 let
-  secrets_path = "/etc/nixos/secrets";
+  secrets_path = "/persist/etc/nixos/secrets";
 in
 {
   imports = [
