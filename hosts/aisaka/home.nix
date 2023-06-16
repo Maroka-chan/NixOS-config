@@ -1,4 +1,9 @@
-{ config, pkgs, ...}: {
+{ config, pkgs, impermanence, ...}: {
+
+  imports = [
+    "${impermanence}/home-manager.nix"
+  ];
+
   home.username = "maroka";
   home.homeDirectory = "/home/maroka";
 

@@ -50,7 +50,6 @@
                     "${aisaka-path}/configuration.nix"
                     "${aisaka-path}/hardware-configuration.nix"
                     impermanence.nixosModules.impermanence
-                    impermanence.nixosModules.home-manager.impermanence
                     sops-nix.nixosModules.sops
                     ./modules/btrfs-impermanence
                     home-manager.nixosModules.home-manager
