@@ -19,6 +19,7 @@ in
 
   # Home Manager Persistence
   home.persistence."/persist/home/maroka" = {
+    allowOther = false;
     directories = [
       "Downloads"
       "Documents"
