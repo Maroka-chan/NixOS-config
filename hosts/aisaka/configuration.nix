@@ -3,10 +3,6 @@ let
   secrets_path = "/persist/etc/nixos/secrets";
 in
 {
-  imports = [
-    ../../modules/btrfs-impermanence.nix
-  ];
-
   # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

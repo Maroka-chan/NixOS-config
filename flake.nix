@@ -13,6 +13,7 @@
 
     outputs = { self, nixpkgs, nixos-generators, impermanence, sops-nix, ... }:
     let
+        modules_path = ./. + "/modules";
         akebi-path = ./. + "/hosts/akebi";
         aisaka-path = ./. + "/hosts/aisaka";
         akebi-modules = [
@@ -45,6 +46,7 @@
                     "${aisaka-path}/hardware-configuration.nix"
                     impermanence.nixosModules.impermanence
                     sops-nix.nixosModules.sops
+                    "${modules_path}/btrfs-impermanence.nix"
                 ];
             };
         };
