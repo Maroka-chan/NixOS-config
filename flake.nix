@@ -80,7 +80,7 @@
             aisaka-iso = nixos-generators.nixosGenerate {
                 system = "x86_64-linux";
                 modules = [
-                    "${aisaka-path}/iso.nix"
+                    "${aisaka-path}/iso"
                 ];
 
                 format = "install-iso";
