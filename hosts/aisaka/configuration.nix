@@ -76,12 +76,12 @@ in
   # Automatic Updates
   system.autoUpgrade = {
     enable = true;
-    allowReboot = true;
     channel = "https://nixos.org/channels/nixos-unstable";
   };
 
   # Optimise nix store
   nix.settings.auto-optimise-store = true;
+
   # Garbage collection
   nix.gc = {
     automatic = true;
