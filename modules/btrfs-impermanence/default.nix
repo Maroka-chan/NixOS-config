@@ -9,9 +9,14 @@ in {
     root = mkOption {
       type = types.str;
       default = "/dev/mapper/crypt-nixos";
-      description = "Root partition to wipe on boot.";
+      description = "Encrypted root partition to mount.";
     };
-    blank-root = mkOption {
+    root-subvol = mkOption {
+      type = types.str;
+      default = "root";
+      description = "Root subvolume to wipe on boot.";
+    };
+    blank-root-subvol = mkOption {
       type = types.str;
       default = "root-blank";
       description = "Blank root subvolume to restore on boot.";
@@ -25,17 +30,17 @@ in {
 
       mount -t btrfs ${cfg.root} /mnt
 
-      btrfs subvolume list -o /mnt/root |
+      btrfs subvolume list -o /mnt/${root-subvol} |
       cut -f9 -d' ' |
       while read subvolume; do
       echo "deleting /$subvolume subvolume..."
       btrfs subvolume delete "/mnt/$subvolume"
       done &&
-      echo "deleting /root subvolume..." &&
-      btrfs subvolume delete /mnt/root
+      echo "deleting /${root-subvol} subvolume..." &&
+      btrfs subvolume delete /mnt/${root-subvol}
 
-      echo "restoring blank /root subvolume..."
-      btrfs subvolume snapshot /mnt/${cfg.blank-root} /mnt/root
+      echo "restoring blank /${root-subvol} subvolume..."
+      btrfs subvolume snapshot /mnt/${cfg.blank-root-subvol} /mnt/${root-subvol}
 
       umount /mnt
     '';
@@ -46,9 +51,12 @@ in {
       fs-diff = pkgs.writeScriptBin "fs-diff" ''
           set -euo pipefail
 
-          OLD_TRANSID=$(sudo btrfs subvolume find-new /mnt/root-blank 9999999)
+          mkdir -p /mnt
+          mount -t btrfs ${cfg.root} /mnt
 
-          sudo btrfs subvolume find-new "/mnt/root" "$OLD_TRANSID" |
+          OLD_TRANSID=$(sudo btrfs subvolume find-new /mnt/${cfg.blank-root-subvol} 9999999)
+
+          sudo btrfs subvolume find-new "/${root-subvol}" "$OLD_TRANSID" |
           sed '$d' |
           cut -f17- -d' ' |
           sort |
@@ -63,6 +71,8 @@ in {
               echo "$path"
             fi
           done
+
+          umount /mnt
         '';
     in
       with pkgs; [
