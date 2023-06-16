@@ -2,16 +2,21 @@
     description = "My NixOS configuration";
 
     inputs = {
-        nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.11-small";
+        nixpkgs-small.url = "github:NixOS/nixpkgs/nixos-23.05-small";
+        nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
         nixos-generators = {
             url = "github:nix-community/nixos-generators";
             inputs.nixpkgs.follows = "nixpkgs";
         };
         impermanence.url = "github:nix-community/impermanence";
         sops-nix.url = "github:Mic92/sops-nix";
+        home-manager = {
+            url = "github:nix-community/home-manager";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
     };
 
-    outputs = { self, nixpkgs, nixos-generators, impermanence, sops-nix, ... }:
+    outputs = { self, nixpkgs-small, nixpkgs-unstable, nixos-generators, impermanence, sops-nix, home-manager, ... }:
     let
         akebi-path = ./. + "/hosts/akebi";
         aisaka-path = ./. + "/hosts/aisaka";
@@ -27,32 +32,39 @@
     in
     {
         nixosConfigurations = {
-            akebi = nixpkgs.lib.nixosSystem {
+            akebi = nixpkgs-small.lib.nixosSystem {
                 system = "x86_64-linux";
                 modules = akebi-modules;
             };
-            akebi-vm = nixpkgs.lib.nixosSystem {
+            akebi-vm = nixpkgs-small.lib.nixosSystem {
                 system = "x86_64-linux";
                 modules = [
                     "${akebi-path}/configuration.nix"
                     "${akebi-path}/vm.nix"
                 ];
             };
-            aisaka = nixpkgs.lib.nixosSystem {
+            aisaka = nixpkgs-unstable.lib.nixosSystem {
                 system = "x86_64-linux";
                 modules = [
                     "${aisaka-path}/configuration.nix"
                     "${aisaka-path}/hardware-configuration.nix"
                     impermanence.nixosModules.impermanence
+                    impermanence.nixosModules.home-manager.impermanence
                     sops-nix.nixosModules.sops
                     ./modules/btrfs-impermanence
+                    home-manager.nixosModules.home-manager
+                    {
+                        home-manager.useGlobalPkgs = true;
+                        home-manager.useUserPackages = true;
+                        home-manager.users.maroka = import "${aisaka-path}/home.nix";
+                    }
                 ];
             };
         };
 
         colmena = {
             meta = {
-                nixpkgs = import nixpkgs {
+                nixpkgs = import nixpkgs-small {
                     system = "x86_64-linux";
                     overlays = [];
                 };
