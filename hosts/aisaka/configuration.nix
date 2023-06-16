@@ -64,12 +64,12 @@ in
 
   # Files to persist
   environment.persistence."/persist" = {
+    hideMounts = true;
     directories = [
-      "/etc/NetworkManager"
+      "/etc/NetworkManager/system-connections"
     ];
     files = [
       "/etc/machine-id"
-      "/etc/nix/id_rsa"
     ];
   };
 
