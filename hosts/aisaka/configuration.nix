@@ -16,6 +16,7 @@ in
   time.timeZone = "Europe/Copenhagen";
   i18n.defaultLocale = "en_US.UTF-8";
   users.mutableUsers = false;
+  nixpkgs.config.allowUnfree = true;
 
   networking.networkmanager.enable = true;
   networking.nameservers = [ "1.1.1.2" "1.0.0.2" ];
@@ -31,9 +32,7 @@ in
       neededForUsers = true;
   };
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
+  # Firewall
   networking.firewall = {
     enable = true;
     allowPing = false;
@@ -42,6 +41,7 @@ in
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    git
     neovim
   ];
 
