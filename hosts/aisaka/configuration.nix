@@ -53,6 +53,11 @@ in
     packages = with pkgs; [];
   };
 
+  # Home Manager
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+  home-manager.users.maroka = import ./home.nix;
+
   # Remove sudo lectures
   security.sudo.extraConfig = ''
     # rollback results in sudo lectures after each reboot
