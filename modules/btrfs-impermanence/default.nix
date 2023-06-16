@@ -30,7 +30,7 @@ in {
 
       mount -t btrfs ${cfg.root} /mnt
 
-      btrfs subvolume list -o /mnt/${root-subvol} |
+      btrfs subvolume list -o /mnt/${cfg.root-subvol} |
       cut -f9 -d' ' |
       while read subvolume; do
       echo "deleting /$subvolume subvolume..."
