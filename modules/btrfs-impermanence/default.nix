@@ -36,11 +36,11 @@ in {
       echo "deleting /$subvolume subvolume..."
       btrfs subvolume delete "/mnt/$subvolume"
       done &&
-      echo "deleting /${root-subvol} subvolume..." &&
-      btrfs subvolume delete /mnt/${root-subvol}
+      echo "deleting /${cfg.root-subvol} subvolume..." &&
+      btrfs subvolume delete /mnt/${cfg.root-subvol}
 
-      echo "restoring blank /${root-subvol} subvolume..."
-      btrfs subvolume snapshot /mnt/${cfg.blank-root-subvol} /mnt/${root-subvol}
+      echo "restoring blank /${cfg.root-subvol} subvolume..."
+      btrfs subvolume snapshot /mnt/${cfg.blank-root-subvol} /mnt/${cfg.root-subvol}
 
       umount /mnt
     '';
@@ -56,7 +56,7 @@ in {
 
           OLD_TRANSID=$(sudo btrfs subvolume find-new /mnt/${cfg.blank-root-subvol} 9999999)
 
-          sudo btrfs subvolume find-new "/${root-subvol}" "$OLD_TRANSID" |
+          sudo btrfs subvolume find-new "/${cfg.root-subvol}" "$OLD_TRANSID" |
           sed '$d' |
           cut -f17- -d' ' |
           sort |
