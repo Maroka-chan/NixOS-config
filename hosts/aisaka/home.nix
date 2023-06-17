@@ -1,15 +1,4 @@
-{ config, pkgs, ...}:
-let
-  impermanence = builtins.fetchTarball "https://github.com/nix-community/impermanence/archive/master.tar.gz";
-in
-{
-
-  imports = [
-    "${impermanence}/home-manager.nix"
-  ];
-
-  home.username = "maroka";
-  home.homeDirectory = "/home/maroka";
+{ config, pkgs, ...}: {
 
   home.packages = with pkgs; [
     btop

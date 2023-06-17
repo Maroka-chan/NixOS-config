@@ -51,7 +51,18 @@
                     impermanence.nixosModules.impermanence
                     sops-nix.nixosModules.sops
                     ./modules/btrfs-impermanence
-                    home-manager.nixosModules.home-manager
+                    home-manager.nixosModules.home-manager {
+                        home-manager.useGlobalPkgs = true;
+                        home-manager.useUserPackages = true;
+                        home-manager.users.maroka = {
+                            home.username = "maroka";
+                            home.homeDirectory = "/home/maroka";
+                            imports = [
+                                impermanence.nixosModules.home-manager.impermanence
+                                "${aisaka-path}/home.nix"
+                            ];
+                        };
+                    }
                 ];
             };
         };
