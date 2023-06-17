@@ -7,11 +7,6 @@
   programs.zsh.enable = true;
 
   # Home Manager Persistence
-
-  systemd.tmpfiles.rules = [
-    "d /persist/home/maroka 0700 maroka users"
-  ];
-
   home.persistence."/persist/home/maroka" = {
     allowOther = false;
     directories = [
