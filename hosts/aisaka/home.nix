@@ -7,7 +7,12 @@
   programs.zsh.enable = true;
 
   # Home Manager Persistence
-  home.persistence."/nix/persist/home/maroka" = {
+
+  systemd.tmpfiles.rules = [
+    "d /persist/home/maroka 0700 maroka users"
+  ];
+
+  home.persistence."/persist/home/maroka" = {
     allowOther = false;
     directories = [
       "Downloads"
