@@ -7,7 +7,7 @@
   programs.zsh.enable = true;
 
   # Home Manager Persistence
-  home.persistence."/persist/home/maroka" = {
+  home.persistence."/nix/persist/home/maroka" = {
     allowOther = false;
     directories = [
       "Downloads"
