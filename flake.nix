@@ -14,9 +14,10 @@
             url = "github:nix-community/home-manager";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        hyprland.url = "github:hyprwm/Hyprland";
     };
 
-    outputs = { self, nixpkgs, nixpkgs-small, nixos-generators, impermanence, sops-nix, home-manager, ... }:
+    outputs = { self, nixpkgs, nixpkgs-small, nixos-generators, impermanence, sops-nix, home-manager, hyprland, ... }:
     let
         akebi-path = ./. + "/hosts/akebi";
         aisaka-path = ./. + "/hosts/aisaka";
@@ -59,9 +60,13 @@
                             home.homeDirectory = "/home/maroka";
                             imports = [
                                 impermanence.nixosModules.home-manager.impermanence
+                                hyprland.homeManagerModules.default
                                 "${aisaka-path}/home.nix"
                             ];
                         };
+                    }
+                    hyprland.nixosModules.default {
+                        programs.hyprland.enable = true;
                     }
                 ];
             };

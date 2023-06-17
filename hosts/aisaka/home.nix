@@ -1,7 +1,7 @@
 { config, pkgs, ...}: {
 
   home.packages = with pkgs; [
-    btop
+    git
   ];
 
   programs.zsh.enable = true;
@@ -17,6 +17,11 @@
       "Music"
       ".ssh"
     ];
+  };
+
+  # Hyprland
+  wayland.windowManager.hyprland = {
+    enable = true;
   };
 
   # Let Home Manager install and manage itself.
