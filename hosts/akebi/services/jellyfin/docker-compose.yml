@@ -14,7 +14,7 @@ services:
       - 8920:8920/tcp
     volumes:
       - config:/config
-      - data:/data
+      - data:/data:ro
     environment:
       TZ: 'Europe/Copenhagen'
     labels:

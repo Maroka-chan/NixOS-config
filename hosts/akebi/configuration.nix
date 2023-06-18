@@ -5,8 +5,6 @@
     ./bootloader.nix
     ./firewall.nix
     ./deployment-user.nix
-    ./podman.nix
-    ./services/jellyfin
   ];
 
   networking.hostName = "akebi";
@@ -44,7 +42,7 @@
   system.autoUpgrade = {
     enable = true;
     allowReboot = true;
-    channel = "https://nixos.org/channels/nixos-22.11-small";
+    channel = "https://nixos.org/channels/nixos-23.05-small";
   };
 
   # Optimise nix store
@@ -62,6 +60,5 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.11"; # Did you read the comment?
-
+  system.stateVersion = "23.05"; # Did you read the comment?
 }
