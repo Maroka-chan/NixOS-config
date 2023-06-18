@@ -1,5 +1,15 @@
 { config, lib, pkgs, ... }:
 {
+    boot = {
+        loader = {
+            systemd-boot.enable = true;
+            efi.canTouchEfiVariables = true;
+        };
+        kernelParams = [ "nomodeset" ];
+    };
+
+    boot.initrd.availableKernelModules = [ "xhci_pci" "ehci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+
     fileSystems = {
         "/" = {
             device  = "/dev/disk/by-label/NIXOS";
