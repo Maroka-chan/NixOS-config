@@ -1,6 +1,6 @@
 { config, lib, pkgs, modulesPath, ... }:
 {
-  boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk" ];
+  boot.initrd.availableKernelModules = [ ];
   #boot.initrd.kernelModules = [ "usb_storage" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
