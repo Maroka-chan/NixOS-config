@@ -15,9 +15,10 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
         hyprland.url = "github:hyprwm/Hyprland";
+        yofi.url = "github:l4l/yofi";
     };
 
-    outputs = { self, nixpkgs, nixpkgs-small, nixos-generators, impermanence, sops-nix, home-manager, hyprland, ... }:
+    outputs = { self, nixpkgs, nixpkgs-small, nixos-generators, impermanence, sops-nix, home-manager, hyprland, yofi, ... }:
     let
         akebi-path = ./. + "/hosts/akebi";
         aisaka-path = ./. + "/hosts/aisaka";
@@ -62,6 +63,9 @@
                                 impermanence.nixosModules.home-manager.impermanence
                                 hyprland.homeManagerModules.default
                                 "${aisaka-path}/home.nix"
+                            ];
+                            home.packages = with pkgs; [
+                                yofi.packages.default
                             ];
                         };
                     }
