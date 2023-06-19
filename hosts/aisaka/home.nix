@@ -2,6 +2,7 @@
 
   home.packages = with pkgs; [
     git
+    kitty
   ];
 
   programs.zsh.enable = true;
@@ -22,6 +23,9 @@
   # Hyprland
   wayland.windowManager.hyprland = {
     enable = true;
+    extraConfig = ''
+      bind = SUPER, Return, exec, kitty
+    '';
   };
 
   # Let Home Manager install and manage itself.
