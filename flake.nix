@@ -21,7 +21,7 @@
         };
     };
 
-    outputs = { self, nixpkgs, nixpkgs-small, nixos-generators, impermanence, sops-nix, home-manager, hyprland, yofi, ... }:
+    outputs = { self, nixpkgs, nixpkgs-small, nixos-generators, impermanence, sops-nix, home-manager, hyprland, anyrun, ... }:
     let
         akebi-path = ./. + "/hosts/akebi";
         aisaka-path = ./. + "/hosts/aisaka";
@@ -34,6 +34,7 @@
             "${akebi-path}/services/jellyfin"
             "${akebi-path}/services/transmission"
         ];
+        system = "x86_64-linux";
         pkgs = import nixpkgs {
             system = system;
             overlays = [anyrun.overlay];
