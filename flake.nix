@@ -15,7 +15,10 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
         hyprland.url = "github:hyprwm/Hyprland";
-        yofi.url = "github:l4l/yofi";
+        anyrun = {
+            url = "github:Kirottu/anyrun";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
     };
 
     outputs = { self, nixpkgs, nixpkgs-small, nixos-generators, impermanence, sops-nix, home-manager, hyprland, yofi, ... }:
@@ -31,6 +34,11 @@
             "${akebi-path}/services/jellyfin"
             "${akebi-path}/services/transmission"
         ];
+        pkgs = import nixpkgs {
+            system = system;
+            overlays = [anyrun.overlay];
+            allowUnfree = true;
+        };
     in
     {
         nixosConfigurations = {
@@ -64,7 +72,9 @@
                                 hyprland.homeManagerModules.default
                                 "${aisaka-path}/home.nix"
                             ];
-                            home.packages = [ yofi ];
+                            home.packages = [
+                                pkgs.anyrun
+                            ];
                         };
                     }
                     hyprland.nixosModules.default {
