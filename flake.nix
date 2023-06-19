@@ -64,9 +64,6 @@
                                 hyprland.homeManagerModules.default
                                 "${aisaka-path}/home.nix"
                             ];
-                            home.packages = with pkgs; [
-                                yofi.packages.default
-                            ];
                         };
                     }
                     hyprland.nixosModules.default {

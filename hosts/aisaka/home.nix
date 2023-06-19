@@ -1,8 +1,9 @@
-{ config, pkgs, ...}: {
+{ config, pkgs, yofi, ...}: {
 
   home.packages = with pkgs; [
     git
     kitty
+    yofi.packages.default
   ];
 
   programs.zsh.enable = true;
