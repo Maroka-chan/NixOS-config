@@ -43,6 +43,7 @@ in
   environment.systemPackages = with pkgs; [
     neovim
     btop
+    neofetch
   ];
 
   # Users
