@@ -89,6 +89,11 @@ in
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
+  # Fonts
+  fonts.fonts = with pkgs; [
+    (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
+  ];
+
   # Impermanence
   btrfs-impermanence.enable = true;
 
