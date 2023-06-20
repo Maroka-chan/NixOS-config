@@ -44,14 +44,14 @@ in
     neovim
     btop
     neofetch
+    eww-wayland
   ];
 
   # Users
   users.users.maroka = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [ "wheel" "networkmanager" ];
     passwordFile = config.sops.secrets.maroka-password.path;
-    packages = with pkgs; [];
   };
 
   # Remove sudo lectures
@@ -59,6 +59,9 @@ in
     # rollback results in sudo lectures after each reboot
     Defaults lecture = never
   '';
+
+  # SSH
+  programs.ssh.startAgent = true;
 
   # Impermanence
   btrfs-impermanence.enable = true;

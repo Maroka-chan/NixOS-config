@@ -2,10 +2,20 @@
 
   home.packages = with pkgs; [
     git
-    kitty
+    alacritty
+    firefox
+    brave
+    librewolf
   ];
 
-  programs.zsh.enable = true;
+  programs = {
+    zsh.enable = true;
+    git = {
+      enable = true;
+      userName = "Maroka-chan";
+      userEmail = "64618598+Maroka-chan@users.noreply.github.com";
+    };
+  };
 
   # Home Manager Persistence
   home.persistence."/persist/home/maroka" = {
@@ -24,7 +34,9 @@
   wayland.windowManager.hyprland = {
     enable = true;
     extraConfig = ''
-      bind = SUPER, Return, exec, kitty
+      bind = SUPER SHIFT, Q, killactive
+      bind = SUPER, D, exec, anyrun
+      bind = SUPER, Return, exec, alacritty
     '';
   };
 
