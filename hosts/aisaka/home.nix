@@ -35,6 +35,7 @@
     enable = true;
     extraConfig = ''
       bind = SUPER SHIFT, Q, killactive
+      bind = SUPER, F, fullscreen
       bind = SUPER, D, exec, anyrun
       bind = SUPER, Return, exec, alacritty
     '';
