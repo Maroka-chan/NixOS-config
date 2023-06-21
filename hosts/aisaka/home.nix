@@ -61,10 +61,12 @@ in
 	}
       }
 
-      bind = SUPER SHIFT, Q, killactive
-      bind = SUPER, F, fullscreen
-      bind = SUPER, D, exec, anyrun
-      bind = SUPER, Return, exec, alacritty
+      $mainMod = SUPER
+
+      bind = $mainMod SHIFT, Q, killactive
+      bind = $mainMod, F, fullscreen
+      bind = $mainMod, D, exec, anyrun
+      bind = $mainMod, Return, exec, alacritty
 
       # Switch workspaces with mainMod + [0-9]
       bind = $mainMod, 1, workspace, 1
