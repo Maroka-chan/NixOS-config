@@ -2,8 +2,18 @@
 {
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
+  boot.kernelModules = [ "kvm-intel" "uas" "usbcore" "usb_storage" "vfat" "nls_cp437" "nls_iso8859_1" ];
   boot.extraModulePackages = [ ];
+
+  boot.initrd.postDeviceCommands =
+    let
+      USB_ID = "812A-4D31";
+    in
+    pkgs.lib.mkBefore ''
+      mkdir -m 0755 -p /key
+      sleep 2
+      mount -n -t vfat -o ro `findfs UUID=${USB_ID}` /key
+    '';
 
   boot.initrd.luks.devices = 
   let
@@ -16,6 +26,9 @@
   {
     "crypt-nixos" = crypt-template // {
       device = "/dev/disk/by-label/CRYPT_NIXOS";
+      keyFile = "/key/keyfile";
+      preLVM = false;
+      fallbackToPassword = true;
     };
   };
 
