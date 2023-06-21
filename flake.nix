@@ -35,9 +35,15 @@
             "${akebi-path}/services/transmission"
         ];
         system = "x86_64-linux";
+	feathericons.overlay = final: prev: {
+          feathericons = final.callPackage (./. + "/pkgs/fonts/feathericons") {};
+	};
         pkgs = import nixpkgs {
             system = system;
-            overlays = [anyrun.overlay];
+            overlays = [
+	      anyrun.overlay
+	      feathericons.overlay
+	    ];
             allowUnfree = true;
         };
     in
@@ -57,7 +63,11 @@
             aisaka = nixpkgs.lib.nixosSystem {
                 system = "x86_64-linux";
                 modules = [
-                    "${aisaka-path}/configuration.nix"
+                    "${aisaka-path}/configuration.nix" {
+                      fonts.fonts = [
+                        pkgs.feathericons
+		      ];
+		    }
                     "${aisaka-path}/hardware-configuration.nix"
                     impermanence.nixosModules.impermanence
                     sops-nix.nixosModules.sops
