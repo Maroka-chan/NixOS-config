@@ -1,34 +1,29 @@
 { config, lib, pkgs, modulesPath, ... }:
 {
   boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" "uas" "usbcore" "usb_storage" "vfat" "nls_cp437" "nls_iso8859_1" ];
+  boot.initrd.kernelModules = [ "uas" "usbcore" "usb_storage" "vfat" "nls_cp437" "nls_iso8859_1" ];
+  boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
-
-  boot.initrd.postDeviceCommands =
-    let
-      USB_ID = "3F09-DDCE";
-    in
-    pkgs.lib.mkBefore ''
-      mkdir -m 0755 -p /key
-      sleep 2
-      mount -n -t vfat -o ro `findfs UUID=${USB_ID}` /key
-    '';
 
   boot.initrd.luks.devices = 
   let
-    crypt-template = {
-      allowDiscards = true;
-      #keyFileSize = 4096;
-      #keyFile = "/dev/sdb";
-    };
+    USB_ID = "3F09-DDCE";
   in
   {
-    "crypt-nixos" = crypt-template // {
+    "crypt-nixos" = {
       device = "/dev/disk/by-label/CRYPT_NIXOS";
-      keyFile = "/key/keyfile";
-      preLVM = false;
+      keyFile = "/key/aisaka-crypt.key";
       fallbackToPassword = true;
+      allowDiscards = true;
+      preOpenCommands = ''
+        mkdir -m 0755 -p /key
+	sleep 2
+	mount -n -t vfat -o ro `findfs UUID=${USB_ID}` /key
+      '';
+      postOpenCommands = ''
+        umount /key
+	rm -rf /key
+      '';
     };
   };
 
