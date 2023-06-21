@@ -5,11 +5,7 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  boot.initrd.luks.devices = 
-  let
-    USB_ID = "3F09-DDCE";
-  in
-  {
+  boot.initrd.luks.devices = {
     "crypt-nixos" = {
       device = "/dev/disk/by-label/CRYPT_NIXOS";
       keyFile = "/key/aisaka-crypt.key";
@@ -18,7 +14,7 @@
       preOpenCommands = ''
         mkdir -m 0755 -p /key
 	sleep 2
-	mount -n -t vfat -o ro `findfs UUID=${USB_ID}` /key
+	mount -n -t vfat -o ro /dev/disk/by-label/CRYPTKEY /key
       '';
       postOpenCommands = ''
         umount /key
