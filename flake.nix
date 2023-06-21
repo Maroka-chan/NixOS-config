@@ -73,6 +73,7 @@
                     sops-nix.nixosModules.sops
                     ./modules/btrfs-impermanence
                     home-manager.nixosModules.home-manager {
+		        programs.fuse.userAllowOther = true; # Needed for allowOther option in home persistence
                         home-manager.useGlobalPkgs = true;
                         home-manager.useUserPackages = true;
                         home-manager.users.maroka = {
