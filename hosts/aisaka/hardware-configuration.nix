@@ -7,7 +7,7 @@
 
   boot.initrd.postDeviceCommands =
     let
-      USB_ID = "812A-4D31";
+      USB_ID = "3F09-DDCE";
     in
     pkgs.lib.mkBefore ''
       mkdir -m 0755 -p /key
