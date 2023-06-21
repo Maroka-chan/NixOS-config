@@ -24,7 +24,7 @@ in
 
   # Home Manager Persistence
   home.persistence."/persist/home/maroka" = {
-    allowOther = false;
+    allowOther = true;
     directories = [
       "Downloads"
       "Documents"
@@ -33,7 +33,8 @@ in
       "Music"
       ".ssh"
       ".dotfiles"
-      "NixOS-config"
+      ".config/BraveSoftware/Brave-Browser"
+      ".librewolf"
     ];
   };
 
