@@ -55,7 +55,7 @@ in
   wayland.windowManager.hyprland = {
     enable = true;
     extraConfig = ''
-      monitor=,preferred,auto,auto
+      monitor=,preferred,auto,1
 
       exec-once = swaybg -i ${dotfiles}/wallpapers/yume_no_kissaten_yumegatari.png -m fill
       exec-once = eww daemon & eww open bar
