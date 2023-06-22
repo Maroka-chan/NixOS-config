@@ -1,6 +1,6 @@
 { config, pkgs, ...}:
 let
-  dotfiles = config.lib.file.mkOutOfStoreSymlink "/home/maroka/.dotfiles/config";
+  dotfiles = config.lib.file.mkOutOfStoreSymlink "/home/maroka/.dotfiles";
 in
 {
 
@@ -98,7 +98,7 @@ in
   };
 
   # Eww
-  xdg.configFile."eww".source = "${dotfiles}/eww";
+  xdg.configFile."eww".source = "${dotfiles}/config/eww";
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
