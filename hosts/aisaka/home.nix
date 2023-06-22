@@ -8,9 +8,13 @@ in
     git
     alacritty
     pavucontrol
+
+    # Browsers
     firefox
     brave
     librewolf
+
+    swaybg # Wallpaper Tool
   ];
 
   programs = {
@@ -53,6 +57,7 @@ in
     extraConfig = ''
       monitor=,preferred,auto,auto
 
+      exec-once = swaybg -i ${dotfiles}/wallpapers/yume_no_kissaten_yumegatari.png -m fill
       exec-once = eww daemon & eww open bar
 
       input {
