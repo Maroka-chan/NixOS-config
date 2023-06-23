@@ -97,6 +97,9 @@ in
     (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
   ];
 
+  # Power Management
+  services.tlp.enable = true;
+
   # Impermanence
   btrfs-impermanence.enable = true;
 
