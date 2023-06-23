@@ -15,6 +15,7 @@ in
     librewolf
 
     swaybg # Wallpaper Tool
+    swayidle
   ];
 
   programs = {
@@ -49,6 +50,15 @@ in
     package = pkgs.bibata-cursors;
     name = "Bibata-Modern-Ice";
     size = 24;
+  };
+
+  # Idle Daemon
+  services.swayidle = {
+    enable = true;
+    systemdTarget = "hyprland-session.target";
+    timeouts = [
+      { timeout = 120; command = "${pkgs.systemd}/bin/systemctl suspend"; }
+    ];
   };
 
   # Hyprland
