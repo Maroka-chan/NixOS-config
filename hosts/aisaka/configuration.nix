@@ -47,6 +47,9 @@ in
     eww-wayland
   ];
 
+  # Firmware Updater
+  services.fwupd.enable = true;
+
   # Users
   users.users.maroka = {
     isNormalUser = true;
