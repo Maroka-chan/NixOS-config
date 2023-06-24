@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let
   secrets_path = "/persist/etc/nixos/secrets";
 in
@@ -99,6 +99,17 @@ in
 
   # Power Management
   services.tlp.enable = true;
+
+  # Display Manager
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
+	user = "greeter";
+      };
+    };
+  };
 
   # Impermanence
   btrfs-impermanence.enable = true;
