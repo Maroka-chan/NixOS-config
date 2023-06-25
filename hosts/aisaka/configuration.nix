@@ -130,6 +130,15 @@ in
   # File Manager
   programs.thunar.enable = true;
 
+  # Fingerprint Reader
+  services.fprintd = {
+    enable = true;
+    tod = {
+      enable = true;
+      driver = pkgs.libfprint-2-tod1-goodix-550a;
+    };
+  };
+
   # btrfs settings
   services.btrfs.autoScrub.enable = true;
   ## Impermanence
@@ -145,6 +154,7 @@ in
     hideMounts = true;
     directories = [
       "/etc/NetworkManager/system-connections"
+      "/var/lib/fprint"
     ];
     files = [
       "/etc/machine-id"
