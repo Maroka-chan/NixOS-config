@@ -25,6 +25,10 @@ in
       userName = "Maroka-chan";
       userEmail = "64618598+Maroka-chan@users.noreply.github.com";
     };
+    vscode = {
+      enable = true;
+      package = pkgs.vscodium;
+    };
   };
 
   # Home Manager Persistence
