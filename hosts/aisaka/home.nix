@@ -112,6 +112,28 @@ in
       bind = $mainMod, F, fullscreen
       bind = $mainMod, D, exec, anyrun
       bind = $mainMod, Return, exec, alacritty
+      bind = $mainMod, V, togglefloating
+      bind = $mainMod, B, exec, librewolf
+
+      # Move focus with mainMod + arrow keys
+      bind = $mainMod, left, movefocus, l
+      bind = $mainMod, right, movefocus, r
+      bind = $mainMod, up, movefocus, u
+      bind = $mainMod, down, movefocus, d
+
+      # Move/resize windows with mainMod + LMB/RMB and dragging
+      bindm = $mainMod, mouse:272, movewindow
+      bindm = $mainMod, mouse:273, resizewindow
+
+      # to switch between windows in a floating workspace
+      bind = SUPER,Tab,cyclenext,          # change focus to another window
+      bind = SUPER,Tab,bringactivetotop,   # bring it to the top
+
+      # Volume button that allows press and hold, volume limited to 150%
+      binde = , XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 5%+
+      
+      # Volume button that will activate even while an input inhibitor is active
+      bindl = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
 
       # Switch workspaces with mainMod + [0-9]
       bind = $mainMod, 1, workspace, 1
