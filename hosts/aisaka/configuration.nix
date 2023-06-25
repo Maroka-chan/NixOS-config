@@ -127,7 +127,9 @@ in
     };
   };
 
-  # Impermanence
+  # btrfs settings
+  services.btrfs.autoScrub.enable = true;
+  ## Impermanence
   btrfs-impermanence.enable = true;
 
   # Create persist directories
