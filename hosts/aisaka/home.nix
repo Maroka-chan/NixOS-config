@@ -177,6 +177,9 @@ in
   # Eww
   xdg.configFile."eww".source = "${dotfiles}/config/eww";
 
+  # Alacritty
+  xdg.configFile."alacritty".source = "${dotfiles}/config/alacritty";
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
