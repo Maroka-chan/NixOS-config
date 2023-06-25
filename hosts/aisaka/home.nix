@@ -34,6 +34,9 @@ in
   # Home Manager Persistence
   home.persistence."/persist/home/maroka" = {
     allowOther = true;
+    files = [
+      ".bash_history"
+    ];
     directories = [
       "Downloads"
       "Documents"
