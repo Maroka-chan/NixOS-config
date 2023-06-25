@@ -71,12 +71,39 @@ in
       exec-once = eww daemon & eww open bar
 
       input {
-        scroll_method = "2fg"
-	sensitivity = 0
+        kb_layout = us
+	repeat_rate = 25
+	repeat_delay = 200
+
         touchpad {
           natural_scroll = true
 	  scroll_factor = 0.2
 	}
+
+      }
+
+      gestures {
+        workspace_swipe = true
+      }
+      
+      misc {
+        disable_hyprland_logo = true
+        disable_splash_rendering = true
+      }
+
+      general {
+        border_size = 2
+	gaps_in = 1
+	gaps_out = 2
+
+	col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
+        col.inactive_border = rgba(595959aa)
+
+	layout = dwindle
+      }
+
+      decoration {
+        rounding = 2
       }
 
       $mainMod = SUPER
