@@ -127,6 +127,9 @@ in
     };
   };
 
+  # File Manager
+  programs.thunar.enable = true;
+
   # btrfs settings
   services.btrfs.autoScrub.enable = true;
   ## Impermanence
