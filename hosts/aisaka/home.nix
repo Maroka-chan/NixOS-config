@@ -128,6 +128,12 @@ in
       bind = $mainMod, up, movefocus, u
       bind = $mainMod, down, movefocus, d
 
+      # Move active window with arrow keys
+      bind = $mainMod SHIFT, left, movewindow, l
+      bind = $mainMod SHIFT, right, movewindow, r
+      bind = $mainMod SHIFT, up, movewindow, u
+      bind = $mainMod SHIFT, down, movewindow, d
+
       # Move/resize windows with mainMod + LMB/RMB and dragging
       bindm = $mainMod, mouse:272, movewindow
       bindm = $mainMod, mouse:273, resizewindow
