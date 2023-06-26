@@ -28,6 +28,11 @@ in
       enableCompletion = true;
       enableSyntaxHighlighting = true;
 
+      history = {
+        size = 10000;
+        path = "${config.xdg.dataHome}/zsh/history";
+      };
+
       initExtraFirst = ''
         # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
         # Initialization code that may require console input (password prompts, [y/n]
@@ -40,10 +45,10 @@ in
 
       initExtra = ''
         # Needed for marlonrichert/zsh-autocomplete to work correctly
-	# https://nixos.wiki/wiki/Zsh#Troubleshooting
+        # https://nixos.wiki/wiki/Zsh#Troubleshooting
         bindkey "''${key[Up]}" up-line-or-search
 
-	# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+        # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
         [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
       '';
 
@@ -56,8 +61,7 @@ in
 
       oh-my-zsh = {
         enable = true;
-        plugins = [ "git" "thefuck" ];
-        theme = "powerlevel10k/powerlevel10k";
+        plugins = [ "git" ];
       };
     };
     git = {
@@ -81,7 +85,7 @@ in
   home.persistence."/persist/home/maroka" = {
     allowOther = true;
     files = [
-      ".zsh_history"
+      "${config.programs.zsh.history.path}"
       ".p10k.zsh"
     ];
     directories = [
