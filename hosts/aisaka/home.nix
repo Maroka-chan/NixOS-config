@@ -30,7 +30,7 @@ in
 
       history = {
         size = 10000;
-        path = "${config.xdg.dataHome}/zsh/history";
+        path = "/persist/${config.xdg.dataHome}/zsh/history";
       };
 
       initExtraFirst = ''
