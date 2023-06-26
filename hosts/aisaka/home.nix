@@ -19,7 +19,47 @@ in
   ];
 
   programs = {
-    zsh.enable = true;
+    alacritty = {
+      enable = true;
+    };
+    zsh = {
+      enable = true;
+      enableAutosuggestions = true;
+      enableCompletion = true;
+      enableSyntaxHighlighting = true;
+
+      initExtraFirst = ''
+        # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+        # Initialization code that may require console input (password prompts, [y/n]
+        # confirmations, etc.) must go above this block; everything else may go below.
+        if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+          source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+        fi
+
+      '';
+
+      initExtra = ''
+        # Needed for marlonrichert/zsh-autocomplete to work correctly
+	# https://nixos.wiki/wiki/Zsh#Troubleshooting
+        bindkey "''${key[Up]}" up-line-or-search
+
+	# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+        [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+      '';
+
+      zplug = {
+        enable = true;
+	plugins = [
+          { name = "romkatv/powerlevel10k"; tags = [ as:theme depth:1 ]; }
+	];
+      };
+
+      oh-my-zsh = {
+        enable = true;
+        plugins = [ "git" "thefuck" ];
+        theme = "powerlevel10k/powerlevel10k";
+      };
+    };
     git = {
       enable = true;
       userName = "Maroka-chan";
@@ -29,13 +69,20 @@ in
       enable = true;
       package = pkgs.vscodium;
     };
+    librewolf = {
+      enable = true;
+    };
+    firefox = {
+      enable = true;
+    };
   };
 
   # Home Manager Persistence
   home.persistence."/persist/home/maroka" = {
     allowOther = true;
     files = [
-      ".bash_history"
+      ".zsh_history"
+      ".p10k.zsh"
     ];
     directories = [
       "Downloads"
@@ -47,6 +94,7 @@ in
       ".dotfiles"
       ".config/BraveSoftware/Brave-Browser"
       ".librewolf"
+      ".zplug"
     ];
   };
 
