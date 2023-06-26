@@ -57,6 +57,11 @@ in
     passwordFile = config.sops.secrets.maroka-password.path;
   };
 
+  # Set shell
+  programs.zsh.enable = true;
+  environment.pathsToLink = [ "/share/zsh" ]; # Needed for zsh completion for system packages
+  users.defaultUserShell = pkgs.zsh;
+
   # Remove sudo lectures
   security.sudo.extraConfig = ''
     # rollback results in sudo lectures after each reboot
