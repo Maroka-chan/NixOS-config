@@ -44,10 +44,6 @@ in
       '';
 
       initExtra = ''
-        # Needed for marlonrichert/zsh-autocomplete to work correctly
-        # https://nixos.wiki/wiki/Zsh#Troubleshooting
-        bindkey "''${key[Up]}" up-line-or-search
-
         # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
         [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
       '';
