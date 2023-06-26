@@ -159,6 +159,7 @@ in
 
       decoration {
         rounding = 2
+	blur = false
       }
 
       $mainMod = SUPER
