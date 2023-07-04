@@ -45,6 +45,11 @@ in
     btop
     neofetch
     eww-wayland
+
+    inotify-tools
+    ripgrep
+    jq
+    socat
   ];
 
   # Firmware Updater
