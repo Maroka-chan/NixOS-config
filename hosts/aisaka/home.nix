@@ -30,7 +30,7 @@ in
 
       history = {
         size = 10000;
-        path = "/persist/${config.xdg.dataHome}/zsh/history";
+        path = "/persist${config.xdg.dataHome}/zsh/history";
       };
 
       initExtraFirst = ''
@@ -83,6 +83,7 @@ in
     files = [
       "${config.programs.zsh.history.path}"
       ".p10k.zsh"
+      ".cache/gitstatus/gitstatusd-linux-x86_64"
     ];
     directories = [
       "Downloads"
@@ -162,6 +163,10 @@ in
 	blur = false
       }
 
+      # Animations
+      animation=workspaces,1,4,default
+
+      # Bindings
       $mainMod = SUPER
 
       bind = $mainMod SHIFT, Q, killactive
@@ -194,6 +199,7 @@ in
       # Volume button that allows press and hold, volume limited to 100%
       binde = , XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+
       binde = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+      bind = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 
       # Brightness button that allows press and hold
       binde = , XF86MonBrightnessUp, exec, tee /sys/class/backlight/intel_backlight/brightness <<< $(($(cat /sys/class/backlight/intel_backlight/brightness) + 1000))
