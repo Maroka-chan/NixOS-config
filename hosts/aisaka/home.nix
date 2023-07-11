@@ -8,6 +8,7 @@ in
     git
     alacritty
     pavucontrol
+    mpv
 
     # Browsers
     firefox
@@ -16,6 +17,10 @@ in
 
     swaybg # Wallpaper Tool
     swayidle
+
+    cargo
+    rustc
+    gcc
   ];
 
   programs = {
@@ -83,7 +88,6 @@ in
     files = [
       "${config.programs.zsh.history.path}"
       ".p10k.zsh"
-      ".cache/gitstatus/gitstatusd-linux-x86_64"
     ];
     directories = [
       "Downloads"
@@ -99,7 +103,18 @@ in
     ];
   };
 
-  gtk.enable = true; # Needs to be enabled for home.pointerCursor to actually write gtk XDG settings files
+  gtk = {
+    enable = true;
+    theme = {
+      package = pkgs.dracula-theme;
+      name = "Dracula";
+    };
+    iconTheme = {
+      package = pkgs.dracula-icon-theme;
+      name = "Dracula";
+    };
+  };
+
   home.pointerCursor = {
     gtk.enable = true;
     x11.enable = true;
