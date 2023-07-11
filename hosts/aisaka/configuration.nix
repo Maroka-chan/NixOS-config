@@ -140,6 +140,13 @@ in
 
   # File Manager
   programs.thunar.enable = true;
+  services.gvfs.enable = true;
+
+  # VPN
+  services.mullvad-vpn = {
+    enable = true;
+    package = pkgs.mullvad-vpn;
+  };
 
   # Fingerprint Reader
   services.fprintd = {
