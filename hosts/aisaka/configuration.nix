@@ -103,7 +103,7 @@ in
   services.blueman.enable = true;
 
   # Fonts
-  fonts.fonts = with pkgs; [
+  fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
     noto-fonts
   ];

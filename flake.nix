@@ -63,7 +63,7 @@
                 system = "x86_64-linux";
                 modules = [
                     "${aisaka-path}/configuration.nix" {
-                      fonts.fonts = [
+                      fonts.packages = [
                         pkgs.feathericons
 		      ];
 		    }
