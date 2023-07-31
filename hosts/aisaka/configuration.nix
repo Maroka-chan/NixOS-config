@@ -178,6 +178,7 @@ in
     hideMounts = true;
     directories = [
       "/etc/NetworkManager/system-connections"
+      "/etc/mullvad-vpn"
       "/var/lib/fprint"
     ];
     files = [

@@ -108,6 +108,7 @@ in
     files = [
       "${config.programs.zsh.history.path}"
       ".p10k.zsh"
+      ".config/Mullvad VPN/gui_settings.json"
     ];
     directories = [
       "Downloads"
