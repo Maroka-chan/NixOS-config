@@ -9,6 +9,7 @@ in
     alacritty
     pavucontrol
     mpv
+    jellyfin-media-player
 
     # Browsers
     firefox
@@ -100,6 +101,7 @@ in
       ".config/BraveSoftware/Brave-Browser"
       ".librewolf"
       ".zplug"
+      ".local/share/Jellyfin Media Player/QtWebEngine/Default/Local Storage/leveldb"
     ];
   };
 
