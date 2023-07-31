@@ -21,7 +21,7 @@
         };
     };
 
-    outputs = { self, nixpkgs, nixpkgs-small, nixos-generators, impermanence, sops-nix, home-manager, hyprland, anyrun, ... }:
+    outputs = { self, nixpkgs, nixpkgs-small, nixos-generators, impermanence, sops-nix, home-manager, hyprland, anyrun, ... }@inputs:
     let
         akebi-path = ./. + "/hosts/akebi";
         aisaka-path = ./. + "/hosts/aisaka";
@@ -41,7 +41,6 @@
         pkgs = import nixpkgs {
             system = system;
             overlays = [
-	      anyrun.overlay
 	      feathericons.overlay
 	    ];
             allowUnfree = true;
@@ -74,6 +73,7 @@
                     ./modules/btrfs-impermanence
                     home-manager.nixosModules.home-manager {
 		        programs.fuse.userAllowOther = true; # Needed for allowOther option in home persistence
+                        home-manager.extraSpecialArgs = { inherit inputs; };
                         home-manager.useGlobalPkgs = true;
                         home-manager.useUserPackages = true;
                         home-manager.users.maroka = {
@@ -82,10 +82,11 @@
                             imports = [
                                 impermanence.nixosModules.home-manager.impermanence
                                 hyprland.homeManagerModules.default
+                                anyrun.homeManagerModules.default
                                 "${aisaka-path}/home.nix"
                             ];
                             home.packages = [
-                                pkgs.anyrun
+                                anyrun.packages.${system}.anyrun
                             ];
                         };
                     }
