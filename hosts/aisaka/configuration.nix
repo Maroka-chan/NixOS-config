@@ -140,6 +140,16 @@ in
     };
   };
 
+  # Docker
+  virtualisation.docker = {
+    enable = true;
+    storageDriver = "btrfs";
+    rootless = {
+      enable = true;
+      setSocketVariable = true;
+    };
+  };
+
   # File Manager
   programs.thunar.enable = true;
   services.gvfs.enable = true;
