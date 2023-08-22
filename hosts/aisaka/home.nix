@@ -1,9 +1,14 @@
 { config, pkgs, inputs, ...}:
 let
   dotfiles = config.lib.file.mkOutOfStoreSymlink "/home/maroka/.dotfiles";
+  protonmail = pkgs.makeDesktopItem {
+    name = "protonmail";
+    desktopName = "ProtonMail";
+    exec = "${pkgs.librewolf}/bin/librewolf --kiosk --new-instance -P Protonmail https://mail.proton.me/";
+    icon = ./. + "/protonmail.svg";
+  };
 in
 {
-
   home.packages = with pkgs; [
     git
     alacritty
@@ -22,6 +27,8 @@ in
     cargo
     rustc
     gcc
+
+    protonmail
   ];
 
   programs = {
