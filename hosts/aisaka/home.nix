@@ -148,6 +148,9 @@ in
         nvim-tree-lua
       ];
     };
+    swaylock = {
+      enable = true;
+    };
   };
 
   # Home Manager Persistence
@@ -197,8 +200,12 @@ in
   services.swayidle = {
     enable = true;
     systemdTarget = "hyprland-session.target";
+    events = [
+      { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock"; }
+    ];
     timeouts = [
-      { timeout = 120; command = "${pkgs.systemd}/bin/systemctl suspend"; }
+      { timeout = 120; command = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off"; resumeCommand = "${pkgs.hyprland}/bin/hyprctl dispatch dpms on"; }
+      { timeout = 300; command = "${pkgs.systemd}/bin/systemctl suspend"; }
     ];
   };
 

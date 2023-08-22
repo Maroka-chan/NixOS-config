@@ -162,6 +162,9 @@ in
     ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", MODE="0666", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/class/backlight/%k/brightness"
   '';
 
+  # PAM
+  security.pam.services.swaylock = {};
+
   # btrfs settings
   services.btrfs.autoScrub.enable = true;
   ## Impermanence
