@@ -11,7 +11,6 @@ in
 {
   home.packages = with pkgs; [
     git
-    gitstatus
     alacritty
     pavucontrol
     mpv
@@ -166,6 +165,8 @@ in
       "${config.programs.zsh.history.path}"
       ".p10k.zsh"
       ".config/Mullvad VPN/gui_settings.json"
+      ".config/WebCord/config.json"
+      ".config/btop/btop.conf"
     ];
     directories = [
       "Downloads"
@@ -179,6 +180,7 @@ in
       ".librewolf"
       ".zplug"
       ".local/share/Jellyfin Media Player/QtWebEngine/Default/Local Storage/leveldb"
+      ".config/WebCord/Local Storage/leveldb"
     ];
   };
 
