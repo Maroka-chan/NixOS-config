@@ -163,6 +163,7 @@ in
     files = [
       "${config.programs.zsh.history.path}"
       ".p10k.zsh"
+      ".cache/gitstatus/gitstatusd-linux-x86_64"
       ".config/Mullvad VPN/gui_settings.json"
       ".config/WebCord/config.json"
       ".config/btop/btop.conf"
