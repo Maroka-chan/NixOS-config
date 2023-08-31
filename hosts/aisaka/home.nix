@@ -29,6 +29,7 @@ in
     gcc
 
     protonmail
+    webcord
   ];
 
   programs = {
