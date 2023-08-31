@@ -27,6 +27,7 @@ in
     cargo
     rustc
     gcc
+    dotnet-sdk_7
 
     protonmail
     webcord
@@ -101,6 +102,9 @@ in
     vscode = {
       enable = true;
       package = pkgs.vscodium;
+      extensions = with pkgs.vscode-extensions; [
+        ms-dotnettools.csharp
+      ];
     };
     librewolf = {
       enable = true;
