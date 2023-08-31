@@ -45,11 +45,6 @@
 	    ];
             allowUnfree = true;
         };
-        xwaylandvideobridge = (pkgs.libsForQt5.callPackage ./pkgs/xwaylandvideobridge {}).overrideAttrs (o: {
-          patches = (o.patches or [ ]) ++ [
-            ./pkgs/xwaylandvideobridge/patches/cursor-mode.patch
-          ];
-        });
     in
     {
         nixosConfigurations = {
@@ -68,9 +63,6 @@
                 system = "x86_64-linux";
                 modules = [
                     "${aisaka-path}/configuration.nix" {
-                      environment.systemPackages = with pkgs; [
-                        xwaylandvideobridge
-                      ];
                       fonts.packages = [
                         pkgs.feathericons
 		      ];

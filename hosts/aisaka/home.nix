@@ -11,6 +11,7 @@ in
 {
   home.packages = with pkgs; [
     git
+    gitstatus
     alacritty
     pavucontrol
     mpv
