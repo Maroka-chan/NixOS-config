@@ -227,7 +227,8 @@ in
       exec-once = eww daemon & eww open bar
 
       input {
-        kb_layout = us
+        kb_layout = us,dk
+        kb_options = grp:alt_caps_toggle
 	repeat_rate = 25
 	repeat_delay = 200
 
