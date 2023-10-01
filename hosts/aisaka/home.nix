@@ -123,6 +123,7 @@ in
       ".config/Mullvad VPN/gui_settings.json"
       ".config/WebCord/config.json"
       ".config/btop/btop.conf"
+      ".config/cat_installer/ca.pem" # eduroam wifi certificate
     ];
     directories = [
       "Downloads"
