@@ -61,7 +61,7 @@ in
   users.users.maroka = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
-    passwordFile = config.sops.secrets.maroka-password.path;
+    hashedPasswordFile = config.sops.secrets.maroka-password.path;
   };
 
   # Set shell
