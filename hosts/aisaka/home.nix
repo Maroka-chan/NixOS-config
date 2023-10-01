@@ -219,7 +219,9 @@ in
 
       decoration {
         rounding = 2
-	blur = false
+        blur {
+          enabled = true
+        }
       }
 
       # Animations
