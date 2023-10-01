@@ -25,6 +25,7 @@ let
           nvim-hlslens      # Match Enhancement
           nvim-ufo          # Folding
           nvim-scrollbar    # Scrollbar
+          neoscroll-nvim    # Smooth Scrolling
           nvim-web-devicons # Icons
           knap              # Auto Refresh Preview
           twilight-nvim     # Dimming
