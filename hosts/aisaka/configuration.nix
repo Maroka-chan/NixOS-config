@@ -11,6 +11,12 @@ in
   boot.supportedFilesystems = [ "btrfs" ];
   hardware.enableAllFirmware = true;
 
+  # inotify
+  boot.kernel.sysctl = {
+    "fs.inotify.max_user_watches" = "1048576";
+    "fs.inotify.max_user_instances" = "256";
+  };
+
   # Networking and System Settings
   networking.hostName = "aisaka";
   time.timeZone = "Europe/Copenhagen";
