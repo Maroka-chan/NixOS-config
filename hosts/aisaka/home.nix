@@ -95,13 +95,6 @@ in
       enableZshIntegration = true;
       nix-direnv.enable = true;
     };
-    vscode = {
-      enable = true;
-      package = pkgs.vscodium;
-      extensions = with pkgs.vscode-extensions; [
-        ms-dotnettools.csharp
-      ];
-    };
     librewolf = {
       enable = true;
     };
