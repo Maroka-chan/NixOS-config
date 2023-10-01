@@ -58,6 +58,7 @@ in
     ripgrep
     jq
     socat
+    wl-clipboard # Wayland Clipboard Utilities
   ];
 
   # Firmware Updater
