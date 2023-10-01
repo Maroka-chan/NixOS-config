@@ -17,9 +17,7 @@ in
     jellyfin-media-player
 
     # Browsers
-    firefox
     brave
-    librewolf
 
     swaybg # Wallpaper Tool
     swayidle
