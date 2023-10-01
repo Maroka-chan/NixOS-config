@@ -78,16 +78,16 @@ in
       myNeovim # My Configuration
 
       # Language Servers
-      lua-language-server
-      csharp-ls
+      haskellPackages.haskell-language-server
       nodePackages.bash-language-server
       dockerfile-language-server-nodejs
       docker-compose-language-service
-      gopls
       nodePackages.pyright
-      texlab
-      haskell-language-server
+      lua-language-server
+      csharp-ls
       erlang-ls
+      texlab
+      gopls
 
       nodejs  # Used by Copilot
 
