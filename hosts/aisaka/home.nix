@@ -60,6 +60,7 @@ in
 
       history = {
         size = 10000;
+        path = "${config.xdg.dataHome}/zsh/.zsh_history";
       };
 
       initExtraFirst = ''
@@ -116,7 +117,7 @@ in
   home.persistence."/persist/home/maroka" = {
     allowOther = true;
     files = [
-      "${config.programs.zsh.history.path}"
+      ".local/share/zsh/.zsh_history"
       ".p10k.zsh"
       ".cache/gitstatus/gitstatusd-linux-x86_64"
       ".config/Mullvad VPN/gui_settings.json"
