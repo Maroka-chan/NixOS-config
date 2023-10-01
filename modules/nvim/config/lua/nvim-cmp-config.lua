@@ -41,7 +41,8 @@ local configuration = {
       { name = 'buffer' },
       { name = 'path', options = { trailing_slash = true } },
       { name = 'rg', keyword_length = 3 },
-      { name = 'nvim_lsp_signature_help' }
+      { name = 'nvim_lsp_signature_help' },
+      { name = 'omni' }
   })
 }
 

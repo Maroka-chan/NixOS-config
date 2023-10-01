@@ -30,6 +30,7 @@ let
           twilight-nvim         # Dimming
           copilot-lua           # Copilot AI
           markdown-preview-nvim # Markdown Preview
+          vimtex                # LaTeX Support
 
           # Fuzzy Finder
           telescope-nvim
@@ -48,6 +49,7 @@ let
           cmp-cmdline
           cmp_luasnip
           cmp-rg
+          cmp-omni
           nvim-autopairs
 
           # Snippets
@@ -70,8 +72,10 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ myNeovim ]
-    ++ [
+
+    home.packages = with pkgs; [
+      myNeovim # My Configuration
+
       # Language Servers
       lua-language-server
       csharp-ls
@@ -84,11 +88,14 @@ in
       haskell-language-server
       erlang-ls
 
-      # Node for Copilot
-      nodejs
+      nodejs  # Used by Copilot
 
-      # Tex Engine
-      tectonic
+      # TeX Packages
+      (texlive.combine { inherit (texlive) scheme-basic latexmk
+        pdfpages pdflscape
+        minted; })
+    
+      python311Packages.pygments  # Used by minted
     ];
   };
 }
