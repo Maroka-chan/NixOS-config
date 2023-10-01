@@ -90,6 +90,11 @@ in
       userName = "Maroka-chan";
       userEmail = "64618598+Maroka-chan@users.noreply.github.com";
     };
+    direnv = {
+      enable = true;
+      enableZshIntegration = true;
+      nix-direnv.enable = true;
+    };
     vscode = {
       enable = true;
       package = pkgs.vscodium;
@@ -132,6 +137,7 @@ in
       ".zplug"
       ".local/share/Jellyfin Media Player/QtWebEngine/Default/Local Storage/leveldb"
       ".config/WebCord/Local Storage/leveldb"
+      ".local/share/direnv/allow"
     ];
   };
 
