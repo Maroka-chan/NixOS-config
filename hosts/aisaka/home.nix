@@ -22,10 +22,6 @@ in
     swaybg # Wallpaper Tool
     swayidle
 
-    cargo
-    rustc
-    gcc
-    dotnet-sdk_7
 
     protonmail
     webcord
