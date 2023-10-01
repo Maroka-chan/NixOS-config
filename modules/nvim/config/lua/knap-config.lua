@@ -11,9 +11,6 @@ end
 local gknapsettings = {
     texoutputext = "pdf",
     textopdf = compose_cmd(_engine, _flags),
-    textopdfviewerlaunch = "zathura --synctex-editor-command 'nvim --headless -es --cmd \"lua require('\"'\"'knaphelper'\"'\"').relayjump('\"'\"'%servername%'\"'\"','\"'\"'%{input}'\"'\"',%{line},0)\"' %outputfile%",
-    textopdfviewerrefresh = "none",
-    textopdfforwardjump = "zathura --synctex-forward=%line%:%column%:%srcfile% %outputfile%",
     textopdfshorterror = "A=%outputfile% ; LOGFILE=\"${A%.pdf}.log\" ; rg -N ! \"$LOGFILE\" 2>&1 | head -n 1",
 }
 

@@ -17,7 +17,7 @@ in
     jellyfin-media-player
     
     # Document Viewer
-    zathura
+    sioyek
 
     # Browsers
     brave
