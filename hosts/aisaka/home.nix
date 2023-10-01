@@ -117,6 +117,7 @@ in
       ".config/WebCord/config.json"
       ".config/btop/btop.conf"
       ".config/cat_installer/ca.pem" # eduroam wifi certificate
+      ".local/share/nvim/telescope_history"
     ];
     directories = [
       "Downloads"
@@ -132,6 +133,9 @@ in
       ".local/share/Jellyfin Media Player/QtWebEngine/Default/Local Storage/leveldb"
       ".config/WebCord/Local Storage/leveldb"
       ".local/share/direnv/allow"
+      ".config/github-copilot"
+      ".local/state/nvim/swap"
+      ".local/state/nvim/shada"
     ];
   };
 
