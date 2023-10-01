@@ -1,6 +1,5 @@
 local telescope_builtin = require('telescope.builtin')
 
-
 -- Keymappings
 vim.keymap.set('n', 'ff', telescope_builtin.find_files, {})
 vim.keymap.set('n', 'fg', telescope_builtin.live_grep, {})

@@ -19,21 +19,3 @@ options.termguicolors = true
 options.mouse         = 'nvi'
 options.signcolumn    = 'yes'
 options.clipboard     = 'unnamedplus'
-
--- Set up Plugins
-require('nvim-tree-config')
-require('tokyonight-config')
-require('nvim-lualine-config')
-require('nvim-lspconfig-config')
-require('nvim-cmp-config')
-require('luasnip-config')
-require('nvim-autopairs-config')
-require('nvim-treesitter-config')
-require('nvim-treesitter-context-config')
-require('nvim-ufo-config')
-require('nvim-hlslens-config')
-require('nvim-scrollbar-config')
-require('neoscroll-config')
-require('copilot-lua-config')
-require('markdown-preview-nvim-config')
-require('vimtex-config')
