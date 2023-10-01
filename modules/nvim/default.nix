@@ -86,6 +86,9 @@ in
 
       # Node for Copilot
       nodejs
+
+      # Tex Engine
+      tectonic
     ];
   };
 }

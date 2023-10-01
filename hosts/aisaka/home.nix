@@ -15,6 +15,9 @@ in
     pavucontrol
     mpv
     jellyfin-media-player
+    
+    # Document Viewer
+    zathura
 
     # Browsers
     brave
