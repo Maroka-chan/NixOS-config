@@ -22,6 +22,7 @@ in
     swaybg # Wallpaper Tool
     swayidle
 
+    material-design-icons
 
     protonmail
     webcord
