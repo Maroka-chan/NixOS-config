@@ -29,6 +29,7 @@ let
           nvim-web-devicons # Icons
           knap              # Auto Refresh Preview
           twilight-nvim     # Dimming
+          copilot-lua       # Copilot AI
 
           # Fuzzy Finder
           telescope-nvim
@@ -82,6 +83,9 @@ in
       texlab
       haskell-language-server
       erlang-ls
+
+      # Node for Copilot
+      nodejs
     ];
   };
 }
