@@ -18,18 +18,19 @@ let
         start = [
           myConfig
 
-          nvim-tree-lua     # File Tree
-          tokyonight-nvim   # Theme
-          lualine-nvim      # Status Line
-          plenary-nvim      # Lua Helper Functions
-          nvim-hlslens      # Match Enhancement
-          nvim-ufo          # Folding
-          nvim-scrollbar    # Scrollbar
-          neoscroll-nvim    # Smooth Scrolling
-          nvim-web-devicons # Icons
           knap              # Auto Refresh Preview
-          twilight-nvim     # Dimming
-          copilot-lua       # Copilot AI
+          nvim-tree-lua         # File Tree
+          tokyonight-nvim       # Theme
+          lualine-nvim          # Status Line
+          plenary-nvim          # Lua Helper Functions
+          nvim-hlslens          # Match Enhancement
+          nvim-ufo              # Folding
+          nvim-scrollbar        # Scrollbar
+          neoscroll-nvim        # Smooth Scrolling
+          nvim-web-devicons     # Icons
+          twilight-nvim         # Dimming
+          copilot-lua           # Copilot AI
+          markdown-preview-nvim # Markdown Preview
 
           # Fuzzy Finder
           telescope-nvim
