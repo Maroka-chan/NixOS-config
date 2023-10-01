@@ -84,11 +84,6 @@ in
           { name = "romkatv/powerlevel10k"; tags = [ as:theme depth:1 ]; }
 	];
       };
-
-      oh-my-zsh = {
-        enable = true;
-        plugins = [ "git" ];
-      };
     };
     git = {
       enable = true;
