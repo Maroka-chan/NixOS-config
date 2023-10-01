@@ -12,7 +12,7 @@ let
   myNeovim = pkgs.neovim.override {
     configure = {
       customRC = ''
-        lua require("init")
+        luafile ${./config/init.lua}
       '';
       packages.myPlugins = with pkgs.vimPlugins; {
         start = [
