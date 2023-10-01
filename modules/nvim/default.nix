@@ -18,7 +18,6 @@ let
         start = [
           myConfig
 
-          knap              # Auto Refresh Preview
           nvim-tree-lua         # File Tree
           tokyonight-nvim       # Theme
           lualine-nvim          # Status Line
