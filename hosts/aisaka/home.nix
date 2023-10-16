@@ -232,6 +232,7 @@ in
 
       bind = $mainMod SHIFT, Q, killactive
       bind = $mainMod, F, fullscreen
+      bind = $mainMod, M, fullscreen, 1
       bind = $mainMod, D, exec, anyrun
       bind = $mainMod, Return, exec, alacritty
       bind = $mainMod, V, togglefloating
