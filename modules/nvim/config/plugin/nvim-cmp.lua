@@ -35,6 +35,9 @@ local configuration = {
       end
     end, { 'i', 's' }),
   }),
+  window = {
+    documentation = cmp.config.window.bordered()
+  },
   sources = cmp.config.sources({
       { name = 'nvim_lsp' },
       { name = 'luasnip' },
