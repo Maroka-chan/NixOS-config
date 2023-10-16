@@ -31,6 +31,11 @@ let
           copilot-lua           # Copilot AI
           markdown-preview-nvim # Markdown Preview
           vimtex                # LaTeX Support
+          haskell-tools-nvim    # Better Haskell Support
+          neotest               # Testing Framework
+
+          # Neotest Adapters
+          neotest-dotnet
 
           # Fuzzy Finder
           telescope-nvim
@@ -78,10 +83,10 @@ in
       myNeovim # My Configuration
 
       # Language Servers
-      haskellPackages.haskell-language-server
       nodePackages.bash-language-server
       dockerfile-language-server-nodejs
       docker-compose-language-service
+      #haskell-language-server  # Needs to be the exact same version as ghc, so it might be best to just let devenv install the language servers?
       nodePackages.pyright
       lua-language-server
       csharp-ls
@@ -92,11 +97,21 @@ in
       nodejs  # Used by Copilot
 
       # TeX Packages
-      (texlive.combine { inherit (texlive) scheme-basic latexmk
+      (texlive.combine { inherit (texlive) scheme-medium latexmk biber
         pdfpages pdflscape
-        minted; })
+        minted
+        lipsum
+        a4wide
+        tocloft
+        biblatex; })
     
       python311Packages.pygments  # Used by minted
+
+      # Dependencies
+      ripgrep
+      fd
+      gcc
+      tree-sitter
     ];
   };
 }
