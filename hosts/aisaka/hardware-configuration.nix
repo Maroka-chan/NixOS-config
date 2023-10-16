@@ -1,21 +1,25 @@
 { config, lib, pkgs, modulesPath, ... }:
 {
-  boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk" ];
-  #boot.initrd.kernelModules = [ "usb_storage" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
+  boot.initrd.kernelModules = [ "uas" "usbcore" "usb_storage" "vfat" "nls_cp437" "nls_iso8859_1" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  boot.initrd.luks.devices = 
-  let
-    crypt-template = {
-      allowDiscards = true;
-      #keyFileSize = 4096;
-      #keyFile = "/dev/sdb";
-    };
-  in
-  {
-    "crypt-nixos" = crypt-template // {
+  boot.initrd.luks.devices = {
+    "crypt-nixos" = {
       device = "/dev/disk/by-label/CRYPT_NIXOS";
+      keyFile = "/key/aisaka-crypt.key";
+      fallbackToPassword = true;
+      allowDiscards = true;
+      preOpenCommands = ''
+        mkdir -m 0755 -p /key
+	sleep 2
+	mount -n -t vfat -o ro /dev/disk/by-label/CRYPTKEY /key
+      '';
+      postOpenCommands = ''
+        umount /key
+	rm -rf /key
+      '';
     };
   };
 
@@ -67,5 +71,6 @@
   # networking.interfaces.enp1s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

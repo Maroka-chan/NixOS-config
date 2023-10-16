@@ -18,8 +18,10 @@ type=linux
 EOF
 
 # Create LUKS partitions for root
-sudo cryptsetup -v -h sha512 -s 512 --iter-time 5000 --verify-passphrase luksFormat "$NIXOS_DISK"2
-sudo cryptsetup luksHeaderBackup --header-backup-file "$NIXOS_DISK"2.luksheader "$NIXOS_DISK"2
+sudo cryptsetup -v -h sha512 -s 512 --iter-time 20000 --verify-passphrase luksFormat "$NIXOS_DISK"2
+# TODO: Also add keyfile before backing up luksHeader
+#sudo cryptsetup -v -h sha512 -s 512 --iter-time 5000 luksFormat "$NIXOS_DISK"2 /key/aisaka-crypt.key
+sudo cryptsetup luksHeaderBackup --header-backup-file aisaka-nixos.luksheader "$NIXOS_DISK"2
 sudo cryptsetup config "$NIXOS_DISK"2 --label CRYPT_NIXOS
 sudo cryptsetup open "$NIXOS_DISK"2 crypt-nixos
 ROOT_DISK=/dev/mapper/crypt-nixos
