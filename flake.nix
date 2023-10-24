@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-small.url = "github:NixOS/nixpkgs/nixos-23.05-small";
     impermanence.url = "github:nix-community/impermanence";
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
@@ -15,12 +16,14 @@
     anyrun.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = inputs @ { self, nixpkgs, home-manager, nixos-generators, impermanence, sops-nix, hyprland, anyrun, ... }:
+  outputs = inputs @ { self, nixpkgs, nixpkgs-small, home-manager, nixos-generators, impermanence, sops-nix, hyprland, anyrun, ... }:
   let
     system = "x86_64-linux";
   in
   {
-    nixosConfigurations."aisaka" = nixpkgs.lib.nixosSystem {
+    ### Aisaka ###
+
+    nixosConfigurations.aisaka = nixpkgs.lib.nixosSystem {
       inherit system;
 
       modules = [
@@ -56,11 +59,60 @@
         }
       ];
     };
-    
-    packages."${system}"."aisaka-iso" = nixos-generators.nixosGenerate {
-      inherit system;
-      format = "install-iso";
-      modules = [ ./hosts/aisaka/iso ];
+
+
+    ### Akebi ###
+
+    nixosConfigurations = {
+      akebi = nixpkgs-small.lib.nixosSystem {
+        inherit system;
+        modules = [
+          impermanence.nixosModules.impermanence
+          ./hosts/akebi/impermanence.nix
+          ./hosts/akebi/hardware-configuration.nix
+          ./hosts/akebi/configuration.nix
+        ];
+      };
+      akebi-vm = nixpkgs-small.lib.nixosSystem {
+        inherit system;
+        modules = [
+            ./hosts/akebi/configuration.nix
+            ./hosts/akebi/vm.nix
+        ];
+      };
+    };
+
+    colmena = {
+      meta = {
+        nixpkgs = import nixpkgs-small {
+          inherit system;
+          overlays = [];
+        };
+      };
+
+      akebi = { name, nodes, pkgs, ... }: 
+      {
+        import = self.nixosConfigurations.akebi.modules;
+
+        deployment.targetHost = "akebi";
+        deployment.targetUser = "deploy";
+        deployment.buildOnTarget = true;
+      };
+    };
+
+
+    ### ISO's ###
+    packages."${system}" = {
+      aisaka-iso = nixos-generators.nixosGenerate {
+        inherit system;
+        format = "install-iso";
+        modules = [ ./hosts/aisaka/iso ];
+      };
+      akebi-iso = nixos-generators.nixosGenerate {
+        inherit system;
+        format = "install-iso";
+        modules = [ ./hosts/akebi/iso.nix ];
+      };
     };
   };
 }
