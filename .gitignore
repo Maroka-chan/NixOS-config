@@ -1,5 +1,7 @@
-# Directory for VM builds
+# VM builds
 result
+*.qcow2
+
 
 # Directory for test VMs
 testvm/root/
