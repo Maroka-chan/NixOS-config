@@ -145,6 +145,9 @@ in {
 
           ${iproute2}/bin/ip -n wg addr add ${cfg.namespaceAddress}/24 dev veth-vpn
           ${iproute2}/bin/ip -n wg link set dev veth-vpn up
+
+          # Block traffic initiated from the vpn namespace veth interface to the bridge interface on default namespace
+          ${iproute2}/bin/ip netns exec wg ${iptables}/bin/iptables -A OUTPUT -o veth-vpn -d ${cfg.bridgeAddress} -j DROP
         ''
 
         # Add routes to make the namespace accessible
