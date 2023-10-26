@@ -71,13 +71,15 @@
           ./hosts/akebi/impermanence.nix
           ./hosts/akebi/hardware-configuration.nix
           ./hosts/akebi/configuration.nix
+          ./modules/vpnnamespace
         ];
       };
       akebi-vm = nixpkgs-small.lib.nixosSystem {
         inherit system;
         modules = [
-            ./hosts/akebi/configuration.nix
-            ./hosts/akebi/vm.nix
+          ./hosts/akebi/configuration.nix
+          ./hosts/akebi/vm.nix
+          ./modules/vpnnamespace
         ];
       };
     };
