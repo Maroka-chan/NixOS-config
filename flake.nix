@@ -19,6 +19,9 @@
   outputs = inputs @ { self, nixpkgs, nixpkgs-small, home-manager, nixos-generators, impermanence, sops-nix, hyprland, anyrun, ... }:
   let
     system = "x86_64-linux";
+    modules = [
+      ./modules/vpnnamespace
+    ];
   in
   {
     ### Aisaka ###
@@ -71,16 +74,14 @@
           ./hosts/akebi/impermanence.nix
           ./hosts/akebi/hardware-configuration.nix
           ./hosts/akebi/configuration.nix
-          ./modules/vpnnamespace
-        ];
+        ] ++ modules;
       };
       akebi-vm = nixpkgs-small.lib.nixosSystem {
         inherit system;
         modules = [
           ./hosts/akebi/configuration.nix
           ./hosts/akebi/vm.nix
-          ./modules/vpnnamespace
-        ];
+        ] ++ modules;
       };
     };
 
