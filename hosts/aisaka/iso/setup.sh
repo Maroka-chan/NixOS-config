@@ -21,8 +21,8 @@ EOF
 sudo cryptsetup -v -h sha512 -s 512 --iter-time 20000 --verify-passphrase luksFormat "$NIXOS_DISK"2
 # TODO: Also add keyfile before backing up luksHeader
 #sudo cryptsetup -v -h sha512 -s 512 --iter-time 5000 luksFormat "$NIXOS_DISK"2 /key/aisaka-crypt.key
-sudo cryptsetup luksHeaderBackup --header-backup-file aisaka-nixos.luksheader "$NIXOS_DISK"2
 sudo cryptsetup config "$NIXOS_DISK"2 --label CRYPT_NIXOS
+sudo cryptsetup luksHeaderBackup --header-backup-file aisaka-nixos.luksheader "$NIXOS_DISK"2
 sudo cryptsetup open "$NIXOS_DISK"2 crypt-nixos
 ROOT_DISK=/dev/mapper/crypt-nixos
 
@@ -70,7 +70,6 @@ echo "Setting up swapfile"
 sudo mount -o subvol=swap "$ROOT_DISK" /mnt/swap
 sudo truncate -s 0 /mnt/swap/swapfile
 sudo chattr +C /mnt/swap/swapfile
-sudo btrfs property set /mnt/swap/swapfile compression none
 sudo dd if=/dev/zero of=/mnt/swap/swapfile bs=1M count=4096
 sudo chmod 0600 /mnt/swap/swapfile
 sudo mkswap -L SWAP /mnt/swap/swapfile
