@@ -1,26 +1,18 @@
 { config, pkgs, ... }:
 let
-    partition_script = ./. + "/scripts/partition-disks.sh";
-    persist_script = ./. + "/scripts/persist-files.sh";
-    nixsetup = pkgs.writeScriptBin "nixsetup" ''
-        ${partition_script}
-
-        # Generate NixOS config
-        # echo "Generating NixOS config"
-        # sudo nixos-generate-config --root /mnt
-
-        # Install NixOS
-        echo "Installing NixOS"
-        sudo nixos-install --flake "git+https://github.com/Maroka-chan/NixOS-config?ref=filesystem/btrfs#akebi" --no-root-passwd
-
-        # ${persist_script}
-    '';
+  setup_script = ./. + "/scripts/setup-nixos.sh";
+  nixsetup = pkgs.writeScriptBin "nixsetup" ''
+    ${setup_script}
+  '';
 in
 {
-    isoImage.squashfsCompression = "gzip -Xcompression-level 1";
+  isoImage.squashfsCompression = "gzip -Xcompression-level 1";
 
-    environment.systemPackages = with pkgs; [
-        git
-        nixsetup
-    ];
+  environment.systemPackages = with pkgs; [
+    git
+    newt
+    nixsetup
+  ];
+
+  users.users."nixos".openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGqzG8P89pW2HiMb7zfJgp22t968eHuOsheYEHtuhshl aisaka" ];
 }
