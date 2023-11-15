@@ -1,7 +1,7 @@
 { pkgs, config, ... }:
 {
-  services.samba = {
+  services.syncthing = {
     enable = true;
-    openFirewall = true;
+    # Set up devices
   };
 }

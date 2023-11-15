@@ -1,7 +1,6 @@
 { pkgs, config, ... }:
 {
-  services.samba = {
+  services.tailscale = {
     enable = true;
-    openFirewall = true;
   };
 }

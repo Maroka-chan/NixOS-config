@@ -1,36 +1,22 @@
-{ pkgs, ... }:
-let
-  user = "jellyfin";
-  group = "jellyfin";
-  service_name = "jellyfin-podman";
-  compose_file = ./. + "/docker-compose.yml";
-  docker_compose = "${pkgs.podman-compose}/bin/podman-compose -f ${compose_file}";
-in {
-  systemd.services."${service_name}" = {
-    path = [ "/run/wrappers" pkgs.podman ];
-    serviceConfig = {
-      User = user;
-      Group = group;
-      Type = "forking";
-      Restart = "on-failure";
-      TimeoutStopSec = 70;
-    };
-    script = "${docker_compose} up -d";
-    preStop = "${docker_compose} down";
-
-    after = [ "network-online.target" ];
-    wantedBy = [ "network-online.target" ];
+{ pkgs, config, ... }:
+{
+  services.jellyfin = {
+    enable = true;
+    openFirewall = true;
   };
   
-  users = {
-    groups.${group} = {};
-    users.${user} = {
-      isNormalUser = true;
-      group = group;
-    };
+# Enable vaapi on OS-level
+  nixpkgs.config.packageOverrides = pkgs: {
+    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
   };
-
-  networking.firewall = {
-    allowedTCPPorts = [ 8096 8920 ];
+  hardware.opengl = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      vaapiIntel
+      vaapiVdpau
+      libvdpau-va-gl
+      intel-compute-runtime # OpenCL filter support (hardware tonemapping and subtitle burn-in)
+    ];
   };
 }
