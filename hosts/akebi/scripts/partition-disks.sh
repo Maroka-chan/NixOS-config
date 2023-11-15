@@ -61,7 +61,7 @@ PASSKEY_FILE=crypt.key
 #sudo mount "$PASSKEY_DISK" /media/cryptpasskey
 
 sudo dd bs=1024 count=4 if=/dev/random of="$PASSKEY_FILE" iflag=fullblock
-sudo chmod 600 "$PASSKEY_FILE"
+sudo chmod 0400 "$PASSKEY_FILE"
 
 sudo dd if="$PASSKEY_FILE" of="$PASSKEY_DISK"
 
