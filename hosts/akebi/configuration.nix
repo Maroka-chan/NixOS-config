@@ -33,9 +33,12 @@
   # Enable the OpenSSH daemon.
   services.openssh = {
     enable = true;
-    permitRootLogin = "no";
-    passwordAuthentication = false;
-    kbdInteractiveAuthentication = false;
+    startWhenNeeded = true;
+    settings = {
+      PermitRootLogin = "no";
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+    };
   };
 
   security.sudo.extraConfig = ''
