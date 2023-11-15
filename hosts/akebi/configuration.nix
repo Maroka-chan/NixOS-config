@@ -5,6 +5,7 @@
     ./bootloader.nix
     ./firewall.nix
     ./deployment-user.nix
+    ./services
   ];
 
   networking.hostName = "akebi";
@@ -24,6 +25,10 @@
   environment.systemPackages = with pkgs; [
     neovim
   ];
+
+  # Enable AppArmor
+  security.apparmor.enable = true;
+  security.apparmor.killUnconfinedConfinables = true;
 
   # Enable the OpenSSH daemon.
   services.openssh = {
