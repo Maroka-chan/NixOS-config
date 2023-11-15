@@ -13,12 +13,12 @@
       allowDiscards = true;
       preOpenCommands = ''
         mkdir -m 0755 -p /key
-	sleep 2
-	mount -n -t vfat -o ro /dev/disk/by-label/CRYPTKEY /key
+        sleep 2
+        mount -n -t vfat -o ro /dev/disk/by-label/CRYPTKEY /key
       '';
       postOpenCommands = ''
         umount /key
-	rm -rf /key
+        rm -rf /key
       '';
     };
   };
