@@ -1,9 +1,5 @@
 { config, lib, pkgs, modulesPath, ... }:
 {
-  # imports =
-  #   [ (modulesPath + "/profiles/qemu-guest.nix")
-  #   ];
-
   boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "virtio_pci" "sr_mod" "virtio_blk" ];
   boot.initrd.kernelModules = [ "usb_storage" ];
   boot.kernelModules = [ "kvm-intel" ];
@@ -14,18 +10,21 @@
     crypt-template = {
       allowDiscards = true;
       keyFileSize = 4096;
-      keyFile = "/dev/sdb";
+      keyFile = "/dev/disk/by-partlabel/CRYPTKEY";
     };
   in
   {
     "crypt-nixos" = crypt-template // {
       device = "/dev/disk/by-label/CRYPT_NIXOS";
     };
-    "crypt-data0" = crypt-template // {
-      device = "/dev/disk/by-label/CRYPT_DATA0";
+    "crypt-data-1" = crypt-template // {
+      device = "/dev/disk/by-label/CRYPT_DATA_1";
     };
-    "crypt-data1" = crypt-template // {
-      device = "/dev/disk/by-label/CRYPT_DATA1";
+    "crypt-data-2" = crypt-template // {
+      device = "/dev/disk/by-label/CRYPT_DATA_2";
+    };
+    "crypt-data-3" = crypt-template // {
+      device = "/dev/disk/by-label/CRYPT_DATA_3";
     };
   };
 
@@ -33,13 +32,6 @@
     { device = "/dev/disk/by-label/NIXOS";
       fsType = "btrfs";
       options = [ "subvol=root" "compress=zstd" "noatime" "ssd" "autodefrag" "discard=async" ];
-    };
-
-  fileSystems."/home" =
-    { device = "/dev/disk/by-label/NIXOS";
-      fsType = "btrfs";
-      options = [ "subvol=home" "compress=zstd" "noatime" "ssd" "autodefrag" "discard=async" ];
-      neededForBoot = true;
     };
 
   fileSystems."/nix" =
