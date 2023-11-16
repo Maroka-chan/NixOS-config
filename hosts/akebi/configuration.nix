@@ -26,6 +26,24 @@
   sops.age.keyFile = "/var/lib/sops-nix/key.txt";
   sops.age.generateKey = true;
 
+  # BTRFS Settings
+  services.btrfs.autoScrub.enable = true;
+  # Impermanence
+  btrfs-impermanence.enable = true;
+
+  # State to persist.
+  environment.persistence."/persist" = {
+    directories = [
+      "/var/lib/private/uptime-kuma"
+      "/var/lib/jellyfin"
+    ];
+    files = [
+      "/etc/machine-id"
+      "/etc/ssh/ssh_host_ed25519_key"
+      "/etc/ssh/ssh_host_ed25519_key.pub"
+    ];
+  };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
