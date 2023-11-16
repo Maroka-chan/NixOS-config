@@ -10,25 +10,25 @@ let
 in
 {
   home.packages = with pkgs; [
-    git
-    alacritty
-    pavucontrol
-    mpv
-    jellyfin-media-player
+    git       # Version control
+    alacritty # Terminal emulator
+    pavucontrol # Audio control gui
     
-    # Document Viewer
-    sioyek
+    # Media players
+    jellyfin-media-player
+    mpv
 
-    # Browsers
-    brave
+    sioyek    # Document Viewer
+    brave     # Browser
+    swaybg    # Wallpaper Tool
+    swayidle  # Idle management
 
-    swaybg # Wallpaper Tool
-    swayidle
+    material-design-icons # Icons
+    protonmail  # Mail
 
-    material-design-icons
 
-    protonmail
-    webcord
+    webcord   # Third-party Discord
+
   ];
 
   programs = {
