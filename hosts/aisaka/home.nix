@@ -18,6 +18,8 @@ in
     jellyfin-media-player
     mpv
 
+    feh # Image Viewer
+
     sioyek    # Document Viewer
     brave     # Browser
     swaybg    # Wallpaper Tool
