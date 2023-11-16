@@ -28,6 +28,7 @@ in
     material-design-icons # Icons
     protonmail  # Mail
 
+    sshfs       # Remote filesystems over SSH
 
     webcord   # Third-party Discord
 
