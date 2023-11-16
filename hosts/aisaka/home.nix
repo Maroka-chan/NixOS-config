@@ -32,6 +32,7 @@ in
 
     webcord   # Third-party Discord
 
+    deploy-rs # Deployment Tool
   ];
 
   programs = {
