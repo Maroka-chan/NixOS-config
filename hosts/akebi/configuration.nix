@@ -20,6 +20,12 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Secrets
+  sops.defaultSopsFile = ./secrets/secrets.yaml;
+  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+  sops.age.keyFile = "/var/lib/sops-nix/key.txt";
+  sops.age.generateKey = true;
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [

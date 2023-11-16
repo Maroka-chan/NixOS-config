@@ -19,8 +19,10 @@
   outputs = inputs @ { self, nixpkgs, nixpkgs-small, home-manager, nixos-generators, impermanence, sops-nix, hyprland, anyrun, ... }:
   let
     system = "x86_64-linux";
-    modules = [
-      ./modules/vpnnamespace
+    base-modules = [
+      impermanence.nixosModules.impermanence
+      sops-nix.nixosModules.sops
+      ./modules/btrfs-impermanence
     ];
   in
   {
@@ -29,12 +31,9 @@
     nixosConfigurations.aisaka = nixpkgs.lib.nixosSystem {
       inherit system;
 
-      modules = [
+      modules = base-modules ++ [
         ./hosts/aisaka/configuration.nix
         ./hosts/aisaka/hardware-configuration.nix
-        ./modules/btrfs-impermanence
-        impermanence.nixosModules.impermanence
-        sops-nix.nixosModules.sops
         hyprland.nixosModules.default {
           programs.hyprland.enable = true;
         }
@@ -69,19 +68,11 @@
     nixosConfigurations = {
       akebi = nixpkgs-small.lib.nixosSystem {
         inherit system;
-        modules = [
-          impermanence.nixosModules.impermanence
-          ./hosts/akebi/impermanence.nix
+        modules = base-modules ++ [
           ./hosts/akebi/hardware-configuration.nix
           ./hosts/akebi/configuration.nix
-        ] ++ modules;
-      };
-      akebi-vm = nixpkgs-small.lib.nixosSystem {
-        inherit system;
-        modules = [
-          ./hosts/akebi/configuration.nix
-          ./hosts/akebi/vm.nix
-        ] ++ modules;
+          ./modules/vpnnamespace
+        ];
       };
     };
 
