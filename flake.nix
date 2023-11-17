@@ -14,9 +14,12 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     anyrun.url = "github:Kirottu/anyrun";
     anyrun.inputs.nixpkgs.follows = "nixpkgs";
+    deploy-rs.url = "github:serokell/deploy-rs";
   };
 
-  outputs = inputs @ { self, nixpkgs, nixpkgs-small, home-manager, nixos-generators, impermanence, sops-nix, hyprland, anyrun, ... }:
+  outputs = inputs @ { self, nixpkgs, nixpkgs-small, home-manager,
+    nixos-generators, impermanence, sops-nix, hyprland, anyrun,
+    deploy-rs, ... }:
   let
     system = "x86_64-linux";
     base-modules = [
@@ -76,23 +79,24 @@
       };
     };
 
-    colmena = {
-      meta = {
-        nixpkgs = import nixpkgs-small {
-          inherit system;
-          overlays = [];
+    deploy.nodes.akebi = {
+      hostname = "akebi";
+      profiles = {
+        system = {
+          sshUser = "deploy";
+          path =
+            deploy-rs.lib.x86_64-linux.activate.nixos
+            self.nixosConfigurations.akebi;
+          user = "root";
         };
       };
-
-      akebi = { name, nodes, pkgs, ... }: 
-      {
-        import = self.nixosConfigurations.akebi.modules;
-
-        deployment.targetHost = "akebi";
-        deployment.targetUser = "deploy";
-        deployment.buildOnTarget = true;
-      };
+      remoteBuild = true;
     };
+
+    # This is highly advised, and will prevent many possible mistakes
+    checks =
+      builtins.mapAttrs
+        (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
 
     ### ISO's ###
