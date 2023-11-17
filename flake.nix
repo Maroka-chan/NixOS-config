@@ -27,6 +27,12 @@
       sops-nix.nixosModules.sops
       ./modules/btrfs-impermanence
     ];
+    overlay-unstable = final: prev: {
+      unstable = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
+    };
   in
   {
     ### Aisaka ###
@@ -75,6 +81,7 @@
           ./hosts/akebi/hardware-configuration.nix
           ./hosts/akebi/configuration.nix
           ./modules/vpnnamespace
+          { nixpkgs.overlays = [ overlay-unstable ]; }
         ];
       };
     };
