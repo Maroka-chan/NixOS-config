@@ -125,6 +125,7 @@ in
       ".config/btop/btop.conf"
       ".config/cat_installer/ca.pem" # eduroam wifi certificate
       ".local/share/nvim/telescope_history"
+      ".config/sops/age/keys.txt" # age key for sops-nix
     ];
     directories = [
       "Downloads"
