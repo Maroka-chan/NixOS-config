@@ -1,4 +1,4 @@
-{ lib, pkgs, config, ... }:
+{ lib, pkgs, config, ... }: # NOTE TO SELF: Make it so you can make multiple namespaces by giving a list of objects with settings as attributes. Also add an option to enable whether the namespace should use a vpn or not.
 with lib;
 let
   cfg = config.services.vpnnamespace;
@@ -62,11 +62,14 @@ in {
       '';
     };
 
-    wireguardAddress = mkOption {
-      type = types.str;
+    wireguardAddressPath = mkOption {
+      type = types.path;
       default = "";
       description = lib.mdDoc ''
         The address for the wireguard interface.
+        It is a path to a file containing the address.
+        This is done so the whole wireguard config can be specified
+        in a secret file, such as a yaml file for sops-nix.
       '';
     };
 
@@ -123,13 +126,11 @@ in {
           # Set up the wireguard interface
           ${iproute2}/bin/ip link add wg0 type wireguard
           ${iproute2}/bin/ip link set wg0 netns wg
-          ${iproute2}/bin/ip -n wg address add ${cfg.wireguardAddress} dev wg0
-          #${iproute2}/bin/ip -n wg -6 address add fc00:bbbb:bbbb:bb01::4:aaad/128 dev wg0
+          ${iproute2}/bin/ip -n wg address add $(cat ${cfg.wireguardAddressPath}) dev wg0
           ${iproute2}/bin/ip netns exec wg \
             ${wireguard-tools}/bin/wg setconf wg0 ${cfg.wireguardConfigFile}
           ${iproute2}/bin/ip -n wg link set wg0 up
           ${iproute2}/bin/ip -n wg route add default dev wg0
-          #${iproute2}/bin/ip -n wg -6 route add default dev wg0
 
           # Start the loopback interface
           ${iproute2}/bin/ip -n wg link set dev lo up
@@ -145,9 +146,6 @@ in {
 
           ${iproute2}/bin/ip -n wg addr add ${cfg.namespaceAddress}/24 dev veth-vpn
           ${iproute2}/bin/ip -n wg link set dev veth-vpn up
-
-          # Block traffic initiated from the vpn namespace veth interface to the bridge interface on default namespace
-          ${iproute2}/bin/ip netns exec wg ${iptables}/bin/iptables -A OUTPUT -o veth-vpn -d ${cfg.bridgeAddress} -j DROP
         ''
 
         # Add routes to make the namespace accessible
@@ -159,14 +157,10 @@ in {
 
         ExecStopPost = with pkgs; writers.writeBash "wg-down" (''
           ${iproute2}/bin/ip -n wg route del default dev wg0
-          #${iproute2}/bin/ip -n wg -6 route del default dev wg0
           ${iproute2}/bin/ip -n wg link del wg0
           ${iproute2}/bin/ip -n wg link del veth-vpn
           ${iproute2}/bin/ip link del v-net-0
         ''
-
-        # Delete routes to make the namespace accessible
-        + strings.concatMapStrings (x: "${iproute2}/bin/ip -n wg route del ${x} via ${cfg.bridgeAddress}" + "\n") cfg.accessibleFrom
 
         # Delete prerouting rules
         + strings.concatMapStrings (x: "${iptables}/bin/iptables -t nat -D PREROUTING -p tcp --dport ${builtins.toString x.From} -j DNAT --to-destination ${cfg.namespaceAddress}:${builtins.toString x.To}" + "\n") cfg.portMappings);
