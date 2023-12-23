@@ -32,6 +32,9 @@ in
     webcord   # Third-party Discord
 
     deploy-rs # Deployment Tool
+
+    jetbrains.idea-ultimate # Intellij Java IDE
+    jetbrains.rider         # Dotnet IDE
   ];
 
   programs = {
@@ -124,6 +127,8 @@ in
       ".config/cat_installer/ca.pem" # eduroam wifi certificate
       ".local/share/nvim/telescope_history"
       ".config/sops/age/keys.txt" # age key for sops-nix
+      ".gnupg"
+      ".config/JetBrains"
     ];
     directories = [
       "Downloads"
