@@ -10,7 +10,6 @@ let
 in
 {
   home.packages = with pkgs; [
-    git       # Version control
     alacritty # Terminal emulator
     pavucontrol # Audio control gui
     
@@ -67,7 +66,7 @@ in
 
       history = {
         size = 10000;
-        path = "${config.xdg.dataHome}/zsh/.zsh_history";
+        path = "/persist/home/maroka/.local/share/zsh/.zsh_history";
       };
 
       initExtraFirst = ''
@@ -117,7 +116,6 @@ in
   home.persistence."/persist/home/maroka" = {
     allowOther = true;
     files = [
-      ".local/share/zsh/.zsh_history"
       ".p10k.zsh"
       ".cache/gitstatus/gitstatusd-linux-x86_64"
       ".config/Mullvad VPN/gui_settings.json"
