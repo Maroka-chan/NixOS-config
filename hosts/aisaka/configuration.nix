@@ -55,6 +55,16 @@
     wl-clipboard # Wayland Clipboard Utilities
   ];
 
+  # Git
+  programs.git = {
+    enable = true;
+    config = {
+      user.signingkey = "D86778C9EE6F81D3";
+      commit.gpgsign = true;
+      core.autocrlf = true;
+    };
+  };
+
   # Firmware Updater
   services.fwupd.enable = true;
 
