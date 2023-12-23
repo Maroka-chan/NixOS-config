@@ -5,6 +5,7 @@
     ./bootloader.nix
     ./firewall.nix
     ./deployment-user.nix
+    ./networkshare-user.nix
     ./services
   ];
 
@@ -12,7 +13,7 @@
   time.timeZone = "Europe/Copenhagen";
   i18n.defaultLocale = "en_US.UTF-8";
 
-  networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
+  networking.nameservers = [ "1.1.1.2" "1.0.0.2" ];
 
   # Set users to be immutable
   users.mutableUsers = false;
@@ -23,7 +24,7 @@
   # Secrets
   sops.defaultSopsFile = ./secrets/secrets.yaml;
   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-  sops.age.keyFile = "/var/lib/sops-nix/key.txt";
+  sops.age.keyFile = "/var/lib/sops-nix/keys.txt";
   sops.age.generateKey = true;
 
   # BTRFS Settings
