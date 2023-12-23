@@ -75,7 +75,7 @@
   system.autoUpgrade = {
     enable = true;
     allowReboot = true;
-    channel = "https://nixos.org/channels/nixos-23.05-small";
+    channel = "https://nixos.org/channels/nixos-23.11-small";
   };
 
   # Optimise nix store
