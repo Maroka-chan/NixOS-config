@@ -103,6 +103,7 @@ in
         lipsum
         a4wide
         tocloft
+        titlesec
         biblatex; })
     
       python311Packages.pygments  # Used by minted
