@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-small.url = "github:NixOS/nixpkgs/nixos-23.05-small";
+    nixpkgs-small.url = "github:NixOS/nixpkgs/nixos-23.11-small";
     impermanence.url = "github:nix-community/impermanence";
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
@@ -15,6 +15,7 @@
     anyrun.url = "github:Kirottu/anyrun";
     anyrun.inputs.nixpkgs.follows = "nixpkgs";
     deploy-rs.url = "github:serokell/deploy-rs";
+    shutoku.url = "path:/home/maroka/Documents/Shutoku";
   };
 
   outputs = inputs @ { self, nixpkgs, nixpkgs-small, home-manager,
@@ -23,6 +24,7 @@
   let
     system = "x86_64-linux";
     base-modules = [
+      inputs.shutoku.nixosModules.shutoku
       impermanence.nixosModules.impermanence
       sops-nix.nixosModules.sops
       ./modules/btrfs-impermanence
