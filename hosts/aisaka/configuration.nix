@@ -92,6 +92,9 @@
   # SSH
   programs.ssh.startAgent = true;
 
+  # GNUPG
+  programs.gnupg.agent.enable = true;
+
   # Pipewire
   security.rtkit.enable = true;
   services.pipewire = {
