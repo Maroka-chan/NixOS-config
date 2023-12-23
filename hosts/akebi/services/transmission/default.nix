@@ -52,13 +52,15 @@
 
   services.transmission = {
     enable = true;
+    group = "media";
     package = pkgs.unstable.transmission_4;
     openRPCPort = true;
     credentialsFile = config.sops.templates."transmission_settings.json".path;
     settings = {
+      "download-dir" = "/data/media/downloads";
       "rpc-bind-address" = config.services.vpnnamespace.namespaceAddress;
       "rpc-whitelist-enabled" = true;
-      "rpc-whitelist" = "192.168.0.*";
+      "rpc-whitelist" = "192.168.0.*,192.168.15.1,127.0.0.1";
       "rpc-authentication-required" = true;
 
       "blocklist-enabled" = true;
