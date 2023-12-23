@@ -65,6 +65,9 @@
     };
   };
 
+  # Tailscale
+  services.tailscale.enable = true;
+
   # Firmware Updater
   services.fwupd.enable = true;
 
