@@ -3,6 +3,8 @@
   imports = [
     ./transmission
     ./jellyfin
+    ./shutoku
     ./uptime-kuma
+    ./tailscale
   ];
 }
