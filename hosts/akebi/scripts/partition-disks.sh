@@ -78,7 +78,7 @@ counter=0
 for drive in "${RAID_DRIVES[@]}"; do
     sudo cryptsetup -v -h sha512 -s 512 --iter-time 5000 luksFormat "$drive" "$PASSKEY_FILE"
     sudo cryptsetup luksHeaderBackup --header-backup-file "$drive".luksheader "$drive"
-    sudo cryptsetup config "$drive" --label CRYPT_DATA"$counter"
+    sudo cryptsetup config "$drive" --label CRYPT_DATA_"$counter"
     sudo cryptsetup open --key-file="$PASSKEY_FILE" "$drive" crypt-data"$counter"
     #sudo mkfs.btrfs -L "$DATA_DISK_LABEL" /dev/mapper/crypt-data"$counter"
     DATA_DRIVES+=("/dev/mapper/crypt-data$counter")

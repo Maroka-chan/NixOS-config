@@ -97,6 +97,8 @@ done
 # Format Root Disk
 echo "Formatting Root Disk..."
 
+sudo wipefs --all "$root_disk"
+
 sudo sfdisk "$root_disk" << EOF
 label: gpt
 size=550M, type=uefi
@@ -135,14 +137,15 @@ if [ $encrypt_root -eq 0 ]; then
   fi
 
   sudo cryptsetup config "$root_part" --label "$root_crypt_label"
-  header_path="$(sudo mktemp /tmp/${hostname}.luksheader.XXXXXXXXXX)" || { echo "Failed to create temp header file"; exit 1; }
-  sudo cryptsetup luksHeaderBackup --header-backup-file "$header_path" "$root_part"
 
   if [ $root_crypt_use_keyfile -eq 0 ]; then
     sudo cryptsetup open "$root_part" "$root_crypt_mapper_label" --key-file "$key_path" || { echo "Failed to Decrypt Disk"; exit 1; }
   else
     sudo cryptsetup open "$root_part" "$root_crypt_mapper_label" || { echo "Failed to Decrypt Disk"; exit 1; }
   fi
+
+  header_path="$(sudo mktemp /tmp/${hostname}.luksheader.XXXXXXXXXX)" || { echo "Failed to create temp header file"; exit 1; }
+  sudo cryptsetup luksHeaderBackup --header-backup-file "$header_path" "$root_part"
 
   root_part=/dev/mapper/"$root_crypt_mapper_label"
 fi
