@@ -1,7 +1,4 @@
 { config, pkgs, lib, ... }:
-let
-  secrets_path = "/persist/etc/nixos/secrets";
-in
 {
   # Bootloader
   boot.loader.systemd-boot.enable = true;
@@ -28,11 +25,8 @@ in
   networking.nameservers = [ "1.1.1.2" "1.0.0.2" ];
 
   # Secrets
-  sops.defaultSopsFile = secrets_path + "/secrets.yaml";
-  sops.validateSopsFiles = false;
-  sops.age.sshKeyPaths = [];
-  sops.age.keyFile = secrets_path + "/keys.txt";
-  sops.gnupg.sshKeyPaths = [];
+  sops.defaultSopsFile = ./secrets/secrets.yaml;
+  sops.age.keyFile = "/home/maroka/.config/sops/age/keys.txt";
 
   sops.secrets.maroka-password = {
       neededForUsers = true;
