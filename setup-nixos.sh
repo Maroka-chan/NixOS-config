@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
 
-hostname=V00334
+hostname=Akebi
 
 root_disk=/dev/nvme0n1
 boot_part="$root_disk"p1
 root_part="$root_disk"p2
-#root_label=CRYPT_NIXOS
-#root_crypt_label=crypt-root
-#header_path="${HOME}/${hostname}.luksheader"
+root_label=CRYPT_NIXOS
+root_crypt_label=crypt-root
+header_path="${HOME}/${hostname}.luksheader"
 
-#key_path="${HOME}/${hostname}-crypt.key"
+key_path="${HOME}/${hostname}-crypt.key"
 swap_size=4096  # In Mebibytes
 
 # Format Disk
@@ -18,6 +18,26 @@ label: gpt
 size=550M, type=uefi
 type=linux
 EOF
+
+# Generate Crypt Key
+sudo dd bs=1024 count=4 if=/dev/random of="$key_path" iflag=fullblock
+sudo chmod 0400 "$key_path"
+
+# Encrypt Disk with Key
+sudo cryptsetup -vq -h sha512 -s 512 --iter-time 5000 luksFormat "$root_part" "$key_path"
+# Add Password to LUKS Header
+sudo cryptsetup luksAddKey --iter-time 20000 --verify-passphrase --key-file="$key_path" "$root_part"
+
+# Set Label
+sudo cryptsetup config "$root_part" --label "$root_label"
+
+# Decrypt Disk
+sudo cryptsetup open "$root_part" "$root_crypt_label" --key-file "$key_path"
+
+# Backup LUKS Header
+sudo cryptsetup luksHeaderBackup --header-backup-file "$header_path" "$root_part"
+
+root_part=/dev/mapper/"$root_crypt_label"
 
 # Create Filesystems
 sudo mkfs.vfat -n BOOT "$root_disk"1
@@ -72,9 +92,9 @@ echo "Mounting Boot Partition..."
 sudo mount "$root_disk"1 /mnt/boot
 
 echo "DONE."
-#echo "BACKUP YOUR CRYPT KEY AND HEADER!"
-#echo "$key_path"
-#echo "$header_path"
+echo "BACKUP YOUR CRYPT KEY AND HEADER!"
+echo "$key_path"
+echo "$header_path"
 
 echo "Configure any additional disks and run:"
 echo "sudo nixos-install --flake flake-uri#name --no-root-passwd"
