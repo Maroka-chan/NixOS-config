@@ -18,19 +18,19 @@
   networking.hostName = "V00334";
   time.timeZone = "Europe/Copenhagen";
   i18n.defaultLocale = "en_US.UTF-8";
-  users.mutableUsers = false;
+  #users.mutableUsers = false;
   nixpkgs.config.allowUnfree = true;
 
   networking.networkmanager.enable = true;
   networking.nameservers = [ "1.1.1.2" "1.0.0.2" ];
 
   # Secrets
-  sops.defaultSopsFile = ./secrets/secrets.yaml;
-  sops.age.keyFile = "/home/maroka/.config/sops/age/keys.txt";
+  #sops.defaultSopsFile = ./secrets/secrets.yaml;
+  #sops.age.keyFile = "/home/maroka/.config/sops/age/keys.txt";
 
-  sops.secrets.maroka-password = {
-      neededForUsers = true;
-  };
+  #sops.secrets.maroka-password = {
+  #    neededForUsers = true;
+  #};
 
   # Firewall
   networking.firewall = {
@@ -72,7 +72,7 @@
   users.users.maroka = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
-    hashedPasswordFile = config.sops.secrets.maroka-password.path;
+    #hashedPasswordFile = config.sops.secrets.maroka-password.path;
   };
 
   # Set shell
