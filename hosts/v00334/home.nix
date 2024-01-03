@@ -1,7 +1,6 @@
 { config, pkgs, inputs, ...}:
 let
   dotfiles = config.lib.file.mkOutOfStoreSymlink "/home/maroka/.dotfiles";
-  };
 in
 {
   home.packages = with pkgs; [

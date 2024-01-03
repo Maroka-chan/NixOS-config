@@ -5,12 +5,9 @@ hostname=V00334
 root_disk=/dev/nvme0n1
 boot_part="$root_disk"p1
 root_part="$root_disk"p2
-#root_label=CRYPT_NIXOS
-#root_crypt_label=crypt-root
-#header_path="${HOME}/${hostname}.luksheader"
-
-#key_path="${HOME}/${hostname}-crypt.key"
 swap_size=4096  # In Mebibytes
+
+sudo wipefs -a "$root_disk"
 
 # Format Disk
 sudo sfdisk "$root_disk" << EOF
@@ -20,7 +17,7 @@ type=linux
 EOF
 
 # Create Filesystems
-sudo mkfs.vfat -n BOOT "$root_disk"1
+sudo mkfs.vfat -n BOOT "$boot_part"
 sudo mkfs.btrfs -L NIXOS "$root_part"
 
 # Mount Partitions
@@ -31,6 +28,7 @@ sudo btrfs subvolume create /mnt/root
 sudo btrfs subvolume create /mnt/nix
 sudo btrfs subvolume create /mnt/persist
 sudo btrfs subvolume create /mnt/log
+sudo btrfs subvolume create /mnt/home
 
 # Create Swap Subvolume
 sudo btrfs subvolume create /mnt/swap
@@ -59,7 +57,7 @@ sudo mount -o subvol=log,compress=zstd,noatime,ssd,autodefrag,discard=async "$ro
 sudo mount -o subvol=swap "$root_part" /mnt/swap
 sudo truncate -s 0 /mnt/swap/swapfile
 sudo chattr +C /mnt/swap/swapfile
-sudo btrfs property set /mnt/swap/swapfile compression none
+sudo btrfs property set /mnt/swap compression none
 sudo dd if=/dev/zero of=/mnt/swap/swapfile bs=1M count="$swap_size"
 sudo chmod 0600 /mnt/swap/swapfile
 sudo mkswap -L SWAP /mnt/swap/swapfile
@@ -69,12 +67,9 @@ sudo swapon /mnt/swap/swapfile
 
 # Mount Boot Partition
 echo "Mounting Boot Partition..."
-sudo mount "$root_disk"1 /mnt/boot
+sudo mount "$boot_part" /mnt/boot
 
 echo "DONE."
-#echo "BACKUP YOUR CRYPT KEY AND HEADER!"
-#echo "$key_path"
-#echo "$header_path"
 
 echo "Configure any additional disks and run:"
 echo "sudo nixos-install --flake flake-uri#name --no-root-passwd"
