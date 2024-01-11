@@ -7,7 +7,7 @@ let
     nixinstall = pkgs.writeScriptBin "nixinstall" ''
         # Install NixOS
         echo "Installing NixOS"
-        sudo nixos-install --no-root-passwd --flake "git+https://github.com/Maroka-chan/NixOS-config?ref=filesystem/btrfs#aisaka"
+        sudo nixos-install --no-root-passwd --flake "git+https://github.com/Maroka-chan/NixOS-config#aisaka"
     '';
 in
 {

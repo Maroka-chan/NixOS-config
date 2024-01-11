@@ -13,6 +13,8 @@ in
 
     feh # Image Viewer
 
+    cava # Audio Visualizer
+
     sioyek    # Document Viewer
     brave     # Browser
     swaybg    # Wallpaper Tool
@@ -183,7 +185,7 @@ in
       monitor=,preferred,auto,1
 
       exec-once = swaybg -i ${dotfiles}/wallpapers/yume_no_kissaten_yumegatari.png -m fill
-      exec-once = eww daemon & eww open bar
+      exec-once = eww daemon & eww open statusbar
 
       input {
         kb_layout = us,dk
@@ -193,13 +195,14 @@ in
 
         touchpad {
           natural_scroll = true
-	  scroll_factor = 0.2
-	}
+          scroll_factor = 0.2
+        }
 
       }
 
       gestures {
         workspace_swipe = true
+        workspace_swipe_create_new = false
       }
       
       misc {
@@ -291,6 +294,9 @@ in
       bind = $mainMod SHIFT, 8, movetoworkspace, 8
       bind = $mainMod SHIFT, 9, movetoworkspace, 9
       bind = $mainMod SHIFT, 0, movetoworkspace, 10
+
+      # Layer Rule
+      layerrule = blur,gtk-layer-shell
     '';
   };
 
