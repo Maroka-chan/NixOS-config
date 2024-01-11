@@ -1,28 +1,16 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 {
-  # Bootloader
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  imports = [
+    ./hardware-configuration.nix
+    inputs.home-manager.nixosModule
+    inputs.hyprland.nixosModules.default {
+      programs.hyprland.enable = true;
+    }
+    ../../modules/base/home-manager.nix
+  ];
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.supportedFilesystems = [ "btrfs" ];
-  hardware.enableAllFirmware = true;
-
-  # inotify
-  boot.kernel.sysctl = {
-    "fs.inotify.max_user_watches" = "1048576";
-    "fs.inotify.max_user_instances" = "256";
-  };
-
-  # Networking and System Settings
-  networking.hostName = "aisaka";
-  time.timeZone = "Europe/Copenhagen";
-  i18n.defaultLocale = "en_US.UTF-8";
   users.mutableUsers = false;
-  nixpkgs.config.allowUnfree = true;
-
   networking.networkmanager.enable = true;
-  networking.nameservers = [ "1.1.1.2" "1.0.0.2" ];
 
   # Secrets
   sops.defaultSopsFile = ./secrets/secrets.yaml;
@@ -32,10 +20,20 @@
       neededForUsers = true;
   };
 
-  # Firewall
-  networking.firewall = {
-    enable = true;
-    allowPing = false;
+  # Home Manager
+  home-manager.users.maroka = {
+    home = {
+      username = "maroka";
+      homeDirectory = "/home/maroka";
+      packages = [ inputs.anyrun.packages.${pkgs.system}.anyrun ];
+    };
+    imports = [
+      inputs.impermanence.nixosModules.home-manager.impermanence
+      inputs.hyprland.homeManagerModules.default
+      inputs.anyrun.homeManagerModules.default
+      ./home.nix
+      ../../modules/nvim
+    ];
   };
 
   # Environment Variables
@@ -61,15 +59,12 @@
     config = {
       user.signingkey = "D86778C9EE6F81D3";
       commit.gpgsign = true;
-      core.autocrlf = true;
+      core.autocrlf = "input";
     };
   };
 
   # Tailscale
   services.tailscale.enable = true;
-
-  # Firmware Updater
-  services.fwupd.enable = true;
 
   # Users
   users.users.maroka = {
@@ -82,12 +77,6 @@
   programs.zsh.enable = true;
   environment.pathsToLink = [ "/share/zsh" ]; # Needed for zsh completion for system packages
   users.defaultUserShell = pkgs.zsh;
-
-  # Remove sudo lectures
-  security.sudo.extraConfig = ''
-    # rollback results in sudo lectures after each reboot
-    Defaults lecture = never
-  '';
 
   # SSH
   programs.ssh.startAgent = true;
@@ -134,7 +123,7 @@
       START_CHARGE_THRESH_BAT0 = 20;
       STOP_CHARGE_THRESH_BAT0 = 80;
       CPU_BOOST_ON_AC = 1;
-      CPU_BOOST_ON_BAT = 0;
+      CPU_BOOST_ON_BAT = 1;
       CPU_SCALING_GOVERNOR_ON_AC = "performance";
       CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
     };
@@ -143,16 +132,13 @@
   services.logind.lidSwitch = "suspend";
   services.upower.enable = true;
 
-  # Thermal Management
-  services.thermald.enable = true;
-
   # Display Manager
   services.greetd = {
     enable = true;
     settings = {
       default_session = {
         command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd Hyprland";
-	user = "greeter";
+	      user = "greeter";
       };
     };
   };
@@ -191,9 +177,7 @@
   # PAM
   security.pam.services.swaylock = {};
 
-  # btrfs settings
-  services.btrfs.autoScrub.enable = true;
-  ## Impermanence
+  # Impermanence
   btrfs-impermanence.enable = true;
 
   # Create persist directories

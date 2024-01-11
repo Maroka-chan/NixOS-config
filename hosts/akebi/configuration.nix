@@ -1,25 +1,23 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 {
   imports =
   [
-    ./bootloader.nix
+    ./hardware-configuration.nix
+    ../../modules/vpnnamespace
     ./firewall.nix
     ./deployment-user.nix
     ./networkshare-user.nix
     ./services
   ];
 
-  networking.hostName = "akebi";
-  time.timeZone = "Europe/Copenhagen";
-  i18n.defaultLocale = "en_US.UTF-8";
+  boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 0;
 
-  networking.nameservers = [ "1.1.1.2" "1.0.0.2" ];
+
+  users.groups.media = {};
+
 
   # Set users to be immutable
   users.mutableUsers = false;
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   # Secrets
   sops.defaultSopsFile = ./secrets/secrets.yaml;
@@ -27,8 +25,6 @@
   sops.age.keyFile = "/var/lib/sops-nix/keys.txt";
   sops.age.generateKey = true;
 
-  # BTRFS Settings
-  services.btrfs.autoScrub.enable = true;
   # Impermanence
   btrfs-impermanence.enable = true;
 
@@ -52,8 +48,8 @@
   ];
 
   # Enable AppArmor
-  security.apparmor.enable = true;
-  security.apparmor.killUnconfinedConfinables = true;
+  #security.apparmor.enable = true;
+  #security.apparmor.killUnconfinedConfinables = true;
 
   # Enable the OpenSSH daemon.
   services.openssh = {
@@ -65,11 +61,6 @@
       KbdInteractiveAuthentication = false;
     };
   };
-
-  security.sudo.extraConfig = ''
-    # rollback results in sudo lectures after each reboot
-    Defaults lecture = never
-  '';
 
   # Automatic Updates
   system.autoUpgrade = {

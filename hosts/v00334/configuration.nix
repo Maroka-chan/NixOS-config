@@ -1,41 +1,30 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 {
-  # Bootloader
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.supportedFilesystems = [ "btrfs" ];
-  hardware.enableAllFirmware = true;
-
-  # inotify
-  boot.kernel.sysctl = {
-    "fs.inotify.max_user_watches" = "1048576";
-    "fs.inotify.max_user_instances" = "256";
-  };
-
-  # Networking and System Settings
-  networking.hostName = "V00334";
-  time.timeZone = "Europe/Copenhagen";
-  i18n.defaultLocale = "en_US.UTF-8";
-  #users.mutableUsers = false;
-  nixpkgs.config.allowUnfree = true;
+  imports = [
+    ./hardware-configuration.nix
+    inputs.home-manager.nixosModule
+    inputs.hyprland.nixosModules.default {
+      programs.hyprland.enable = true;
+    }
+    ../../modules/base/home-manager.nix
+  ];
 
   networking.networkmanager.enable = true;
-  networking.nameservers = [ "1.1.1.2" "1.0.0.2" ];
 
-  # Secrets
-  #sops.defaultSopsFile = ./secrets/secrets.yaml;
-  #sops.age.keyFile = "/home/maroka/.config/sops/age/keys.txt";
-
-  #sops.secrets.maroka-password = {
-  #    neededForUsers = true;
-  #};
-
-  # Firewall
-  networking.firewall = {
-    enable = true;
-    allowPing = false;
+  # Home Manager
+  home-manager.users.maroka = {
+    home = {
+      username = "maroka";
+      homeDirectory = "/home/maroka";
+      packages = [ inputs.anyrun.packages.${pkgs.system}.anyrun ];
+    };
+    imports = [
+      inputs.impermanence.nixosModules.home-manager.impermanence
+      inputs.hyprland.homeManagerModules.default
+      inputs.anyrun.homeManagerModules.default
+      ./home.nix
+      ../../modules/nvim
+    ];
   };
 
   # Environment Variables
@@ -65,9 +54,6 @@
     };
   };
 
-  # Firmware Updater
-  services.fwupd.enable = true;
-
   # Users
   users.users.maroka = {
     isNormalUser = true;
@@ -79,12 +65,6 @@
   programs.zsh.enable = true;
   environment.pathsToLink = [ "/share/zsh" ]; # Needed for zsh completion for system packages
   users.defaultUserShell = pkgs.zsh;
-
-  # Remove sudo lectures
-  security.sudo.extraConfig = ''
-    # rollback results in sudo lectures after each reboot
-    Defaults lecture = never
-  '';
 
   # SSH
   programs.ssh.startAgent = true;
@@ -140,9 +120,6 @@
   services.logind.lidSwitch = "suspend";
   services.upower.enable = true;
 
-  # Thermal Management
-  services.thermald.enable = true;
-
   # Display Manager
   services.greetd = {
     enable = true;
@@ -181,30 +158,6 @@
 
   # PAM
   security.pam.services.swaylock = {};
-
-  # btrfs settings
-  services.btrfs.autoScrub.enable = true;
-
- # ## Impermanence
- # btrfs-impermanence.enable = true;
-
- # # Create persist directories
- # systemd.tmpfiles.rules = [
- #   "d /persist/home/maroka 0700 maroka users"
- # ];
-
- # # Files to persist
- # environment.persistence."/persist" = {
- #   hideMounts = true;
- #   directories = [
- #     "/etc/NetworkManager/system-connections"
- #     "/etc/mullvad-vpn"
- #     "/var/lib/fprint"
- #   ];
- #   files = [
- #     "/etc/machine-id"
- #   ];
- # };
 
   # Automatic Updates
   system.autoUpgrade = {

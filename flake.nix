@@ -21,72 +21,8 @@
   outputs = inputs @ { self, nixpkgs, nixpkgs-small, home-manager,
     nixos-generators, impermanence, sops-nix, hyprland, anyrun,
     deploy-rs, ... }:
-  let
-    system = "x86_64-linux";
-    base-modules = [
-      inputs.shutoku.nixosModules.shutoku
-      impermanence.nixosModules.impermanence
-      sops-nix.nixosModules.sops
-      ./modules/btrfs-impermanence
-    ];
-    overlay-unstable = final: prev: {
-      unstable = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
-    };
-  in
   {
-    ### Aisaka ###
-
-    nixosConfigurations.aisaka = nixpkgs.lib.nixosSystem {
-      inherit system;
-
-      modules = base-modules ++ [
-        ./hosts/aisaka/configuration.nix
-        ./hosts/aisaka/hardware-configuration.nix
-        hyprland.nixosModules.default {
-          programs.hyprland.enable = true;
-        }
-        home-manager.nixosModules.home-manager {
-          programs.fuse.userAllowOther = true;
-          home-manager = {
-            extraSpecialArgs = { inherit inputs; };
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.maroka = {
-              home = {
-                username = "maroka";
-                homeDirectory = "/home/maroka";
-                packages = [ anyrun.packages.${system}.anyrun ];
-              };
-              imports = [
-                impermanence.nixosModules.home-manager.impermanence
-                hyprland.homeManagerModules.default
-                anyrun.homeManagerModules.default
-                ./hosts/aisaka/home.nix
-                ./modules/nvim
-              ];
-            };
-          };
-        }
-      ];
-    };
-
-
-    ### Akebi ###
-
-    nixosConfigurations = {
-      akebi = nixpkgs-small.lib.nixosSystem {
-        inherit system;
-        modules = base-modules ++ [
-          ./hosts/akebi/hardware-configuration.nix
-          ./hosts/akebi/configuration.nix
-          ./modules/vpnnamespace
-          { nixpkgs.overlays = [ overlay-unstable ]; }
-        ];
-      };
-    };
+    nixosConfigurations = import ./hosts {inherit inputs;};
 
     deploy.nodes.akebi = {
       hostname = "akebi";
@@ -108,55 +44,18 @@
         (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
 
-    ### V00334 ###
-
-    nixosConfigurations.v00334 = nixpkgs.lib.nixosSystem {
-      inherit system;
-
-      modules = base-modules ++ [
-        ./hosts/v00334/configuration.nix
-        ./hosts/v00334/hardware-configuration.nix
-        hyprland.nixosModules.default {
-          programs.hyprland.enable = true;
-        }
-        home-manager.nixosModules.home-manager {
-          programs.fuse.userAllowOther = true;
-          home-manager = {
-            extraSpecialArgs = { inherit inputs; };
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.maroka = {
-              home = {
-                username = "maroka";
-                homeDirectory = "/home/maroka";
-                packages = [ anyrun.packages.${system}.anyrun ];
-              };
-              imports = [
-                impermanence.nixosModules.home-manager.impermanence
-                hyprland.homeManagerModules.default
-                anyrun.homeManagerModules.default
-                ./hosts/v00334/home.nix
-                ./modules/nvim
-              ];
-            };
-          };
-        }
-      ];
-    };
-
-
     ### ISO's ###
-    packages."${system}" = {
-      aisaka-iso = nixos-generators.nixosGenerate {
-        inherit system;
-        format = "install-iso";
-        modules = [ ./hosts/aisaka/iso ];
-      };
-      akebi-iso = nixos-generators.nixosGenerate {
-        inherit system;
-        format = "install-iso";
-        modules = [ ./hosts/akebi/iso.nix ];
-      };
-    };
+   # packages."${system}" = {
+   #   aisaka-iso = nixos-generators.nixosGenerate {
+   #     inherit system;
+   #     format = "install-iso";
+   #     modules = [ ./hosts/aisaka/iso ];
+   #   };
+   #   akebi-iso = nixos-generators.nixosGenerate {
+   #     inherit system;
+   #     format = "install-iso";
+   #     modules = [ ./hosts/akebi/iso.nix ];
+   #   };
+   # };
   };
 }

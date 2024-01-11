@@ -1,9 +1,8 @@
 { lib, pkgs, config, ... }:
 {
   imports = [
-    ./transmission
+    ./mediamanager
     ./jellyfin
-    ./shutoku
     ./uptime-kuma
     ./tailscale
   ];
