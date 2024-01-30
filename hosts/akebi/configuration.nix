@@ -12,10 +12,6 @@
 
   boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 0;
 
-
-  users.groups.media = {};
-
-
   # Set users to be immutable
   users.mutableUsers = false;
 
