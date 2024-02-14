@@ -20,6 +20,11 @@ in
     swaybg    # Wallpaper Tool
     swayidle  # Idle management
 
+    # Screenshot
+    swappy
+    grim
+    slurp
+
     material-design-icons # Icons
 
     sshfs       # Remote filesystems over SSH
@@ -241,6 +246,8 @@ in
       bind = $mainMod, Return, exec, alacritty
       bind = $mainMod, V, togglefloating
       bind = $mainMod, B, exec, librewolf
+
+      bind = $mainMod SHIFT, S, exec, grim -g "$(slurp)" - | swappy -f -
 
       # Move focus with mainMod + arrow keys
       bind = $mainMod, left, movefocus, l
