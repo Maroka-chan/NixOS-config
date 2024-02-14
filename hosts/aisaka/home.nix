@@ -190,13 +190,13 @@ in
       monitor=,preferred,auto,1
 
       exec-once = swaybg -i ${dotfiles}/wallpapers/yume_no_kissaten_yumegatari.png -m fill
-      exec-once = eww daemon & eww open statusbar
+      exec-once = eww daemon & eww open-many statusbar radio controls
 
       input {
         kb_layout = us,dk
         kb_options = grp:alt_caps_toggle
-	repeat_rate = 25
-	repeat_delay = 200
+        repeat_rate = 25
+        repeat_delay = 200
 
         touchpad {
           natural_scroll = true
@@ -217,13 +217,13 @@ in
 
       general {
         border_size = 2
-	gaps_in = 1
-	gaps_out = 2
+        gaps_in = 1
+        gaps_out = 2
 
-	col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
+        col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
         col.inactive_border = rgba(595959aa)
 
-	layout = dwindle
+        layout = dwindle
       }
 
       decoration {
