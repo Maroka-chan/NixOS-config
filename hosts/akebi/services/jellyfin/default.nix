@@ -5,7 +5,7 @@
     openFirewall = true;
   };
   
-# Enable vaapi on OS-level
+  # Enable vaapi on OS-level
   nixpkgs.config.packageOverrides = pkgs: {
     vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
   };

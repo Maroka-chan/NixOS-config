@@ -33,6 +33,7 @@ let
           vimtex                # LaTeX Support
           haskell-tools-nvim    # Better Haskell Support
           neotest               # Testing Framework
+          vim-csharp            # Extends CSharp support
 
           # Neotest Adapters
           neotest-dotnet
@@ -93,6 +94,9 @@ in
       erlang-ls
       texlab
       gopls
+      libclang
+      rust-analyzer
+      ccls
 
       nodejs  # Used by Copilot
 

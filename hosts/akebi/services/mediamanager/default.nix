@@ -51,7 +51,7 @@
     ];
   };
 
-  containers.transmission = {
+  containers.mediamanager = {
     autoStart = true;
     ephemeral = true;
     extraFlags = [ "--network-namespace-path=/var/run/netns/wg" ];
