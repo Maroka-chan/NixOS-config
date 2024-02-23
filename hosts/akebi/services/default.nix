@@ -5,5 +5,6 @@
     ./jellyfin
     ./uptime-kuma
     ./tailscale
+    ./samba
   ];
 }
