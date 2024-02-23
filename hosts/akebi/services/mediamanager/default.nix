@@ -51,6 +51,10 @@
     ];
   };
 
+  systemd.services."container@mediamanager" = {
+    requires = [ "wg.service" ];
+  };
+
   containers.mediamanager = {
     autoStart = true;
     ephemeral = true;
