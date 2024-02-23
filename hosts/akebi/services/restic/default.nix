@@ -1,9 +1,21 @@
 { pkgs, config, ... }:
 {
   services.restic = {
-    server.enable = true;
     backups = {
-      
+      memories = {
+        repository = "";
+        initialize = true;
+        passwordFile = "";
+        paths = [
+          "/data/networkshare/Pictures/Memories"
+          "/data/networkshare/Videos/Memories"
+        ];
+        timerConfig = {
+          OnCalendar = "00:05";
+          Persistent = true;
+          RandomizedDelaySec = "5h";
+        };
+      };
     };
   };
 }
