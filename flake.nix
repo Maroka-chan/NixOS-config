@@ -15,7 +15,7 @@
     anyrun.url = "github:Kirottu/anyrun";
     anyrun.inputs.nixpkgs.follows = "nixpkgs";
     deploy-rs.url = "github:serokell/deploy-rs";
-    shutoku.url = "path:/home/maroka/Documents/Shutoku";
+    shutoku.url = "git+ssh://git@github.com/Maroka-chan/Shutoku";
   };
 
   outputs = inputs @ { self, nixpkgs, nixpkgs-small, home-manager,
