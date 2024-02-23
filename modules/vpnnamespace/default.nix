@@ -102,7 +102,6 @@ in {
     systemd.services."netns@" = {
       description = "%I network namespace";
       before = [ "network.target" ];
-      wantedBy = [ "multi-user.target" ];
       serviceConfig = {
         Type = "oneshot";
         RemainAfterExit = true;
