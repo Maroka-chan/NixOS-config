@@ -6,5 +6,6 @@
     ./uptime-kuma
     ./tailscale
     ./samba
+    ./restic
   ];
 }
