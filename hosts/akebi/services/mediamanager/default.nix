@@ -1,10 +1,16 @@
 { lib, pkgs, config, inputs, ... }:
 {
+  imports = [
+    inputs.shutoku.nixosModule
+  ];
+
   sops.secrets = {
     mullvad_privatekey = {};
+    mullvad_allowedips = {};
     mullvad_publickey = {};
     mullvad_endpoint = {};
     mullvad_address = {};
+    mullvad_dns = {};
 
     transmission_user = {};
     transmission_pass = {};
@@ -31,19 +37,20 @@
   sops.templates."wg0.conf".content = ''
     [Interface]
     PrivateKey = ${config.sops.placeholder.mullvad_privatekey}
+    Address = ${config.sops.placeholder.mullvad_address}
+    DNS = ${config.sops.placeholder.mullvad_dns}
 
     [Peer]
     PublicKey = ${config.sops.placeholder.mullvad_publickey}
-    AllowedIPs = 0.0.0.0/0,::0/0
+    AllowedIPs = ${config.sops.placeholder.mullvad_allowedips}
     Endpoint = ${config.sops.placeholder.mullvad_endpoint}
   '';
 
-  services.vpnnamespace = {
+  services.vpnnamespace.namespace.wg = {
     enable = true;
     accessibleFrom = [
       "192.168.0.0/24"
     ];
-    wireguardAddressPath = config.sops.secrets.mullvad_address.path;
     wireguardConfigFile = config.sops.templates."wg0.conf".path;
     portMappings = [
       { From = 9091; To = 9091; }
@@ -51,88 +58,54 @@
     ];
   };
 
-  systemd.services."container@mediamanager" = {
-    requires = [ "wg.service" ];
+  users.groups.media = {};
+
+  systemd.services.transmission.vpnconfinement = {
+    enable = true;
+    vpnnamespace = "wg";
   };
 
-  containers.mediamanager = {
-    autoStart = true;
-    ephemeral = true;
-    extraFlags = [ "--network-namespace-path=/var/run/netns/wg" ];
+  services.transmission = {
+    enable = true;
+    group = "media";
+    package = inputs.nixpkgs.legacyPackages.${pkgs.system}.transmission_4;
+    openRPCPort = true;
+    credentialsFile = config.sops.templates."transmission_settings.json".path;
+    settings = {
+      "download-dir" = "/data/media/downloads";
+      "incomplete-dir" = "/data/media/.incomplete";
+      "rpc-bind-address" = "192.168.15.1";
+      "rpc-whitelist-enabled" = true;
+      "rpc-whitelist" = "192.168.0.*,192.168.15.1,127.0.0.1";
+      "rpc-authentication-required" = true;
 
-    bindMounts = {
-      "${config.sops.templates."transmission_settings.json".path}".isReadOnly = true;
-      "${config.sops.templates."shutoku_settings.json".path}".isReadOnly = true;
-      "/data/media".isReadOnly = false;
+      "blocklist-enabled" = true;
+      "blocklist-url" = "https://github.com/Naunter/BT_BlockLists/raw/master/bt_blocklists.gz";
+
+      "encryption" = 2;
+      "utp-enabled" = false;
+      "port-forwarding-enabled" = false;
+
+      "anti-brute-force-enabled" = true;
+      "anti-brute-force-threshold" = 10;
     };
+  };
 
-    config = {
-      imports = [
-        inputs.shutoku.nixosModule
-      ];
+  systemd.services.shutoku.vpnconfinement = {
+    enable = true;
+    vpnnamespace = "wg";
+  };
 
-      users.groups.media = {};
-
-      networking.nameservers = [ "100.64.0.23" ];
-
-      systemd.services.transmission.serviceConfig = {
-        RootDirectoryStartOnly = lib.mkForce false;
-        RootDirectory = lib.mkForce "";
+  services.shutoku = {
+    enable = true;
+    group = "media";
+    settings = {
+      App = {
+        DownloadPath = "/data/media/downloads";
+        TorrentDestination = "/data/media";
       };
-
-      services.transmission = {
-        enable = true;
-        group = "media";
-        package = inputs.nixpkgs.legacyPackages.${pkgs.system}.transmission_4;
-        openRPCPort = true;
-        credentialsFile = config.sops.templates."transmission_settings.json".path;
-        settings = {
-          "download-dir" = "/data/media/downloads";
-          "incomplete-dir" = "/data/media/.incomplete";
-          "rpc-bind-address" = "192.168.15.1";
-          "rpc-whitelist-enabled" = true;
-          "rpc-whitelist" = "192.168.0.*,192.168.15.1,127.0.0.1";
-          "rpc-authentication-required" = true;
-
-          "blocklist-enabled" = true;
-          "blocklist-url" = "https://github.com/Naunter/BT_BlockLists/raw/master/bt_blocklists.gz";
-
-          "encryption" = 2;
-          "utp-enabled" = false;
-          "port-forwarding-enabled" = false;
-
-          "anti-brute-force-enabled" = true;
-          "anti-brute-force-threshold" = 10;
-        };
-      };
-
-      services.shutoku = {
-        enable = true;
-        group = "media";
-        settings = {
-          App = {
-            DownloadPath = "/data/media/downloads";
-            TorrentDestination = "/data/media";
-          };
-        };
-        torrentClientCredentialsFile = config.sops.templates."shutoku_settings.json".path;
-        openFirewall = true;
-      };
-
-      system.stateVersion = "23.11";
-
-      networking = {
-        firewall = {
-          enable = true;
-          allowedUDPPorts = [ 51820 ];
-        };
-
-        # Use systemd-resolved inside the container
-        # Workaround for bug https://github.com/NixOS/nixpkgs/issues/162686
-        useHostResolvConf = lib.mkForce false;
-      };
-
-      services.resolved.enable = true;
     };
+    torrentClientCredentialsFile = config.sops.templates."shutoku_settings.json".path;
+    openFirewall = true;
   };
 }
