@@ -46,7 +46,7 @@
     Endpoint = ${config.sops.placeholder.mullvad_endpoint}
   '';
 
-  services.vpnnamespace.namespace.wg = {
+  vpnnamespaces.wg = {
     enable = true;
     accessibleFrom = [
       "192.168.0.0/24"

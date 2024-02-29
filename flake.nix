@@ -16,6 +16,7 @@
     anyrun.inputs.nixpkgs.follows = "nixpkgs";
     deploy-rs.url = "github:serokell/deploy-rs";
     shutoku.url = "git+ssh://git@github.com/Maroka-chan/Shutoku";
+    vpnconfinement.url = "github:Maroka-chan/VPN-Confinement";
   };
 
   outputs = inputs @ { self, nixpkgs, nixpkgs-small, home-manager,

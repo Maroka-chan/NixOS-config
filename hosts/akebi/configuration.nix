@@ -3,11 +3,11 @@
   imports =
   [
     ./hardware-configuration.nix
-    ../../modules/vpnnamespace
     ./firewall.nix
     ./deployment-user.nix
     ./networkshare-user.nix
     ./services
+    inputs.vpnconfinement.nixosModules.default
   ];
 
   boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 0;
