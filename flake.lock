@@ -750,14 +750,17 @@
         "nixpkgs": "nixpkgs_6"
       },
       "locked": {
-        "lastModified": 1709733280,
-        "narHash": "sha256-E3zLHBBfIww61vhTlt6bhA685ceWfDHeOXbRUMVKkk4=",
-        "path": "/home/maroka/Documents/VPN-Confinement",
-        "type": "path"
+        "lastModified": 1709679094,
+        "narHash": "sha256-JsOOL2AxyMOECuhnycSdEe+/zCEWi7j0Yo+dRcZF2l0=",
+        "owner": "Maroka-chan",
+        "repo": "VPN-Confinement",
+        "rev": "fabffcaa9446a5ca5ffb730cfcf327304fe41dfd",
+        "type": "github"
       },
       "original": {
-        "path": "/home/maroka/Documents/VPN-Confinement",
-        "type": "path"
+        "owner": "Maroka-chan",
+        "repo": "VPN-Confinement",
+        "type": "github"
       }
     },
     "wlroots": {

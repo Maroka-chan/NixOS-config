@@ -5,8 +5,6 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  boot.initrd.luks.devices.crypt-nixos.keyFile = "/dev/disk/by-partlabel/CRYPTKEY";
-  boot.initrd.luks.devices.crypt-nixos.preLVM = false;
   boot.initrd.luks.devices = 
   let 
     crypt-template = {

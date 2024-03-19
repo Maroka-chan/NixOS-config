@@ -58,8 +58,8 @@
   programs.git = {
     enable = true;
     config = {
-     # user.signingkey = "D86778C9EE6F81D3";
-     # commit.gpgsign = true;
+      user.signingkey = "6FB24A246C6BAFC3";
+      commit.gpgsign = true;
       core.autocrlf = "input";
     };
   };
@@ -224,9 +224,9 @@
       "/etc/mullvad-vpn"
       "/var/lib/fprint"
     ];
-   # files = [
-   #   "/etc/machine-id"
-   # ];
+    files = [
+      "/etc/machine-id"
+    ];
   };
 
   # Automatic Updates
