@@ -130,7 +130,6 @@ in
       ".config/WebCord/config.json"
       ".config/btop/btop.conf"
       ".local/share/nvim/telescope_history"
-      ".config/sops/age/keys.txt" # age key for sops-nix
       ".gnupg"
     ];
     directories = [
