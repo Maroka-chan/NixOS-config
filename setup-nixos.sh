@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-hostname=Akebi
+set -xe
+
+hostname=kanan
 
 root_disk=/dev/nvme0n1
 boot_part="$root_disk"p1
@@ -40,7 +42,7 @@ sudo cryptsetup luksHeaderBackup --header-backup-file "$header_path" "$root_part
 root_part=/dev/mapper/"$root_crypt_label"
 
 # Create Filesystems
-sudo mkfs.vfat -n BOOT "$root_disk"1
+sudo mkfs.vfat -n BOOT "$boot_part"
 sudo mkfs.btrfs -L NIXOS "$root_part"
 
 # Mount Partitions
@@ -48,6 +50,7 @@ sudo mount -t btrfs "$root_part" /mnt
 
 # Create BTRFS Subvolumes
 sudo btrfs subvolume create /mnt/root
+sudo btrfs subvolume create /mnt/home
 sudo btrfs subvolume create /mnt/nix
 sudo btrfs subvolume create /mnt/persist
 sudo btrfs subvolume create /mnt/log
@@ -75,21 +78,21 @@ sudo mount -o subvol=log,compress=zstd,noatime,ssd,autodefrag,discard=async "$ro
 
 
 # Set Up Swapfile
-# btrfs filesystem mkswapfile --size 4G swapfile
 sudo mount -o subvol=swap "$root_part" /mnt/swap
-sudo truncate -s 0 /mnt/swap/swapfile
-sudo chattr +C /mnt/swap/swapfile
-sudo btrfs property set /mnt/swap/swapfile compression none
-sudo dd if=/dev/zero of=/mnt/swap/swapfile bs=1M count="$swap_size"
-sudo chmod 0600 /mnt/swap/swapfile
-sudo mkswap -L SWAP /mnt/swap/swapfile
+sudo btrfs filesystem mkswapfile --size "$swap_size"m /mnt/swap/swapfile
+#sudo truncate -s 0 /mnt/swap/swapfile
+#sudo chattr +C /mnt/swap/swapfile
+#sudo btrfs property set /mnt/swap/swapfile compression none
+#sudo dd if=/dev/zero of=/mnt/swap/swapfile bs=1M count="$swap_size"
+#sudo chmod 0600 /mnt/swap/swapfile
+#sudo mkswap -L SWAP /mnt/swap/swapfile
 
 # Swapon
 sudo swapon /mnt/swap/swapfile
 
 # Mount Boot Partition
 echo "Mounting Boot Partition..."
-sudo mount "$root_disk"1 /mnt/boot
+sudo mount "$boot_part" /mnt/boot
 
 echo "DONE."
 echo "BACKUP YOUR CRYPT KEY AND HEADER!"
