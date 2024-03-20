@@ -24,6 +24,8 @@ end_sector=$(("$start_sector" + "$part_sector_size" - 1))
 sudo wipefs --all --force "$usb"
 sudo sgdisk -n 1:"$start_sector":"$end_sector" -c 1:CRYPTKEY "$usb"
 
+sudo dd if="$keyfile" of="$usb"1 bs=512 conv=fsync
+
 start_sector=$((("$end_sector" / "$start_sector" + 1) * "$start_sector"))
 if whiptail --title "Format as FAT32" --defaultno --yesno "Format the remaining space as a FAT32 partition?" 0 0
 then
