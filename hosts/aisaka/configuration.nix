@@ -14,7 +14,7 @@
 
   # Secrets
   sops.defaultSopsFile = ./secrets/secrets.yaml;
-  sops.age.keyFile = "/home/maroka/.config/sops/age/keys.txt";
+  sops.age.keyFile = "/persist/var/lib/sops/age/keys.txt";
 
   sops.secrets.maroka-password = {
       neededForUsers = true;
