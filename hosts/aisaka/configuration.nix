@@ -117,17 +117,22 @@
   ];
 
   # Power Management
-  services.auto-cpufreq.enable = true;
-
-  services.tlp = {
+  services.auto-cpufreq = {
     enable = true;
     settings = {
-      START_CHARGE_THRESH_BAT0 = 20;
-      STOP_CHARGE_THRESH_BAT0 = 80;
-      CPU_BOOST_ON_AC = 1;
-      CPU_BOOST_ON_BAT = 1;
-      CPU_SCALING_GOVERNOR_ON_AC = "performance";
-      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+      battery = {
+        energy_performance_preference = "power";
+        governor = "powersave";
+        turbo = "always";
+        enable_thresholds = true;
+        start_threshold = 20;
+        stop_threshold = 80;
+      };
+      charger = {
+        energy_performance_preference = "performance";
+        governor = "performance";
+        turbo = "always";
+      };
     };
   };
 
