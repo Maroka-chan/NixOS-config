@@ -53,16 +53,18 @@
     ];
     wireguardConfigFile = config.sops.templates."wg0.conf".path;
     portMappings = [
-      { From = 9091; To = 9091; }
-      { From = 5000; To = 5000; }
+      { from = 9091; to = 9091; }
+      { from = 5000; to = 5000; }
     ];
   };
 
   users.groups.media = {};
 
-  systemd.services.transmission.vpnconfinement = {
-    enable = true;
-    vpnnamespace = "wg";
+  systemd.services.transmission = {
+    vpnconfinement = {
+      enable = true;
+      vpnnamespace = "wg";
+    };
   };
 
   services.transmission = {
@@ -77,6 +79,7 @@
       "rpc-whitelist-enabled" = true;
       "rpc-whitelist" = "192.168.0.*,192.168.15.1,127.0.0.1";
       "rpc-authentication-required" = true;
+      "message-level" = 3;
 
       "blocklist-enabled" = true;
       "blocklist-url" = "https://github.com/Naunter/BT_BlockLists/raw/master/bt_blocklists.gz";
@@ -105,6 +108,5 @@
       };
     };
     torrentClientCredentialsFile = config.sops.templates."shutoku_settings.json".path;
-    openFirewall = true;
   };
 }
