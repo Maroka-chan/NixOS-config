@@ -150,14 +150,12 @@
     };
   };
 
-  # Docker
-  virtualisation.docker = {
+  # Podman
+  virtualisation.podman = {
     enable = true;
-    storageDriver = "btrfs";
-    rootless = {
-      enable = true;
-      setSocketVariable = true;
-    };
+    dockerCompat = true;
+    dockerSocket.enable = true;
+    defaultNetwork.settings.dns_enabled = true;
   };
 
   # File Manager
