@@ -68,8 +68,7 @@
   services.transmission = {
     enable = true;
     group = "media";
-    package = inputs.nixpkgs.legacyPackages.${pkgs.system}.transmission_4;
-    openRPCPort = true;
+    package = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.transmission_4;
     credentialsFile = config.sops.templates."transmission_settings.json".path;
     settings = {
       "download-dir" = "/data/media/downloads";
