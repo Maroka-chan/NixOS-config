@@ -189,7 +189,7 @@ in
   wayland.windowManager.hyprland = {
     enable = true;
     extraConfig = ''
-      monitor=,preferred,auto,1
+      monitor=DP-3,2560x1440@240,auto,1
 
       exec-once = swaybg -i ${dotfiles}/wallpapers/yume_no_kissaten_yumegatari.png -m fill
       exec-once = eww daemon & eww open-many statusbar radio controls
@@ -200,11 +200,8 @@ in
         repeat_rate = 25
         repeat_delay = 200
 
-        touchpad {
-          natural_scroll = true
-          scroll_factor = 0.2
-        }
-
+        sensitivity = 0
+        accel_profile = flat
       }
 
       gestures {
