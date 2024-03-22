@@ -4,7 +4,7 @@
     ./mediamanager
     ./jellyfin
     ./uptime-kuma
-    ./tailscale
+    #./tailscale
     ./samba
     ./restic
   ];
