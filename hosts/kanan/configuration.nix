@@ -131,22 +131,12 @@
     };
   };
 
-  # Docker
- # virtualisation.docker = {
- #   enable = true;
- #   storageDriver = "btrfs";
- #   rootless = {
- #     enable = true;
- #     setSocketVariable = true;
- #   };
- # };
   virtualisation.podman = {
     enable = true;
     dockerCompat = true;
     dockerSocket.enable = true;
     defaultNetwork.settings.dns_enabled = true;
   };
-  #networking.firewall.interfaces."podman+".allowedUDPPorts = [ 53 ];
 
   # File Manager
   programs.thunar.enable = true;
