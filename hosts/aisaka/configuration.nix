@@ -12,6 +12,12 @@
   users.mutableUsers = false;
   networking.networkmanager.enable = true;
 
+  # Filesystem
+  filesystem.btrfs = {
+    enable = true;
+    impermanence.enable = true;
+  };
+
   # Secrets
   sops.defaultSopsFile = ./secrets/secrets.yaml;
   sops.age.keyFile = "/persist/var/lib/sops/age/keys.txt";
@@ -181,9 +187,6 @@
 
   # PAM
   security.pam.services.swaylock = {};
-
-  # Impermanence
-  btrfs-impermanence.enable = true;
 
   # Create persist directories
   systemd.tmpfiles.rules = [

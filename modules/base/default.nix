@@ -4,8 +4,6 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
-  boot.supportedFilesystems = [ "btrfs" ];
-
   hardware.enableAllFirmware = true;
 
   # inotify
@@ -37,7 +35,4 @@
 
   # Thermal Management
   services.thermald.enable = true;
-
-  # btrfs settings
-  services.btrfs.autoScrub.enable = true;
 }

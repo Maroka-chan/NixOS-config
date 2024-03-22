@@ -5,7 +5,6 @@ let
     impermanence.nixosModules.impermanence
     sops-nix.nixosModules.sops
     disko.nixosModules.disko
-    ../modules/btrfs-impermanence
   ];
 
   mkSystem = name: {

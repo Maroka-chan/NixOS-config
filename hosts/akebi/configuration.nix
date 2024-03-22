@@ -21,8 +21,11 @@
   sops.age.keyFile = "/var/lib/sops-nix/keys.txt";
   sops.age.generateKey = true;
 
-  # Impermanence
-  btrfs-impermanence.enable = true;
+  # Filesystem
+  filesystem.btrfs = {
+    enable = true;
+    impermanence.enable = true;
+  };
 
   # State to persist.
   environment.persistence."/persist" = {
