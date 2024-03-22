@@ -70,9 +70,6 @@
     };
   };
 
-  # Tailscale
-  # services.tailscale.enable = true;
-
   # Users
   users.users.maroka = {
     isNormalUser = true;
@@ -123,45 +120,6 @@
     noto-fonts
   ];
 
-  # Power Management
- # services.auto-cpufreq = {
- #   enable = true;
- #   settings = {
- #     battery = {
- #       energy_performance_preference = "power";
- #       governor = "powersave";
- #       turbo = "always";
- #       enable_thresholds = true;
- #       start_threshold = 20;
- #       stop_threshold = 80;
- #      # scaling_min_freq = 2000000;
- #      # scaling_max_freq = 4400000;
- #     };
- #     charger = {
- #       energy_performance_preference = "performance";
- #       governor = "performance";
- #       turbo = "always";
- #      # scaling_min_freq = 3000000;
- #      # scaling_max_freq = 4400000;
- #     };
- #   };
- # };
-
- # services.tlp = {
- #   enable = true;
- #   settings = {
- #     START_CHARGE_THRESH_BAT0 = 20;
- #     STOP_CHARGE_THRESH_BAT0 = 80;
- #     CPU_BOOST_ON_AC = 1;
- #     CPU_BOOST_ON_BAT = 1;
- #     CPU_SCALING_GOVERNOR_ON_AC = "performance";
- #     CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
- #   };
- # };
-
- # services.logind.lidSwitch = "suspend";
- # services.upower.enable = true;
-
   # Display Manager
   services.greetd = {
     enable = true;
@@ -200,17 +158,6 @@
     package = pkgs.mullvad-vpn;
   };
 
-  # Fingerprint Reader
-  services.fprintd = {
-    enable = true;
-  };
-
-  # Udev rules
-  ## Brightness
- # services.udev.extraRules = ''
- #   ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="intel_backlight", MODE="0666", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/class/backlight/%k/brightness"
- # '';
-
   # PAM
   security.pam.services.swaylock = {};
 
@@ -225,7 +172,6 @@
     directories = [
       "/etc/NetworkManager/system-connections"
       "/etc/mullvad-vpn"
-      "/var/lib/fprint"
     ];
     files = [
       "/etc/machine-id"
