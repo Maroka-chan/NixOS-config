@@ -51,7 +51,7 @@
   environment.systemPackages = with pkgs; [
     btop
     neofetch
-    eww-wayland
+    inputs.nixpkgs.legacyPackages.${pkgs.system}.eww-wayland
 
     inotify-tools
     ripgrep
