@@ -26,7 +26,9 @@ in
 
     material-design-icons # Icons
 
-    #sshfs       # Remote filesystems over SSH
+    osu-lazer-bin
+
+    sshfs     # Remote filesystems over SSH
 
     webcord   # Third-party Discord
 
@@ -149,6 +151,7 @@ in
       ".config/github-copilot"
       ".local/state/nvim/swap"
       ".local/state/nvim/shada"
+      ".local/share/osu"
     ];
   };
 
