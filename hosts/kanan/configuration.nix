@@ -18,6 +18,25 @@
     impermanence.enable = true;
   };
 
+  # Create persist directories
+  systemd.tmpfiles.rules = [
+    "d /persist/home/maroka 0700 maroka users"
+    "L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"
+  ];
+
+  #AMDGPU
+  hardware.opengl.extraPackages = with pkgs; [
+    amdvlk
+    rocmPackages.clr.icd
+  ];
+
+  hardware.opengl.extraPackages32 = with pkgs; [
+    driversi686Linux.amdvlk
+  ];
+
+  hardware.opengl.driSupport = true;
+  hardware.opengl.driSupport32Bit = true;
+
   # Secrets
   sops.defaultSopsFile = ./secrets/secrets.yaml;
   sops.age.keyFile = "/persist/var/lib/sops/age/keys.txt";
@@ -150,11 +169,6 @@
 
   # PAM
   security.pam.services.swaylock = {};
-
-  # Create persist directories
-  systemd.tmpfiles.rules = [
-    "d /persist/home/maroka 0700 maroka users"
-  ];
 
   # Files to persist
   environment.persistence."/persist" = {
