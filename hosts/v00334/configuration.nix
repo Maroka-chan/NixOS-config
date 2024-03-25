@@ -10,6 +10,7 @@
   ];
 
   networking.networkmanager.enable = true;
+  networking.firewall.enable = lib.mkForce false;
 
   # Home Manager
   home-manager.users.maroka = {
