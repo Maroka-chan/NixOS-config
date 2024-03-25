@@ -20,6 +20,7 @@ in
     swayidle  # Idle management
 
     material-design-icons # Icons
+    slack
   ];
 
   programs = {
@@ -74,16 +75,16 @@ in
 
       zplug = {
         enable = true;
-	plugins = [
+        plugins = [
           { name = "romkatv/powerlevel10k"; tags = [ as:theme depth:1 ]; }
-	];
+        ];
       };
     };
-   # git = {
-   #   enable = true;
-   #   userName = "Maroka-chan";
-   #   userEmail = "64618598+Maroka-chan@users.noreply.github.com";
-   # };
+    git = {
+      enable = true;
+      userName = "Maroka-chan";
+      userEmail = "64618598+Maroka-chan@users.noreply.github.com";
+    };
     direnv = {
       enable = true;
       enableZshIntegration = true;
@@ -172,7 +173,9 @@ in
   wayland.windowManager.hyprland = {
     enable = true;
     extraConfig = ''
-      monitor=,preferred,auto,1
+      monitor=eDP-1,1920x1200,2560x0,1
+      monitor=HDMI-A-1,3840x2160,0x0,1.5
+      monitor=DP-1,3840x2160,-2560x0,1.5
 
       exec-once = swaybg -i ${dotfiles}/wallpapers/yume_no_kissaten_yumegatari.png -m fill
       exec-once = eww daemon & eww open statusbar
