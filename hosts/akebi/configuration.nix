@@ -10,8 +10,6 @@
     inputs.vpnconfinement.nixosModules.default
   ];
 
-  #networking.nftables.enable = true;
-
   systemd.services.vpn-test-service = {
     vpnconfinement = {
       enable = true;

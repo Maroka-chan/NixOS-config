@@ -35,4 +35,12 @@
 
   # Thermal Management
   services.thermald.enable = true;
+
+  # Increase amount of files we can have open
+  security.pam.loginLimits = [{
+    domain = "*";
+    type = "soft";
+    item = "nofile";
+    value = "8192";
+  }];
 }
