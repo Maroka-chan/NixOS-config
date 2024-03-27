@@ -19,7 +19,7 @@
     hyprlock.inputs.nixpkgs.follows = "nixpkgs";
     anyrun.url = "github:Kirottu/anyrun";
     anyrun.inputs.nixpkgs.follows = "nixpkgs";
-    shutoku.url = "git+ssh://git@github.com/Maroka-chan/Shutoku";
+    shutoku.url = "git+ssh://git@github.com/Maroka-chan/Shutoku-rs";
     vpnconfinement.url = "github:Maroka-chan/VPN-Confinement";
 
     disko.url = "github:nix-community/disko";
@@ -28,7 +28,7 @@
 
   outputs = inputs @ { self, nixos-generators, deploy-rs, ... }:
   {
-    nixosConfigurations = import ./hosts {inherit inputs;};
+    nixosConfigurations = import ./hosts { inherit inputs; };
 
     deploy.nodes.akebi = {
       hostname = "akebi";

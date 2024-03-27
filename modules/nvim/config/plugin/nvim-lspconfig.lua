@@ -22,6 +22,26 @@ local lua_settings = {
   },
 }
 
+local rust_analyzer_settings = {
+  ["rust-analyzer"] = {
+    imports = {
+      granularity = {
+        group = "module",
+      },
+      prefix = "self",
+    },
+    cargo = {
+      buildScripts = {
+        enable = true,
+      },
+      features = "all"
+    },
+    procMacro = {
+      enable = true
+    },
+  }
+}
+
 
 -- Language Server Protocols to Enable
 local LSP_servers = {
@@ -35,7 +55,7 @@ local LSP_servers = {
   { 'texlab' },
   { 'clangd' },
   { 'erlangls' },
-  { 'rust_analyzer' },
+  { 'rust_analyzer', settings = rust_analyzer_settings },
   { 'ccls' }
 }
 

@@ -13,7 +13,10 @@
     mullvad_dns = {};
 
     transmission_user = {};
-    transmission_pass = {};
+    transmission_pass = {
+      owner = "shutoku";
+      group = "root";
+    };
   };
 
   sops.templates."transmission_settings.json".content = ''
@@ -21,16 +24,6 @@
       "rpc-username": "${config.sops.placeholder.transmission_user}",
       "rpc-password": "${config.sops.placeholder.transmission_pass}",
       "bind-address-ipv4": "${config.sops.placeholder.mullvad_address}"
-    }
-  '';
-
-  sops.templates."shutoku_settings.json".content = ''
-    {
-      "TorrentClient": {
-        "Address": "http://192.168.15.1:9091",
-        "Username": "${config.sops.placeholder.transmission_user}",
-        "Password": "${config.sops.placeholder.transmission_pass}"
-      }
     }
   '';
 
@@ -54,7 +47,7 @@
     wireguardConfigFile = config.sops.templates."wg0.conf".path;
     portMappings = [
       { from = 9091; to = 9091; }
-      { from = 5000; to = 5000; }
+      { from = 3000; to = 3000; }
     ];
   };
 
@@ -101,12 +94,12 @@
   services.shutoku = {
     enable = true;
     group = "media";
+    listenAddr = "192.168.15.1:3000";
     settings = {
-      App = {
-        DownloadPath = "/data/media/downloads";
-        TorrentDestination = "/data/media";
-      };
+      download_dest = "/data/media/downloads";
+      media_dest = "/data/media";
+      client_addr = "http://192.168.15.1:9091/transmission/rpc";
+      client_password_file = config.sops.secrets.transmission_pass.path;
     };
-    torrentClientCredentialsFile = config.sops.templates."shutoku_settings.json".path;
   };
 }
