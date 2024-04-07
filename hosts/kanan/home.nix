@@ -30,7 +30,7 @@ in
 
     sshfs     # Remote filesystems over SSH
 
-    webcord   # Third-party Discord
+    vesktop   # Third-party Discord
   ];
 
   programs = {
@@ -38,6 +38,17 @@ in
       enable = true;
     };
     customNeovim.enable = true;
+    thunderbird = {
+      enable = true;
+      settings = {
+        "general.useragent.override" = "";
+        "privacy.donottrackheader.enabled" = true;
+      };
+      profiles.main = {
+        isDefault = true;
+      };
+    };
+    password-store.enable = true;
     rofi = {
       enable = true;
       package = pkgs.rofi-wayland;
@@ -290,6 +301,7 @@ in
     swaylock = {
       enable = true;
     };
+    gpg.enable = true;
    # hyprlock = {
    #   enable = true;
    #   backgrounds = [{
@@ -308,10 +320,14 @@ in
       ".p10k.zsh"
       ".cache/gitstatus/gitstatusd-linux-x86_64"
       ".config/Mullvad VPN/gui_settings.json"
-      ".config/WebCord/config.json"
       ".config/btop/btop.conf"
       ".local/share/nvim/telescope_history"
-      ".gnupg"
+      ".config/sops/age/keys.txt"
+      ".config/vesktop/settings/settings.json"
+      ".config/vesktop/settings.json"
+      ".config/vesktop/state.json"
+      ".local/state/wireplumber/default-routes"
+      ".local/state/wireplumber/stream-properties"
     ];
     directories = [
       "Downloads"
@@ -325,12 +341,16 @@ in
       ".librewolf"
       ".zplug"
       ".local/share/Jellyfin Media Player/QtWebEngine/Default/Local Storage/leveldb"
-      ".config/WebCord/Local Storage/leveldb"
+      ".config/vesktop/sessionData/Local Storage/leveldb"
       ".local/share/direnv/allow"
       ".config/github-copilot"
       ".local/state/nvim/swap"
       ".local/state/nvim/shada"
       ".local/share/osu"
+      ".local/share/password-store"
+      ".thunderbird"
+      ".config/protonmail/bridge-v3"
+      ".local/share/protonmail/bridge-v3"
     ];
   };
 
@@ -354,6 +374,25 @@ in
     size = 24;
   };
 
+  services.pass-secret-service.enable = true;
+  services.gpg-agent = let
+    pinentryRofi = pkgs.writeShellApplication {
+      name = "pinentry-rofi-with-env";
+      text = ''
+        PATH="$PATH:${pkgs.coreutils}/bin:${pkgs.rofi-wayland}/bin"
+        "${pkgs.pinentry-rofi}/bin/pinentry-rofi" "$@"
+      '';
+    };
+  in {
+    enable = true;
+    enableZshIntegration = true;
+    pinentryPackage = pkgs.pinentry-gnome3;
+    extraConfig = ''
+      allow-preset-passphrase
+      pinentry-program ${pinentryRofi}/bin/pinentry-rofi-with-env
+    '';
+  };
+
   # Idle Daemon
   services.swayidle = {
     enable = true;
@@ -375,6 +414,8 @@ in
 
       exec-once = swaybg -i ${dotfiles}/wallpapers/yume_no_kissaten_yumegatari.png -m fill
       exec-once = eww daemon & eww open-many statusbar radio controls
+
+      windowrulev2 = idleinhibit fullscreen,class:(org.jellyfin.),title:(Jellyfin Media Player)
 
       input {
         kb_layout = us,dk
@@ -493,6 +534,18 @@ in
   
   # Alacritty
   xdg.configFile."alacritty".source = "${dotfiles}/config/alacritty";
+
+  # Hide desktop files
+  xdg.desktopEntries = {
+    "thunar-bulk-rename" = {
+      name = "Bulk Rename";
+      noDisplay = true;
+    };
+    "thunar-settings" = {
+      name = "File Manager Settings";
+      noDisplay = true;
+    };
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
