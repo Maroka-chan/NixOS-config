@@ -1,5 +1,5 @@
 local scrollbar = require('scrollbar')
-local colors = require('tokyonight.colors')
+local colors = require('citruszest.palettes.colors')
 
 local configuration = {
   handle = {
@@ -16,6 +16,5 @@ local configuration = {
 }
 
 -- Setup
-colors.setup()
 scrollbar.setup(configuration)
 require('scrollbar.handlers.search').setup({ calm_down = true, nearest_only = true })

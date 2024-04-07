@@ -22,7 +22,38 @@ local lua_settings = {
   },
 }
 
-local rust_analyzer_settings = {
+-- Language Server Protocols to Enable
+local LSP_servers = {
+  { 'lua_ls', settings = lua_settings  },
+  { 'bashls' },
+  { 'csharp_ls' },
+  { 'dockerls' },
+  { 'docker_compose_language_service' },
+  { 'gopls' },
+  { 'pyright' },
+  { 'texlab' },
+  { 'clangd' },
+}
+
+local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+local lsp_defaults = lspconfig.util.default_config
+lsp_defaults.capabilities = vim.tbl_deep_extend('force', lsp_defaults.capabilities, capabilities)
+
+-- For nvim-ufo
+--capabilities.textDocument.FoldingRange = {
+--  dynamicRegistration = false,
+--  lineFoldingOnly = true
+--}
+
+lspconfig.rust_analyzer.setup {
+  cmd = vim.lsp.rpc.connect("127.0.0.1", 27631),
+  init_options = {
+    lspMux = {
+      version = "1",
+      method = "connect",
+      server = "rust-analyzer",
+    },
+  },
   ["rust-analyzer"] = {
     imports = {
       granularity = {
@@ -40,33 +71,6 @@ local rust_analyzer_settings = {
       enable = true
     },
   }
-}
-
-
--- Language Server Protocols to Enable
-local LSP_servers = {
-  { 'lua_ls', settings = lua_settings  },
-  { 'bashls' },
-  { 'csharp_ls' },
-  { 'dockerls' },
-  { 'docker_compose_language_service' },
-  { 'gopls' },
-  { 'pyright' },
-  { 'texlab' },
-  { 'clangd' },
-  { 'erlangls' },
-  { 'rust_analyzer', settings = rust_analyzer_settings },
-  { 'ccls' }
-}
-
-local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-local lsp_defaults = lspconfig.util.default_config
-lsp_defaults.capabilities = vim.tbl_deep_extend('force', lsp_defaults.capabilities, capabilities)
-
--- For nvim-ufo
-capabilities.textDocument.FoldingRange = {
-  dynamicRegistration = false,
-  lineFoldingOnly = true
 }
 
 for _, lsp in ipairs(LSP_servers) do
