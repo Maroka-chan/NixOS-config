@@ -39,7 +39,7 @@
 
   # Secrets
   sops.defaultSopsFile = ./secrets/secrets.yaml;
-  sops.age.keyFile = "/persist/var/lib/sops/age/keys.txt";
+  sops.age.keyFile = "/persist/home/maroka/.config/sops/age/keys.txt";
 
   sops.secrets.maroka-password = {
       neededForUsers = true;
@@ -71,6 +71,7 @@
     btop
     neofetch
     inputs.nixpkgs.legacyPackages.${pkgs.system}.eww-wayland
+    protonmail-bridge-gui
 
     inotify-tools
     ripgrep
@@ -78,6 +79,12 @@
     socat
     wl-clipboard # Wayland Clipboard Utilities
   ];
+
+  xdg.mime.defaultApplications = {
+    "text/html"                     = [ "librewolf.desktop" ];
+    "x-scheme-handler/http"         = [ "librewolf.desktop" ];
+    "x-scheme-handler/https"        = [ "librewolf.desktop" ];
+  };
 
   # Git
   programs.git = {
@@ -103,9 +110,6 @@
 
   # SSH
   programs.ssh.startAgent = true;
-
-  # GNUPG
-  programs.gnupg.agent.enable = true;
 
   # Pipewire
   security.rtkit.enable = true;
@@ -168,6 +172,16 @@
   };
 
   # PAM
+  security.pam.services.login.gnupg = {
+    enable = true;
+    noAutostart = true;
+    storeOnly = true;
+  };
+  security.pam.services.greetd.gnupg = {
+    enable = true;
+    noAutostart = true;
+    storeOnly = true;
+  };
   security.pam.services.swaylock = {};
 
   # Files to persist
@@ -180,6 +194,11 @@
     files = [
       "/etc/machine-id"
     ];
+    users.maroka = {
+      directories = [
+        ".gnupg"
+      ];
+    };
   };
 
   # Automatic Updates
