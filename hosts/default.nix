@@ -11,13 +11,17 @@ let
     system,
     channel
   }:
-    let lib = channel.lib;
+    let
+      lib = channel.lib;
+      overlay = final: prev: {
+      };
     in lib.nixosSystem {
       inherit system;
       modules =
         baseModules
         ++ [
           { networking.hostName = name; }
+          { nixpkgs.overlays = [ overlay ]; }
           (import (./. + "/${name}/configuration.nix"))
         ];
       specialArgs = {inherit inputs lib;};

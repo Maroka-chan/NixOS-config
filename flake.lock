@@ -613,11 +613,11 @@
         "systems": "systems_6"
       },
       "locked": {
-        "lastModified": 1711570264,
-        "narHash": "sha256-OCyq7lpf/nPnVpytz4SpytbEvvKU2dBke7+ot4JnT4s=",
+        "lastModified": 1712348818,
+        "narHash": "sha256-XD9w/0ph+AT4X31KY5Y1Z4P5makPiba/MkM3qrCQCHI=",
         "ref": "refs/heads/master",
-        "rev": "c2c8ca24a08ebe5fb1dd96d0d6fa8d5ee9b6402f",
-        "revCount": 28,
+        "rev": "8e00cf8ea42fc53c4263088884dcf832be9b785f",
+        "revCount": 30,
         "type": "git",
         "url": "ssh://git@github.com/Maroka-chan/Shutoku-rs"
       },
