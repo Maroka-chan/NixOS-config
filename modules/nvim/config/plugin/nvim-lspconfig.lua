@@ -39,13 +39,7 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protoc
 local lsp_defaults = lspconfig.util.default_config
 lsp_defaults.capabilities = vim.tbl_deep_extend('force', lsp_defaults.capabilities, capabilities)
 
--- For nvim-ufo
---capabilities.textDocument.FoldingRange = {
---  dynamicRegistration = false,
---  lineFoldingOnly = true
---}
-
-lspconfig.rust_analyzer.setup {
+lspconfig.rust_analyzer.setup({
   cmd = vim.lsp.rpc.connect("127.0.0.1", 27631),
   init_options = {
     lspMux = {
@@ -54,24 +48,26 @@ lspconfig.rust_analyzer.setup {
       server = "rust-analyzer",
     },
   },
-  ["rust-analyzer"] = {
-    imports = {
-      granularity = {
-        group = "module",
+  settings = {
+    ["rust-analyzer"] = {
+      imports = {
+        granularity = {
+          group = "module",
+        },
+        prefix = "self",
       },
-      prefix = "self",
-    },
-    cargo = {
-      buildScripts = {
-        enable = true,
+      cargo = {
+        buildScripts = {
+          enable = true,
+        },
+        allFeatures = true,
       },
-      features = "all"
-    },
-    procMacro = {
-      enable = true
-    },
+      procMacro = {
+        enable = true
+      },
+    }
   }
-}
+})
 
 for _, lsp in ipairs(LSP_servers) do
   local conf = {
