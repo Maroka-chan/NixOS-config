@@ -128,6 +128,7 @@ in
       ".local/share/nvim/telescope_history"
       ".gnupg"
       ".config/JetBrains"
+      ".config/sops/age/keys.txt"
     ];
     directories = [
       "Downloads"
