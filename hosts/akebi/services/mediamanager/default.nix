@@ -17,6 +17,14 @@
       owner = "shutoku";
       group = "root";
     };
+    tracker_user = {
+      owner = "shutoku";
+      group = "root";
+    };
+    tracker_pass = {
+      owner = "shutoku";
+      group = "root";
+    };
   };
 
   sops.templates."transmission_settings.json".content = ''
@@ -78,8 +86,15 @@
       "blocklist-url" = "https://github.com/Naunter/BT_BlockLists/raw/master/bt_blocklists.gz";
 
       "encryption" = 2;
+      "pex-enabled" = false;
+      "dht-enabled" = false;
+      "lpd-enabled" = false;
       "utp-enabled" = false;
       "port-forwarding-enabled" = false;
+
+      "cache-size-mb" = 512;
+      "peer-limit-global" = 1000;
+      "peer-limit-per-torrent" = 200;
 
       "anti-brute-force-enabled" = true;
       "anti-brute-force-threshold" = 10;
@@ -100,6 +115,8 @@
       media_dest = "/data/media";
       client_addr = "http://192.168.15.1:9091/transmission/rpc";
       client_password_file = config.sops.secrets.transmission_pass.path;
+      tracker_username_file = config.sops.secrets.tracker_user.path;
+      tracker_password_file = config.sops.secrets.tracker_pass.path;
     };
   };
 }
