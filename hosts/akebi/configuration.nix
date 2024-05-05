@@ -109,6 +109,7 @@
     directories = [
       "/var/lib/private/uptime-kuma"
       "/var/lib/jellyfin"
+      "/var/lib/tailscale"
     ];
     files = [
       "/etc/machine-id"
