@@ -25,6 +25,14 @@
       owner = "shutoku";
       group = "root";
     };
+    tracker2_user = {
+      owner = "shutoku";
+      group = "root";
+    };
+    tracker2_pass = {
+      owner = "shutoku";
+      group = "root";
+    };
   };
 
   sops.templates."transmission_settings.json".content = ''
@@ -117,6 +125,8 @@
       client_password_file = config.sops.secrets.transmission_pass.path;
       tracker_username_file = config.sops.secrets.tracker_user.path;
       tracker_password_file = config.sops.secrets.tracker_pass.path;
+      tracker2_username_file = config.sops.secrets.tracker2_user.path;
+      tracker2_password_file = config.sops.secrets.tracker2_pass.path;
     };
   };
 }
