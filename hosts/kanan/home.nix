@@ -326,8 +326,6 @@ in
       ".config/vesktop/settings/settings.json"
       ".config/vesktop/settings.json"
       ".config/vesktop/state.json"
-      ".local/state/wireplumber/default-routes"
-      ".local/state/wireplumber/stream-properties"
     ];
     directories = [
       "Downloads"
