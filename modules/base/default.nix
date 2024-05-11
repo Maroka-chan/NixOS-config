@@ -16,7 +16,21 @@
   i18n.defaultLocale = "en_US.UTF-8";
   nixpkgs.config.allowUnfree = true;
 
-  networking.nameservers = [ "1.1.1.2" "1.0.0.2" ];
+  networking = {
+    nameservers = [ "1.1.1.2" "1.0.0.2" ];
+    dhcpcd.extraConfig = "nohook resolv.conf";
+    networkmanager.dns = "none";
+  };
+
+  # The above doesn't seem to actually update resolv.conf, so until that is fixed:
+  environment.etc = {
+    "resolv.conf".text = ''
+      nameserver 192.168.0.1
+      nameserver 1.1.1.2
+      nameserver 1.0.0.2
+      options edns0
+    '';
+  };
 
   # Firewall
   networking.firewall = {
