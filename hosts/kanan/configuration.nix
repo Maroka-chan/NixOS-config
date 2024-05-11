@@ -55,7 +55,6 @@
     imports = [
       inputs.impermanence.nixosModules.home-manager.impermanence
       inputs.hyprland.homeManagerModules.default
-      inputs.hyprlock.homeManagerModules.default
       inputs.anyrun.homeManagerModules.default
       ./home.nix
     ];
