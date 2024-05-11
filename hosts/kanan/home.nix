@@ -416,7 +416,8 @@ in
   wayland.windowManager.hyprland = {
     enable = true;
     extraConfig = ''
-      monitor=DP-3,2560x1440@240,auto,1
+      monitor=DP-3,2560x1440@240,1080x240,1
+      monitor=HDMI-A-1,1920x1080@60,0x0,1,transform,3
 
       exec-once = swaybg -i ${dotfiles}/wallpapers/yume_no_kissaten_yumegatari.png -m fill
       exec-once = eww daemon & eww open-many statusbar radio controls
