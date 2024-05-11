@@ -31,6 +31,12 @@ in
     sshfs     # Remote filesystems over SSH
 
     vesktop   # Third-party Discord
+
+    davinci-resolve
+
+    bottles
+
+    blender
   ];
 
   programs = {
@@ -349,6 +355,8 @@ in
       ".thunderbird"
       ".config/protonmail/bridge-v3"
       ".local/share/protonmail/bridge-v3"
+      ".local/share/DaVinciResolve"
+      ".local/share/bottles"
     ];
   };
 
