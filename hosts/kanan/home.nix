@@ -34,7 +34,7 @@ in
 
     davinci-resolve
     bottles
-    blender
+    blender-hip
 
     inputs.neovim.packages.${pkgs.system}.default
   ];
