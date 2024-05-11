@@ -78,7 +78,12 @@
     jq
     socat
     wl-clipboard # Wayland Clipboard Utilities
+
+    ffmpegthumbnailer
+    nufraw-thumbnailer
   ];
+
+  programs.steam.enable = true;
 
   xdg.mime.defaultApplications = {
     "text/html"                     = [ "librewolf.desktop" ];
@@ -162,7 +167,16 @@
   };
 
   # File Manager
-  programs.thunar.enable = true;
+  programs.thunar = {
+    enable = true;
+    plugins = with pkgs.xfce; [
+      tumbler
+      thunar-archive-plugin
+      thunar-media-tags-plugin
+      thunar-volman
+    ];
+  };
+  programs.xfconf.enable = true;
   services.gvfs.enable = true;
 
   # VPN
