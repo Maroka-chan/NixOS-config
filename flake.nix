@@ -21,6 +21,7 @@
     anyrun.inputs.nixpkgs.follows = "nixpkgs";
     shutoku.url = "git+ssh://git@github.com/Maroka-chan/Shutoku-rs";
     vpnconfinement.url = "github:Maroka-chan/VPN-Confinement";
+    neovim.url = "github:Maroka-chan/nvim-config";
 
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";

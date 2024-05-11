@@ -1,4 +1,0 @@
-require("neotest").setup({
-  adapters = {
-  },
-})

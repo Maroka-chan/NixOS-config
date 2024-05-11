@@ -33,17 +33,16 @@ in
     vesktop   # Third-party Discord
 
     davinci-resolve
-
     bottles
-
     blender
+
+    inputs.neovim.packages.${pkgs.system}.default
   ];
 
   programs = {
     alacritty = {
       enable = true;
     };
-    customNeovim.enable = true;
     thunderbird = {
       enable = true;
       settings = {

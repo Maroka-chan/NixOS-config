@@ -24,7 +24,6 @@
       inputs.hyprland.homeManagerModules.default
       inputs.anyrun.homeManagerModules.default
       ./home.nix
-      ../../modules/nvim
     ];
   };
 

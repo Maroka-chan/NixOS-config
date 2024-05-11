@@ -21,13 +21,14 @@ in
 
     material-design-icons # Icons
     slack
+
+    inputs.neovim.packages.${pkgs.system}.default
   ];
 
   programs = {
     alacritty = {
       enable = true;
     };
-    customNeovim.enable = true;
     anyrun = {
       enable = true;
       config = {
