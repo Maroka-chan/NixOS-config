@@ -331,6 +331,7 @@ in
       ".config/vesktop/settings/settings.json"
       ".config/vesktop/settings.json"
       ".config/vesktop/state.json"
+      ".pam-gnupg"
     ];
     directories = [
       "Downloads"
@@ -380,21 +381,12 @@ in
   };
 
   services.pass-secret-service.enable = true;
-  services.gpg-agent = let
-    pinentryRofi = pkgs.writeShellApplication {
-      name = "pinentry-rofi-with-env";
-      text = ''
-        PATH="$PATH:${pkgs.coreutils}/bin:${pkgs.rofi-wayland}/bin"
-        "${pkgs.pinentry-rofi}/bin/pinentry-rofi" "$@"
-      '';
-    };
-  in {
+  services.gpg-agent = {
     enable = true;
     enableZshIntegration = true;
-    pinentryPackage = pkgs.pinentry-gnome3;
+    pinentryPackage = pkgs.pinentry-gtk2;
     extraConfig = ''
       allow-preset-passphrase
-      pinentry-program ${pinentryRofi}/bin/pinentry-rofi-with-env
     '';
   };
 

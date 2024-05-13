@@ -99,7 +99,7 @@
   users.defaultUserShell = pkgs.zsh;
 
   # SSH
-  programs.ssh.startAgent = true;
+  programs.ssh.startAgent = false; # gpg-agent emulates ssh-agent. So we can use both SSH and GPG keys.
 
   # Pipewire
   security.rtkit.enable = true;
@@ -171,16 +171,30 @@
   };
 
   # PAM
-  security.pam.services.login.gnupg = {
-    enable = true;
-    noAutostart = true;
-    storeOnly = true;
-  };
+ # security.pam.services.login.gnupg = {
+ #   enable = true;
+ #   noAutostart = true;
+ #   storeOnly = true;
+ # };
   security.pam.services.greetd.gnupg = {
     enable = true;
     noAutostart = true;
     storeOnly = true;
   };
+  services.passSecretService.enable = true;
+
+ # security.pam.services = {
+ #   greetd.text = ''
+ #     auth      substack      login
+ #     account   include       login
+ #     password  substack      login
+ #     session   include       login
+
+ #     auth     optional  pam_gnupg.so store-only
+ #     session  optional  pam_gnupg.so
+ #   '';
+ # };
+
   security.pam.services.swaylock = {};
 
   # Files to persist
