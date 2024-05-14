@@ -24,7 +24,7 @@ let
           { nixpkgs.overlays = [ overlay ]; }
           (import (./. + "/${name}/configuration.nix"))
         ];
-      specialArgs = {inherit inputs lib;};
+      specialArgs = { inherit inputs; };
     };
 
   systems = {

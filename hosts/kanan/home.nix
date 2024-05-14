@@ -37,6 +37,7 @@ in
     blender-hip
 
     inputs.neovim.packages.${pkgs.system}.default
+    inputs.tlock.packages.${pkgs.system}.default
   ];
 
   programs = {
@@ -357,6 +358,7 @@ in
       ".local/share/protonmail/bridge-v3"
       ".local/share/DaVinciResolve"
       ".local/share/bottles"
+      ".local/share/tlock"
     ];
   };
 

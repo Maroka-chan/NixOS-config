@@ -171,6 +171,24 @@
         "type": "github"
       }
     },
+    "flake-parts_4": {
+      "inputs": {
+        "nixpkgs-lib": "nixpkgs-lib_3"
+      },
+      "locked": {
+        "lastModified": 1714641030,
+        "narHash": "sha256-yzcRNDoyVP7+SCNX0wmuDju1NUCt8Dz9+lyUXEI0dbI=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "e5d10a24b66c3ea8f150e47dfdb0416ab7c3390e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems_5"
@@ -500,6 +518,18 @@
         "type": "github"
       }
     },
+    "nixpkgs-lib_3": {
+      "locked": {
+        "lastModified": 1714640452,
+        "narHash": "sha256-QBx10+k6JWz6u7VsohfSw8g8hjdBZEf8CFzXH1/1Z94=",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/50eb7ecf4cd0a5756d7275c8ba36790e5bd53e33.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/50eb7ecf4cd0a5756d7275c8ba36790e5bd53e33.tar.gz"
+      }
+    },
     "nixpkgs-small": {
       "locked": {
         "lastModified": 1715592378,
@@ -656,6 +686,7 @@
         "nixpkgs-unstable": "nixpkgs-unstable",
         "shutoku": "shutoku",
         "sops-nix": "sops-nix",
+        "tlock": "tlock",
         "vpnconfinement": "vpnconfinement"
       }
     },
@@ -809,6 +840,28 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "tlock": {
+      "inputs": {
+        "flake-parts": "flake-parts_4",
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1715720461,
+        "narHash": "sha256-qJF9/5DH4PbNryuTav95VT5dOyaLXPbH1jsGGYdklW4=",
+        "owner": "Maroka-chan",
+        "repo": "tlock",
+        "rev": "77d04356d5344959647f6c09b54b5227ffb3f686",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Maroka-chan",
+        "ref": "build/flake",
+        "repo": "tlock",
         "type": "github"
       }
     },
