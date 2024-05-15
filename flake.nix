@@ -22,7 +22,7 @@
     shutoku.url = "git+ssh://git@github.com/Maroka-chan/Shutoku-rs";
     vpnconfinement.url = "github:Maroka-chan/VPN-Confinement";
     neovim.url = "github:Maroka-chan/nvim-config";
-    tlock.url = "github:Maroka-chan/tlock?ref=build/flake";
+    tlock.url = "git+https://github.com/Maroka-chan/tlock?ref=build/flake&submodules=1";
     tlock.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     disko.url = "github:nix-community/disko";
