@@ -43,6 +43,7 @@
       inputs.impermanence.nixosModules.home-manager.impermanence
       inputs.hyprland.homeManagerModules.default
       inputs.anyrun.homeManagerModules.default
+      inputs.ags.homeManagerModules.default
       ./home.nix
     ];
   };

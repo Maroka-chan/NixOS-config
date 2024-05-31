@@ -35,10 +35,21 @@ in
     davinci-resolve
     bottles
     blender-hip
+    inkscape
 
     inputs.neovim.packages.${pkgs.system}.default
     inputs.tlock.packages.${pkgs.system}.default
   ];
+
+  programs.ags = {
+    enable = true;
+    configDir = ./. + "/ags";
+    extraPackages = with pkgs; [
+      gtksourceview
+      webkitgtk
+      accountsservice
+    ];
+  };
 
   programs = {
     alacritty = {
@@ -284,7 +295,7 @@ in
       zplug = {
         enable = true;
         plugins = [
-                { name = "romkatv/powerlevel10k"; tags = [ as:theme depth:1 ]; }
+          { name = "romkatv/powerlevel10k"; tags = [ as:theme depth:1 ]; }
         ];
       };
     };
@@ -408,6 +419,9 @@ in
   # Hyprland
   wayland.windowManager.hyprland = {
     enable = true;
+    plugins = [
+      inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
+    ];
     extraConfig = ''
       monitor=DP-3,2560x1440@240,1080x240,1
       monitor=HDMI-A-1,1920x1080@60,0x0,1,transform,3
@@ -427,6 +441,10 @@ in
         accel_profile = flat
       }
 
+      cursor {
+        no_warps = true
+      }
+
       gestures {
         workspace_swipe = true
         workspace_swipe_create_new = false
@@ -438,18 +456,19 @@ in
       }
 
       general {
-        border_size = 2
-        gaps_in = 1
-        gaps_out = 2
+        border_size = 0
+        gaps_in = 0
+        gaps_out = 0
 
-        col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
-        col.inactive_border = rgba(595959aa)
+        col.active_border = rgba(fffc7fff)
+        col.inactive_border = rgba(595959ff)
 
         layout = dwindle
       }
 
       decoration {
-        rounding = 2
+        rounding = 0
+        drop_shadow = false
         blur {
           enabled = true
         }
@@ -457,6 +476,7 @@ in
 
       # Animations
       animation=workspaces,1,4,default
+      animation=windows,1,4,default
 
       # Bindings
       $mainMod = SUPER
@@ -501,28 +521,28 @@ in
       binde = , XF86MonBrightnessDown, exec, tee /sys/class/backlight/intel_backlight/brightness <<< $(($(cat /sys/class/backlight/intel_backlight/brightness) - 1000))
 
       # Switch workspaces with mainMod + [0-9]
-      bind = $mainMod, 1, workspace, 1
-      bind = $mainMod, 2, workspace, 2
-      bind = $mainMod, 3, workspace, 3
-      bind = $mainMod, 4, workspace, 4
-      bind = $mainMod, 5, workspace, 5
-      bind = $mainMod, 6, workspace, 6
-      bind = $mainMod, 7, workspace, 7
-      bind = $mainMod, 8, workspace, 8
-      bind = $mainMod, 9, workspace, 9
-      bind = $mainMod, 0, workspace, 10
+      bind = $mainMod, 1, split-workspace, 1
+      bind = $mainMod, 2, split-workspace, 2
+      bind = $mainMod, 3, split-workspace, 3
+      bind = $mainMod, 4, split-workspace, 4
+      bind = $mainMod, 5, split-workspace, 5
+      bind = $mainMod, 6, split-workspace, 6
+      bind = $mainMod, 7, split-workspace, 7
+      bind = $mainMod, 8, split-workspace, 8
+      bind = $mainMod, 9, split-workspace, 9
+      bind = $mainMod, 0, split-workspace, 10
 
       # Move active window to a workspace with mainMod + SHIFT + [0-9]
-      bind = $mainMod SHIFT, 1, movetoworkspace, 1
-      bind = $mainMod SHIFT, 2, movetoworkspace, 2
-      bind = $mainMod SHIFT, 3, movetoworkspace, 3
-      bind = $mainMod SHIFT, 4, movetoworkspace, 4
-      bind = $mainMod SHIFT, 5, movetoworkspace, 5
-      bind = $mainMod SHIFT, 6, movetoworkspace, 6
-      bind = $mainMod SHIFT, 7, movetoworkspace, 7
-      bind = $mainMod SHIFT, 8, movetoworkspace, 8
-      bind = $mainMod SHIFT, 9, movetoworkspace, 9
-      bind = $mainMod SHIFT, 0, movetoworkspace, 10
+      bind = $mainMod SHIFT, 1, split-movetoworkspace, 1
+      bind = $mainMod SHIFT, 2, split-movetoworkspace, 2
+      bind = $mainMod SHIFT, 3, split-movetoworkspace, 3
+      bind = $mainMod SHIFT, 4, split-movetoworkspace, 4
+      bind = $mainMod SHIFT, 5, split-movetoworkspace, 5
+      bind = $mainMod SHIFT, 6, split-movetoworkspace, 6
+      bind = $mainMod SHIFT, 7, split-movetoworkspace, 7
+      bind = $mainMod SHIFT, 8, split-movetoworkspace, 8
+      bind = $mainMod SHIFT, 9, split-movetoworkspace, 9
+      bind = $mainMod SHIFT, 0, split-movetoworkspace, 10
 
       # Layer Rule
       layerrule = blur,gtk-layer-shell

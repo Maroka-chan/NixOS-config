@@ -5,6 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-small.url = "github:NixOS/nixpkgs/nixos-23.11-small";
+    nixpkgs-release.url = "github:NixOS/nixpkgs/release-23.11";
     impermanence.url = "github:nix-community/impermanence";
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
@@ -15,15 +16,22 @@
     deploy-rs.url = "github:serokell/deploy-rs";
 
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    split-monitor-workspaces = {
+      url = "github:Duckonaut/split-monitor-workspaces";
+      inputs.hyprland.follows = "hyprland";
+    };
+
     hyprlock.url = "github:hyprwm/hyprlock";
     hyprlock.inputs.nixpkgs.follows = "nixpkgs";
     anyrun.url = "github:Kirottu/anyrun";
     anyrun.inputs.nixpkgs.follows = "nixpkgs";
     shutoku.url = "git+ssh://git@github.com/Maroka-chan/Shutoku-rs";
+    shutoku.inputs.nixpkgs.follows = "nixpkgs-unstable";
     vpnconfinement.url = "github:Maroka-chan/VPN-Confinement";
     neovim.url = "github:Maroka-chan/nvim-config";
-    tlock.url = "git+https://github.com/Maroka-chan/tlock?ref=build/flake&submodules=1";
+    tlock.url = "git+https://github.com/eklairs/tlock?submodules=1";
     tlock.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    ags.url = "github:Aylur/ags";
 
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
