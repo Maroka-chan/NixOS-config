@@ -134,6 +134,13 @@
     noto-fonts
   ];
 
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;
+    dockerSocket.enable = true;
+    defaultNetwork.settings.dns_enabled = true;
+  };
+
   # Display Manager
   services.greetd = {
     enable = true;
@@ -145,11 +152,11 @@
     };
   };
 
-  virtualisation.podman = {
+  # PAM
+  security.pam.services.greetd.gnupg = {
     enable = true;
-    dockerCompat = true;
-    dockerSocket.enable = true;
-    defaultNetwork.settings.dns_enabled = true;
+    noAutostart = true;
+    storeOnly = true;
   };
 
   # File Manager
@@ -170,31 +177,6 @@
     enable = true;
     package = pkgs.mullvad-vpn;
   };
-
-  # PAM
- # security.pam.services.login.gnupg = {
- #   enable = true;
- #   noAutostart = true;
- #   storeOnly = true;
- # };
-  security.pam.services.greetd.gnupg = {
-    enable = true;
-    noAutostart = true;
-    storeOnly = true;
-  };
-  services.passSecretService.enable = true;
-
- # security.pam.services = {
- #   greetd.text = ''
- #     auth      substack      login
- #     account   include       login
- #     password  substack      login
- #     session   include       login
-
- #     auth     optional  pam_gnupg.so store-only
- #     session  optional  pam_gnupg.so
- #   '';
- # };
 
   security.pam.services.swaylock = {};
 
