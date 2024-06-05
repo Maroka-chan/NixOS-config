@@ -10,6 +10,8 @@
     inputs.vpnconfinement.nixosModules.default
   ];
 
+  nix.settings.trusted-users = [ "deploy" ];
+
   systemd.services.vpn-test-service = {
     vpnconfinement = {
       enable = true;
