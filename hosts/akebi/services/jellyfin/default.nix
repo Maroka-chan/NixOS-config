@@ -4,7 +4,6 @@
     enable = true;
     group = "media";
     openFirewall = true;
-    package = inputs.nixpkgs-release.legacyPackages.${pkgs.system}.jellyfin;
   };
   
   # Enable vaapi on OS-level
