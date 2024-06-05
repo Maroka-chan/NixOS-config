@@ -2,10 +2,9 @@
   description = "A Personal NixOS Configuration";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-small.url = "github:NixOS/nixpkgs/nixos-23.11-small";
-    nixpkgs-release.url = "github:NixOS/nixpkgs/release-23.11";
+    nixpkgs-small.url = "github:NixOS/nixpkgs/nixos-24.05-small";
     impermanence.url = "github:nix-community/impermanence";
     sops-nix.url = "github:Mic92/sops-nix";
     sops-nix.inputs.nixpkgs.follows = "nixpkgs";
@@ -27,7 +26,8 @@
     anyrun.inputs.nixpkgs.follows = "nixpkgs";
     shutoku.url = "git+ssh://git@github.com/Maroka-chan/Shutoku-rs";
     shutoku.inputs.nixpkgs.follows = "nixpkgs-unstable";
-    vpnconfinement.url = "github:Maroka-chan/VPN-Confinement";
+    vpnconfinement.url = "github:Maroka-chan/VPN-Confinement?ref=develop";
+    vpnconfinement.inputs.nixpkgs.follows = "nixpkgs-unstable";
     neovim.url = "github:Maroka-chan/nvim-config";
     tlock.url = "git+https://github.com/eklairs/tlock?submodules=1";
     tlock.inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -52,7 +52,7 @@
           user = "root";
         };
       };
-      remoteBuild = true;
+      remoteBuild = false;
     };
 
     # This is highly advised, and will prevent many possible mistakes
