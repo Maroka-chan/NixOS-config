@@ -15,6 +15,7 @@
     deploy-rs.url = "github:serokell/deploy-rs";
 
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+    #hyprland.inputs.nixpkgs.follows = "nixpkgs-unstable";
     split-monitor-workspaces = {
       url = "github:Duckonaut/split-monitor-workspaces";
       inputs.hyprland.follows = "hyprland";
@@ -26,15 +27,20 @@
     anyrun.inputs.nixpkgs.follows = "nixpkgs";
     shutoku.url = "git+ssh://git@github.com/Maroka-chan/Shutoku-rs";
     shutoku.inputs.nixpkgs.follows = "nixpkgs-unstable";
-    vpnconfinement.url = "github:Maroka-chan/VPN-Confinement?ref=develop";
+    vpnconfinement.url = "github:Maroka-chan/VPN-Confinement";
+    #vpnconfinement.url = "path:///home/maroka/Documents/VPN-Confinement/";
     vpnconfinement.inputs.nixpkgs.follows = "nixpkgs-unstable";
     neovim.url = "github:Maroka-chan/nvim-config";
+    neovim.inputs.nixpkgs.follows = "nixpkgs-unstable";
     tlock.url = "git+https://github.com/eklairs/tlock?submodules=1";
     tlock.inputs.nixpkgs.follows = "nixpkgs-unstable";
     ags.url = "github:Aylur/ags";
 
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
+
+    aagl.url = "github:ezKEa/aagl-gtk-on-nix";
+    aagl.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
   outputs = inputs @ { self, nixos-generators, deploy-rs, ... }:
