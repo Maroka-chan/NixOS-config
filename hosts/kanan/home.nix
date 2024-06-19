@@ -1,8 +1,11 @@
-{ config, pkgs, inputs, ...}:
+{ config, pkgs, inputs, username, ...}:
 let
-  dotfiles = config.lib.file.mkOutOfStoreSymlink "/home/maroka/.dotfiles";
+  homeDirectory = "/home/${username}";
+  dotfiles = config.lib.file.mkOutOfStoreSymlink "${homeDirectory}/.dotfiles";
 in
 {
+  home = { inherit username homeDirectory; };
+
   home.packages = with pkgs; [
     pavucontrol # Audio control gui
     
@@ -18,6 +21,7 @@ in
     brave     # Browser
     swaybg    # Wallpaper Tool
     swayidle  # Idle management
+    hyprpicker
 
     # Screenshot
     swappy
@@ -43,12 +47,16 @@ in
 
   programs.ags = {
     enable = true;
-    configDir = ./. + "/ags";
+    configDir = "${dotfiles}/config/ags";
     extraPackages = with pkgs; [
       gtksourceview
       webkitgtk
       accountsservice
     ];
+  };
+
+  programs.obs-studio = {
+    enable = true;
   };
 
   programs = {
@@ -274,7 +282,7 @@ in
 
       history = {
         size = 10000;
-        path = "/persist/home/maroka/.local/share/zsh/.zsh_history";
+        path = "/persist" + homeDirectory + "/.local/share/zsh/.zsh_history";
       };
 
       initExtraFirst = ''
@@ -295,7 +303,7 @@ in
       zplug = {
         enable = true;
         plugins = [
-          { name = "romkatv/powerlevel10k"; tags = [ as:theme depth:1 ]; }
+          { name = "romkatv/powerlevel10k"; tags = [ "as:theme" "depth:1" ]; }
         ];
       };
     };
@@ -311,6 +319,9 @@ in
     };
     librewolf = {
       enable = true;
+      settings = {
+        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+      };
     };
     firefox = {
       enable = true;
@@ -331,12 +342,11 @@ in
   };
 
   # Home Manager Persistence
-  home.persistence."/persist/home/maroka" = {
+  home.persistence."/persist${homeDirectory}" = {
     allowOther = true;
     files = [
       ".p10k.zsh"
       ".cache/gitstatus/gitstatusd-linux-x86_64"
-      ".config/Mullvad VPN/gui_settings.json"
       ".config/btop/btop.conf"
       ".local/share/nvim/telescope_history"
       ".config/sops/age/keys.txt"
@@ -359,7 +369,6 @@ in
       ".local/share/Jellyfin Media Player/QtWebEngine/Default/Local Storage/leveldb"
       ".config/vesktop/sessionData/Local Storage/leveldb"
       ".local/share/direnv/allow"
-      ".config/github-copilot"
       ".local/state/nvim/swap"
       ".local/state/nvim/shada"
       ".local/share/osu"
@@ -370,6 +379,7 @@ in
       ".local/share/DaVinciResolve"
       ".local/share/bottles"
       ".local/share/tlock"
+      ".local/state/wireplumber"
     ];
   };
 
@@ -419,6 +429,7 @@ in
   # Hyprland
   wayland.windowManager.hyprland = {
     enable = true;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     plugins = [
       inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
     ];
@@ -563,6 +574,10 @@ in
     };
     "thunar-settings" = {
       name = "File Manager Settings";
+      noDisplay = true;
+    };
+    "thunar-volman-settings" = {
+      name = "Removable Drives and Media";
       noDisplay = true;
     };
   };

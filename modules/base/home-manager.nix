@@ -1,8 +1,8 @@
-{ inputs, config, lib, ... }:
+{ inputs, config, lib, username, ... }:
 {
   programs.fuse.userAllowOther = true;
   home-manager = {
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = { inherit inputs username; };
     useGlobalPkgs = true;
     useUserPackages = true;
   };
