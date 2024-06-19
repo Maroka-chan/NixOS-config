@@ -27,66 +27,65 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
-    boot.supportedFilesystems = [ "btrfs" ];
-    services.btrfs.autoScrub.enable = true;
+  config = mkMerge [
+    (mkIf cfg.enable {
+      boot.supportedFilesystems = [ "btrfs" ];
+      services.btrfs.autoScrub.enable = true;
+    })
+    (mkIf cfg.impermanence.enable {
+      # Wipe the root subvolume on boot.
+      boot.initrd.postDeviceCommands = pkgs.lib.mkBefore ''
+        mkdir -p /mnt
 
-  } // mkIf cfg.impermanence.enable {
-    # Wipe the root subvolume on boot.
-    boot.initrd.postDeviceCommands = pkgs.lib.mkBefore ''
-      mkdir -p /mnt
+        mount -t btrfs ${cfg.impermanence.root} /mnt
 
-      mount -t btrfs ${cfg.impermanence.root} /mnt
+        btrfs subvolume list -o /mnt/${cfg.impermanence.root-subvol} |
+        cut -f9 -d' ' |
+        while read subvolume; do
+        echo "deleting /$subvolume subvolume..."
+        btrfs subvolume delete "/mnt/$subvolume"
+        done &&
+        echo "deleting /${cfg.impermanence.root-subvol} subvolume..." &&
+        btrfs subvolume delete /mnt/${cfg.impermanence.root-subvol}
 
-      btrfs subvolume list -o /mnt/${cfg.impermanence.root-subvol} |
-      cut -f9 -d' ' |
-      while read subvolume; do
-      echo "deleting /$subvolume subvolume..."
-      btrfs subvolume delete "/mnt/$subvolume"
-      done &&
-      echo "deleting /${cfg.impermanence.root-subvol} subvolume..." &&
-      btrfs subvolume delete /mnt/${cfg.impermanence.root-subvol}
+        echo "restoring blank /${cfg.impermanence.root-subvol} subvolume..."
+        btrfs subvolume snapshot /mnt/${cfg.impermanence.blank-root-subvol} /mnt/${cfg.impermanence.root-subvol}
 
-      echo "restoring blank /${cfg.impermanence.root-subvol} subvolume..."
-      btrfs subvolume snapshot /mnt/${cfg.impermanence.blank-root-subvol} /mnt/${cfg.impermanence.root-subvol}
+        umount /mnt
+      '';
 
-      umount /mnt
-    '';
+      environment.systemPackages = 
+      let
+        # Tools
+        fs-diff = pkgs.writeScriptBin "fs-diff" ''
+            set -euo pipefail
 
-    environment.systemPackages = 
-    let
-      # Tools
-      fs-diff = pkgs.writeScriptBin "fs-diff" ''
-          set -euo pipefail
+            mkdir -p /mnt
+            mount -t btrfs ${cfg.impermanence.root} /mnt
 
-          mkdir -p /mnt
-          mount -t btrfs ${cfg.impermanence.root} /mnt
+            OLD_TRANSID=$(sudo btrfs subvolume find-new /mnt/${cfg.impermanence.blank-root-subvol} 9999999)
+            OLD_TRANSID=''${OLD_TRANSID#transid marker was }
 
-          OLD_TRANSID=$(sudo btrfs subvolume find-new /mnt/${cfg.impermanence.blank-root-subvol} 9999999)
-          OLD_TRANSID=''${OLD_TRANSID#transid marker was }
+            sudo btrfs subvolume find-new "/mnt/${cfg.impermanence.root-subvol}" "$OLD_TRANSID" |
+            sed '$d' |
+            cut -f17- -d' ' |
+            sort |
+            uniq |
+            while read path; do
+              path="/$path"
+              if [ -L "$path" ]; then
+                : # The path is a symbolic link, so is probably handled by NixOS already
+              elif [ -d "$path" ]; then
+                : # The path is a directory, ignore
+              else
+                echo "$path"
+              fi
+            done
 
-          sudo btrfs subvolume find-new "/mnt/${cfg.impermanence.root-subvol}" "$OLD_TRANSID" |
-          sed '$d' |
-          cut -f17- -d' ' |
-          sort |
-          uniq |
-          while read path; do
-            path="/$path"
-            if [ -L "$path" ]; then
-              : # The path is a symbolic link, so is probably handled by NixOS already
-            elif [ -d "$path" ]; then
-              : # The path is a directory, ignore
-            else
-              echo "$path"
-            fi
-          done
-
-          umount /mnt
-        '';
-    in
-      with pkgs; [
-        fs-diff
-      ];
-  };
+            umount /mnt
+          '';
+      in [ fs-diff ];
+    })
+  ];
 }
 
