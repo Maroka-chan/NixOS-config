@@ -15,6 +15,7 @@ let
       lib = channel.lib;
       overlay = final: prev: {
       };
+      username = "maroka";
     in lib.nixosSystem {
       inherit system;
       modules =
@@ -24,7 +25,7 @@ let
           { nixpkgs.overlays = [ overlay ]; }
           (import (./. + "/${name}/configuration.nix"))
         ];
-      specialArgs = { inherit inputs; };
+      specialArgs = { inherit inputs username; };
     };
 
   systems = {
