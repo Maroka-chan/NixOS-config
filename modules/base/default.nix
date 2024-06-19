@@ -1,4 +1,4 @@
-{ inputs, config, lib, pkgs, ...}:
+{ pkgs, ...}:
 {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -19,18 +19,12 @@
   networking = {
     nameservers = [ "1.1.1.2" "1.0.0.2" ];
     dhcpcd.extraConfig = "nohook resolv.conf";
-    networkmanager.dns = "none";
   };
 
-  # The above doesn't seem to actually update resolv.conf, so until that is fixed:
-  environment.etc = {
-    "resolv.conf".text = ''
-      nameserver 192.168.0.1
-      nameserver 1.1.1.2
-      nameserver 1.0.0.2
-      options edns0
-    '';
-  };
+  # Base packages
+  environment.systemPackages = with pkgs; [
+    zip unzip
+  ];
 
   # Firewall
   networking.firewall = {
