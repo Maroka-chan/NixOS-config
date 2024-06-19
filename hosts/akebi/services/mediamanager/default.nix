@@ -5,12 +5,13 @@
   ];
 
   sops.secrets = {
-    mullvad_privatekey = {};
-    mullvad_allowedips = {};
-    mullvad_publickey = {};
-    mullvad_endpoint = {};
-    mullvad_address = {};
-    mullvad_dns = {};
+    vpn_privatekey = {};
+    vpn_presharedkey = {};
+    vpn_allowedips = {};
+    vpn_publickey = {};
+    vpn_endpoint = {};
+    vpn_address = {};
+    vpn_dns = {};
 
     transmission_user = {};
     transmission_pass = {
@@ -39,20 +40,21 @@
     {
       "rpc-username": "${config.sops.placeholder.transmission_user}",
       "rpc-password": "${config.sops.placeholder.transmission_pass}",
-      "bind-address-ipv4": "${config.sops.placeholder.mullvad_address}"
+      "bind-address-ipv4": "${config.sops.placeholder.vpn_address}"
     }
   '';
 
   sops.templates."wg0.conf".content = ''
     [Interface]
-    PrivateKey = ${config.sops.placeholder.mullvad_privatekey}
-    Address = ${config.sops.placeholder.mullvad_address}
-    DNS = ${config.sops.placeholder.mullvad_dns}
+    PrivateKey = ${config.sops.placeholder.vpn_privatekey}
+    Address = ${config.sops.placeholder.vpn_address}
+    DNS = ${config.sops.placeholder.vpn_dns}
 
     [Peer]
-    PublicKey = ${config.sops.placeholder.mullvad_publickey}
-    AllowedIPs = ${config.sops.placeholder.mullvad_allowedips}
-    Endpoint = ${config.sops.placeholder.mullvad_endpoint}
+    PublicKey = ${config.sops.placeholder.vpn_publickey}
+    PresharedKey = ${config.sops.placeholder.vpn_presharedkey}
+    AllowedIPs = ${config.sops.placeholder.vpn_allowedips}
+    Endpoint = ${config.sops.placeholder.vpn_endpoint}
   '';
 
   vpnnamespaces.wg = {
@@ -64,6 +66,9 @@
     portMappings = [
       { from = 9091; to = 9091; }
       { from = 3000; to = 3000; }
+    ];
+    openVPNPorts = [
+      { port = 12340; protocol = "both"; }
     ];
   };
 
@@ -98,7 +103,9 @@
       "dht-enabled" = false;
       "lpd-enabled" = false;
       "utp-enabled" = false;
-      "port-forwarding-enabled" = false;
+
+      "port-forwarding-enabled" = true;
+      "peer-port" = 12340;
 
       "cache-size-mb" = 512;
       "peer-limit-global" = 1000;
