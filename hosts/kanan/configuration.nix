@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, inputs, username, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -8,7 +8,23 @@
     }
     ../../modules/base/home-manager.nix
     ../../modules/hardware/gpu/amd.nix
+    ../../modules/input/japanese.nix
+    ../../modules/programs/aagl.nix
+    ../../modules/programs/mullvad.nix
   ];
+
+  # Programs
+  # An Anime Game Launcher
+  programs.aagl.enable = true;
+  programs.aagl.persist = true;
+  # VPN
+  programs.mullvad.enable = true;
+  programs.mullvad.persist = true;
+
+
+  services.resolved.enable = true;
+
+  xdg.portal.enable = true;
 
   users.mutableUsers = false;
   networking.networkmanager.enable = true;
@@ -21,24 +37,19 @@
 
   # Create persist directories
   systemd.tmpfiles.rules = [
-    "d /persist/home/maroka 0700 maroka users"
+    "d /persist/home/${username} 0700 ${username} users"
   ];
 
   # Secrets
   sops.defaultSopsFile = ./secrets/secrets.yaml;
-  sops.age.keyFile = "/persist/home/maroka/.config/sops/age/keys.txt";
+  sops.age.keyFile = "/persist/home/${username}/.config/sops/age/keys.txt";
 
-  sops.secrets.maroka-password = {
+  sops.secrets."${username}-password" = {
       neededForUsers = true;
   };
 
   # Home Manager
-  home-manager.users.maroka = {
-    home = {
-      username = "maroka";
-      homeDirectory = "/home/maroka";
-      packages = [ inputs.anyrun.packages.${pkgs.system}.anyrun ];
-    };
+  home-manager.users.${username} = {
     imports = [
       inputs.impermanence.nixosModules.home-manager.impermanence
       inputs.hyprland.homeManagerModules.default
@@ -56,7 +67,7 @@
   environment.systemPackages = with pkgs; [
     btop
     neofetch
-    inputs.nixpkgs.legacyPackages.${pkgs.system}.eww-wayland
+    eww
     protonmail-bridge-gui
 
     inotify-tools
@@ -87,11 +98,11 @@
     };
   };
 
-  # Users
-  users.users.maroka = {
+  # Main user
+  users.users.${username} = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
-    hashedPasswordFile = config.sops.secrets.maroka-password.path;
+    hashedPasswordFile = config.sops.secrets."${username}-password".path;
   };
 
   # Set shell
@@ -172,12 +183,6 @@
   programs.xfconf.enable = true;
   services.gvfs.enable = true;
 
-  # VPN
-  services.mullvad-vpn = {
-    enable = true;
-    package = pkgs.mullvad-vpn;
-  };
-
   security.pam.services.swaylock = {};
 
   # Files to persist
@@ -185,12 +190,11 @@
     hideMounts = true;
     directories = [
       "/etc/NetworkManager/system-connections"
-      "/etc/mullvad-vpn"
     ];
     files = [
       "/etc/machine-id"
     ];
-    users.maroka = {
+    users.${username} = {
       directories = [
         ".gnupg"
       ];
