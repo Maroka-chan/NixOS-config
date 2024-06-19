@@ -2,6 +2,7 @@
 let
   baseModules = with inputs; [
     ../modules
+    ../modules/development
     impermanence.nixosModules.impermanence
     sops-nix.nixosModules.sops
     disko.nixosModules.disko
@@ -14,6 +15,9 @@ let
     let
       lib = channel.lib;
       overlay = final: prev: {
+        mpv = prev.mpv.override {
+          scripts = [ final.mpvScripts.mpris ];
+        };
       };
       username = "maroka";
     in lib.nixosSystem {

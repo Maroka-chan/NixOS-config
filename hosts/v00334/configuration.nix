@@ -35,7 +35,7 @@
   environment.systemPackages = with pkgs; [
     btop
     neofetch
-    eww-wayland
+    eww
 
     inotify-tools
     ripgrep
