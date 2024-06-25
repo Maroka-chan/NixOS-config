@@ -3,7 +3,6 @@
   imports =
   [
     ./hardware-configuration.nix
-    ./firewall.nix
     ./deployment-user.nix
     ./networkshare-user.nix
     ./services
