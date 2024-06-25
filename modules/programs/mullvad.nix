@@ -2,9 +2,9 @@
 with lib;
 let
   module_name = "mullvad";
-  cfg = config.programs."${module_name}";
+  cfg = config.configured.programs."${module_name}";
 in {
-  options.programs."${module_name}" = {
+  options.configured.programs."${module_name}" = {
     enable = mkEnableOption "Enable Mullvad VPN Client";
     persist = mkEnableOption "Persist state";
   };

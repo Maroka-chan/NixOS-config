@@ -1,11 +1,8 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, inputs, username, ... }:
 {
   imports = [
     ./hardware-configuration.nix
     inputs.home-manager.nixosModule
-    inputs.hyprland.nixosModules.default {
-      programs.hyprland.enable = true;
-    }
     ../../modules/base/home-manager.nix
   ];
 
@@ -21,7 +18,6 @@
     };
     imports = [
       inputs.impermanence.nixosModules.home-manager.impermanence
-      inputs.hyprland.homeManagerModules.default
       inputs.anyrun.homeManagerModules.default
       ./home.nix
     ];
@@ -120,6 +116,19 @@
   services.logind.lidSwitch = "suspend";
   services.upower.enable = true;
 
+  # Window Manager / Compositor
+  configured.programs.hyprland.enable = true;
+  configured.programs.hyprland.extraConfig = let
+    dotfiles = config.home-manager.users.${username}.lib.file.mkOutOfStoreSymlink "/home/${username}/.dotfiles";
+  in ''
+    monitor=eDP-1,1920x1200,2560x0,1
+    monitor=HDMI-A-1,3840x2160,0x0,1.5
+    monitor=DP-1,3840x2160,-2560x0,1.5
+
+    exec-once = swaybg -i ${dotfiles}/wallpapers/yume_no_kissaten_yumegatari.png -m fill
+    exec-once = eww daemon & eww open statusbar
+  '';
+
   # Display Manager
   services.greetd = {
     enable = true;
@@ -171,13 +180,11 @@
     builders-use-substitutes = true;
     substituters = [
       "https://nix-community.cachix.org"
-      "https://hyprland.cachix.org"
       "https://anyrun.cachix.org"
       "https://devenv.cachix.org"
     ];
     trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       "anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s="
       "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
     ];

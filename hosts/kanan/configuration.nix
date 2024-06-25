@@ -3,24 +3,10 @@
   imports = [
     ./hardware-configuration.nix
     inputs.home-manager.nixosModule
-    inputs.hyprland.nixosModules.default {
-      programs.hyprland.enable = true;
-    }
     ../../modules/base/home-manager.nix
     ../../modules/hardware/gpu/amd.nix
     ../../modules/input/japanese.nix
-    ../../modules/programs/aagl.nix
-    ../../modules/programs/mullvad.nix
   ];
-
-  # Programs
-  # An Anime Game Launcher
-  programs.aagl.enable = true;
-  programs.aagl.persist = true;
-  # VPN
-  programs.mullvad.enable = true;
-  programs.mullvad.persist = true;
-
 
   services.resolved.enable = true;
 
@@ -52,15 +38,10 @@
   home-manager.users.${username} = {
     imports = [
       inputs.impermanence.nixosModules.home-manager.impermanence
-      inputs.hyprland.homeManagerModules.default
-      inputs.anyrun.homeManagerModules.default
       inputs.ags.homeManagerModules.default
       ./home.nix
     ];
   };
-
-  # Environment Variables
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -80,13 +61,32 @@
     nufraw-thumbnailer
   ];
 
-  programs.steam.enable = true;
+  # Programs
+  # An Anime Game Launcher
+  configured.programs.aagl.enable = true;
+  configured.programs.aagl.persist = true;
+  # VPN
+  configured.programs.mullvad.enable = true;
+  configured.programs.mullvad.persist = true;
+  # Browser
+  configured.programs.librewolf.enable = true;
+  configured.programs.librewolf.persist = true;
+  configured.programs.librewolf.defaultBrowser = true;
+  # Window Manager / Compositor
+  configured.programs.hyprland.enable = true;
+  configured.programs.hyprland.extraConfig = let
+    dotfiles = config.home-manager.users.${username}.lib.file.mkOutOfStoreSymlink "/home/${username}/.dotfiles";
+  in ''
+    monitor=DP-3,2560x1440@240,1080x240,1
+    monitor=HDMI-A-1,1920x1080@60,0x0,1,transform,3
 
-  xdg.mime.defaultApplications = {
-    "text/html"                     = [ "librewolf.desktop" ];
-    "x-scheme-handler/http"         = [ "librewolf.desktop" ];
-    "x-scheme-handler/https"        = [ "librewolf.desktop" ];
-  };
+    exec-once = swaybg -i ${dotfiles}/wallpapers/yume_no_kissaten_yumegatari.png -m fill
+    exec-once = eww daemon & eww open-many statusbar radio controls
+
+    windowrulev2 = idleinhibit fullscreen,class:(org.jellyfin.),title:(Jellyfin Media Player)
+  '';
+
+  programs.steam.enable = true;
 
   # Git
   programs.git = {
@@ -213,13 +213,11 @@
     builders-use-substitutes = true;
     substituters = [
       "https://nix-community.cachix.org"
-      "https://hyprland.cachix.org"
       "https://anyrun.cachix.org"
       "https://devenv.cachix.org"
     ];
     trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       "anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s="
       "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
     ];

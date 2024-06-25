@@ -2,9 +2,9 @@
 with lib;
 let
   module_name = "aagl";
-  cfg = config.programs."${module_name}";
+  cfg = config.configured.programs."${module_name}";
 in {
-  options.programs."${module_name}" = {
+  options.configured.programs."${module_name}" = {
     enable = mkEnableOption "Enable An Anime Game Launcher";
     persist = mkEnableOption "Persist state";
   };
