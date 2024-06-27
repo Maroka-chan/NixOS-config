@@ -10,7 +10,7 @@
 
   services.resolved.enable = true;
 
-  xdg.portal.enable = true;
+  #xdg.portal.enable = true;
 
   users.mutableUsers = false;
   networking.networkmanager.enable = true;
@@ -82,9 +82,12 @@
 
     exec-once = swaybg -i ${dotfiles}/wallpapers/yume_no_kissaten_yumegatari.png -m fill
     exec-once = eww daemon & eww open-many statusbar radio controls
-
-    windowrulev2 = idleinhibit fullscreen,class:(org.jellyfin.),title:(Jellyfin Media Player)
   '';
+  # Application Launcher
+  configured.programs.rofi.enable = true;
+  # Terminal Emulator
+  configured.programs.zsh.enable = true;
+  configured.programs.zsh.persist = true;
 
   programs.steam.enable = true;
 
@@ -213,12 +216,10 @@
     builders-use-substitutes = true;
     substituters = [
       "https://nix-community.cachix.org"
-      "https://anyrun.cachix.org"
       "https://devenv.cachix.org"
     ];
     trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s="
       "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
     ];
     experimental-features = "nix-command flakes";
@@ -228,7 +229,7 @@
   nix.gc = {
     automatic = true;
     dates = "weekly";
-    options = "--delete-older-than 30d";
+    options = "--delete-older-than 14d";
   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
