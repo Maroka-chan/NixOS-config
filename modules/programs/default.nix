@@ -7,6 +7,9 @@
    ./hyprland.nix
    ./rofi.nix
    ./zsh.nix
+   ./thunderbird.nix
+   ./thunar.nix
+   ./pipewire.nix
   ];
 }
 

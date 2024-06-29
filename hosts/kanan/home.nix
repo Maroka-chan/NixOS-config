@@ -62,16 +62,6 @@ in
     alacritty = {
       enable = true;
     };
-    thunderbird = {
-      enable = true;
-      settings = {
-        "general.useragent.override" = "";
-        "privacy.donottrackheader.enabled" = true;
-      };
-      profiles.main = {
-        isDefault = true;
-      };
-    };
     password-store.enable = true;
     git = {
       enable = true;
@@ -130,7 +120,6 @@ in
       ".local/state/nvim/shada"
       ".local/share/osu"
       ".local/share/password-store"
-      ".thunderbird"
       ".config/protonmail/bridge-v3"
       ".local/share/protonmail/bridge-v3"
       ".local/share/DaVinciResolve"
@@ -188,22 +177,6 @@ in
   
   # Alacritty
   xdg.configFile."alacritty".source = "${dotfiles}/config/alacritty";
-
-  # Hide desktop files
-  xdg.desktopEntries = {
-    "thunar-bulk-rename" = {
-      name = "Bulk Rename";
-      noDisplay = true;
-    };
-    "thunar-settings" = {
-      name = "File Manager Settings";
-      noDisplay = true;
-    };
-    "thunar-volman-settings" = {
-      name = "Removable Drives and Media";
-      noDisplay = true;
-    };
-  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

@@ -10,8 +10,6 @@
 
   services.resolved.enable = true;
 
-  #xdg.portal.enable = true;
-
   users.mutableUsers = false;
   networking.networkmanager.enable = true;
 
@@ -56,9 +54,6 @@
     jq
     socat
     wl-clipboard # Wayland Clipboard Utilities
-
-    ffmpegthumbnailer
-    nufraw-thumbnailer
   ];
 
   # Programs
@@ -88,6 +83,13 @@
   # Terminal Emulator
   configured.programs.zsh.enable = true;
   configured.programs.zsh.persist = true;
+  # Email Client
+  configured.programs.thunderbird.enable = true;
+  configured.programs.thunderbird.persist = true;
+  # File Manager
+  configured.programs.thunar.enable = true;
+  # Pipewire
+  configured.programs.pipewire.enable = true;
 
   programs.steam.enable = true;
 
@@ -115,28 +117,6 @@
 
   # SSH
   programs.ssh.startAgent = false; # gpg-agent emulates ssh-agent. So we can use both SSH and GPG keys.
-
-  # Pipewire
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-
-    # Bluetooth
-    wireplumber.configPackages = [
-      (pkgs.writeTextDir "share/wireplumber/bluetooth.lua.d/51-bluez-config.lua" ''
-        bluez_monitor.properties = {
-          ["bluez5.enable-sbc-xq"] = true,
-          ["bluez5.enable-msbc"] = true,
-          ["bluez5.enable-hw-volume"] = true,
-          ["bluez5.headset-roles"] = "[ hsp_hs hsp_ag hfp_hf hfp_ag ]"
-        }
-      '')
-    ];
-  };
 
   # Bluetooth
   hardware.bluetooth.enable = true;
@@ -172,19 +152,6 @@
     noAutostart = true;
     storeOnly = true;
   };
-
-  # File Manager
-  programs.thunar = {
-    enable = true;
-    plugins = with pkgs.xfce; [
-      tumbler
-      thunar-archive-plugin
-      thunar-media-tags-plugin
-      thunar-volman
-    ];
-  };
-  programs.xfconf.enable = true;
-  services.gvfs.enable = true;
 
   security.pam.services.swaylock = {};
 
