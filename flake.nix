@@ -41,6 +41,10 @@
 
     aagl.url = "github:ezKEa/aagl-gtk-on-nix";
     aagl.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    umu = {
+      url = "path:///home/maroka/Documents/umu-launcher";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ { self, nixos-generators, deploy-rs, ... }:

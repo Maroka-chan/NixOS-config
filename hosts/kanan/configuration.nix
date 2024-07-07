@@ -44,7 +44,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    btop
+    (btop.override {rocmSupport = true;})
     neofetch
     eww
     protonmail-bridge-gui
@@ -60,6 +60,9 @@
   # An Anime Game Launcher
   configured.programs.aagl.enable = true;
   configured.programs.aagl.persist = true;
+  # HoYoPlay
+  configured.programs.hoyoplay.enable = true;
+  configured.programs.hoyoplay.persist = true;
   # VPN
   configured.programs.mullvad.enable = true;
   configured.programs.mullvad.persist = true;

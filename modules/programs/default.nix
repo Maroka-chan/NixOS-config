@@ -10,6 +10,7 @@
    ./thunderbird.nix
    ./thunar.nix
    ./pipewire.nix
+   ./hoyoplay.nix
   ];
 }
 
