@@ -70,19 +70,16 @@
       builtins.mapAttrs
         (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
-
-    ### ISO's ###
-   # packages."${system}" = {
-   #   aisaka-iso = nixos-generators.nixosGenerate {
-   #     inherit system;
-   #     format = "install-iso";
-   #     modules = [ ./hosts/aisaka/iso ];
-   #   };
-   #   akebi-iso = nixos-generators.nixosGenerate {
-   #     inherit system;
-   #     format = "install-iso";
-   #     modules = [ ./hosts/akebi/iso.nix ];
-   #   };
-   # };
+    packages = let
+      system = "x86_64-linux";
+    in {
+      "${system}" = {
+        installer-iso = nixos-generators.nixosGenerate {
+          inherit system;
+          format = "install-iso";
+          modules = [ ./iso.nix ];
+        };
+      };
+    };
   };
 }
