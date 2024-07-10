@@ -3,7 +3,7 @@
 # Install on a new machine
 
 1. Add new nixosConfiguration for the new machine and set up [secrets](#setting-up-secrets)
-2. Build and boot into the installer iso on the target machine
+2. Add your public ssh key to [iso.nix](https://github.com/Maroka-chan/NixOS-config/blob/master/iso.nix) and boot into the installer iso on the target machine
 ```bash
 nix build .#installer-iso --no-link --print-out-paths
 ```
@@ -33,6 +33,7 @@ nix run github:nix-community/nixos-anywhere -- \
 ssh nixos@<ip>
 sudo cryptsetup luksHeaderBackup --header-backup-file ./"$(hostname)".luksheader <crypt-partition>
 ```
+8. Insert USB with key into the target machine so it can decrypt disks on reboot
 
 # Test installing in interactive VM
 
