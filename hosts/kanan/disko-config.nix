@@ -2,24 +2,28 @@
   disko.devices = {
     disk.nixos = {
       type = "disk";
-      name = "CRYPT_NIXOS";
       device = "/dev/nvme0n1";
-      imageSize = "20G";
+      imageSize = "50G";
       content.type = "gpt";
 
       content.partitions.ESP = {
         type = "EF00";
         size = "550M";
+        label = "BOOT";
         content = {
           type = "filesystem";
           format = "vfat";
           mountpoint = "/boot";
           extraArgs = [ "-n BOOT" ];
+          mountOptions = [
+            "defaults"
+          ];
         };
       };
 
       content.partitions.luks = {
         size = "100%";
+        label = "CRYPT_NIXOS";
 
         content = {
           type = "luks";
@@ -28,6 +32,7 @@
             allowDiscards = true;
             keyFileSize = 4096;
             keyFile = "/dev/disk/by-partlabel/CRYPTKEY";
+            fallbackToPassword = true;
           };
         };
 
@@ -38,12 +43,12 @@
           subvolumes = let
             mountOptions = [ "compress=zstd" "noatime" "ssd" "autodefrag" "discard=async" ];
           in {
-            "/root"     = { mountpoint = "/";         mountOptions = [ "subvol=root" ]    ++ mountOptions; };
-            "/home"     = { mountpoint = "/home";     mountOptions = [ "subvol=home" ]    ++ mountOptions; };
-            "/nix"      = { mountpoint = "/nix";      mountOptions = [ "subvol=nix" ]     ++ mountOptions; };
-            "/persist"  = { mountpoint = "/persist";  mountOptions = [ "subvol=persist" ] ++ mountOptions; };
-            "/log"      = { mountpoint = "/var/log";  mountOptions = [ "subvol=log" ]     ++ mountOptions; };
-            "/swap" = {
+            "root"     = { mountpoint = "/";        inherit mountOptions; };
+            "home"     = { mountpoint = "/home";    inherit mountOptions; };
+            "nix"      = { mountpoint = "/nix";     inherit mountOptions; };
+            "persist"  = { mountpoint = "/persist"; inherit mountOptions; };
+            "log"      = { mountpoint = "/var/log"; inherit mountOptions; };
+            "swap" = {
               mountpoint = "/swap";
               mountOptions = [ "subvol=swap" "noatime" ];
               swap.swapfile.size = "4G";
