@@ -40,6 +40,13 @@
           type = "btrfs";
           extraArgs = [ "-f" "-L NIXOS" ];
 
+          postCreateHook = ''
+            MNTPOINT=$(mktemp -d)
+            mount -t btrfs "/dev/mapper/crypt-nixos" "$MNTPOINT"
+            trap 'umount $MNTPOINT; rm -rf $MNTPOINT' EXIT
+            btrfs subvolume snapshot -r $MNTPOINT/root $MNTPOINT/root-blank
+          '';
+
           subvolumes = let
             mountOptions = [ "compress=zstd" "noatime" "ssd" "autodefrag" "discard=async" ];
           in {
