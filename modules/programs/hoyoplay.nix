@@ -9,30 +9,18 @@ in {
     persist = mkEnableOption "Persist state";
   };
 
-  # TODO: Block telemetry with iptables
   config = mkMerge [
     (mkIf cfg.enable {
+      # Block telemetry
+      networking.hosts = {
+        "0.0.0.0" = [ "overseauspider.yuanshen.com" "log-upload-os.hoyoverse.com" "log-upload-os.mihoyo.com" "dump.gamesafe.qq.com" "log-upload.mihoyo.com" "devlog-upload.mihoyo.com" "uspider.yuanshen.com" "sg-public-data-api.hoyoverse.com" "public-data-api.mihoyo.com" "prd-lender.cdp.internal.unity3d.com" "thind-prd-knob.data.ie.unity3d.com" "thind-gke-usc.prd.data.corp.unity3d.com" "cdp.cloud.unity3d.com" "remote-config-proxy-prd.uca.cloud.unity3d.com" "pc.crashsight.wetest.net" ];
+      };
+
       environment.systemPackages = let
         hoyoplay-version = "1.0.5.88";
         hoyoplay = pkgs.fetchurl {
           url = "https://hoyo.link/8HbjFBAL";
           hash = "sha256-EOXyqnGxA7gQ6be9671VIhyYQVElIKXKieRskzZ8Dhw=";
-        };
-        hoyoplay-icon = pkgs.stdenvNoCC.mkDerivation {
-          name = "hoyoplay-icon";
-          src = hoyoplay;
-
-          dontConfigure = true;
-          dontBuild = true;
-          dontInstall = true;
-
-          nativeBuildInputs = [ pkgs.p7zip ];
-
-          unpackPhase = ''
-            7z e $src ${hoyoplay-version}/launcher.exe -o$out
-            7z e -so $out/launcher.exe .rsrc/1033/ICON/1 > $out/icon.ico
-            rm $out/launcher.exe
-          '';
         };
         hoyoplay-script = pkgs.writeShellApplication {
           name = module_name;
@@ -57,7 +45,7 @@ in {
         (pkgs.makeDesktopItem {
           name = "HoYoPlay";
           desktopName = "HoYoPlay";
-          icon = "${hoyoplay-icon}/icon.ico";
+          icon = ./. + "/hoyoplay.ico";
           exec = "${hoyoplay-script}/bin/${module_name}";
           categories = [ "Game" ];
         })
