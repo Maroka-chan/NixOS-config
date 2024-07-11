@@ -15,7 +15,7 @@
     deploy-rs.url = "github:serokell/deploy-rs";
 
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-    #hyprland.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    hyprland.inputs.nixpkgs.follows = "nixpkgs-unstable";
     split-monitor-workspaces = {
       url = "github:Duckonaut/split-monitor-workspaces";
       inputs.hyprland.follows = "hyprland";
@@ -28,7 +28,6 @@
     shutoku.url = "git+ssh://git@github.com/Maroka-chan/Shutoku-rs";
     shutoku.inputs.nixpkgs.follows = "nixpkgs-unstable";
     vpnconfinement.url = "github:Maroka-chan/VPN-Confinement";
-    #vpnconfinement.url = "path:///home/maroka/Documents/VPN-Confinement/";
     vpnconfinement.inputs.nixpkgs.follows = "nixpkgs-unstable";
     neovim.url = "github:Maroka-chan/nvim-config";
     neovim.inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -39,8 +38,6 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
-    aagl.url = "github:ezKEa/aagl-gtk-on-nix";
-    aagl.inputs.nixpkgs.follows = "nixpkgs-unstable";
     umu = {
       url = "path:///home/maroka/Documents/umu-launcher";
       inputs.nixpkgs.follows = "nixpkgs";

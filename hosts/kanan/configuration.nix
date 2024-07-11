@@ -2,15 +2,20 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./disko-config.nix
     inputs.home-manager.nixosModule
     ../../modules/base/home-manager.nix
     ../../modules/hardware/gpu/amd.nix
     ../../modules/input/japanese.nix
   ];
 
-  services.resolved.enable = true;
+  # Secrets
+  sops.defaultSopsFile = ./secrets/secrets.yaml;
+  sops.age.keyFile = "/persist/home/${username}/.config/sops/age/keys.txt";
+  sops.secrets."${username}-password" = { neededForUsers = true; };
 
-  users.mutableUsers = false;
+  # Networking
+  services.resolved.enable = true;
   networking.networkmanager.enable = true;
 
   # Filesystem
@@ -19,18 +24,18 @@
     impermanence.enable = true;
   };
 
+  # Users
+  users.mutableUsers = false;
+  users.users.${username} = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" "networkmanager" ];
+    hashedPasswordFile = config.sops.secrets."${username}-password".path;
+  };
+
   # Create persist directories
   systemd.tmpfiles.rules = [
     "d /persist/home/${username} 0700 ${username} users"
   ];
-
-  # Secrets
-  sops.defaultSopsFile = ./secrets/secrets.yaml;
-  sops.age.keyFile = "/persist/home/${username}/.config/sops/age/keys.txt";
-
-  sops.secrets."${username}-password" = {
-      neededForUsers = true;
-  };
 
   # Home Manager
   home-manager.users.${username} = {
@@ -44,22 +49,12 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    (btop.override {rocmSupport = true;})
-    neofetch
     eww
     protonmail-bridge-gui
-
-    inotify-tools
-    ripgrep
-    jq
-    socat
     wl-clipboard # Wayland Clipboard Utilities
   ];
 
   # Programs
-  # An Anime Game Launcher
-  configured.programs.aagl.enable = true;
-  configured.programs.aagl.persist = true;
   # HoYoPlay
   configured.programs.hoyoplay.enable = true;
   configured.programs.hoyoplay.persist = true;
@@ -105,18 +100,6 @@
       core.autocrlf = "input";
     };
   };
-
-  # Main user
-  users.users.${username} = {
-    isNormalUser = true;
-    extraGroups = [ "wheel" "networkmanager" ];
-    hashedPasswordFile = config.sops.secrets."${username}-password".path;
-  };
-
-  # Set shell
-  programs.zsh.enable = true;
-  environment.pathsToLink = [ "/share/zsh" ]; # Needed for zsh completion for system packages
-  users.defaultUserShell = pkgs.zsh;
 
   # SSH
   programs.ssh.startAgent = false; # gpg-agent emulates ssh-agent. So we can use both SSH and GPG keys.
