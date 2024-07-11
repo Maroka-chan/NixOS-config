@@ -81,6 +81,7 @@ in {
         users.${username} = {
           directories = [
             ".umu/${module_name}"
+            ".local/share/umu"
             ".local/share/Steam/compatibilitytools.d"
           ];
         };
