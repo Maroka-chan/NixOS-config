@@ -84,7 +84,7 @@
   services.transmission = {
     enable = true;
     group = "media";
-    package = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system}.transmission_4;
+    package = pkgs.transmission_4;
     credentialsFile = config.sops.templates."transmission_settings.json".path;
     settings = {
       "download-dir" = "/data/media/downloads";
