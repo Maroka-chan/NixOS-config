@@ -11,6 +11,46 @@
 
   nix.settings.trusted-users = [ "deploy" ];
 
+  systemd.services.dnstest = {
+    vpnconfinement = {
+      enable = true;
+      vpnnamespace = "wg";
+    };
+
+    script = let
+      vpn-test = pkgs.writeShellApplication {
+        name = "vpn-test";
+
+        runtimeInputs = with pkgs; [util-linux unixtools.ping coreutils curl bash libressl netcat-gnu openresolv dig];
+
+        text = ''
+          cd "$(mktemp -d)"
+
+          # Print resolv.conf
+          echo "/etc/resolv.conf contains:"
+          cat /etc/resolv.conf
+
+          # Query resolvconf
+          echo "resolvconf output:"
+          resolvconf -l
+          echo ""
+
+          # Get ip
+          echo "Getting IP:"
+          curl -s ipinfo.io
+
+          echo -ne "DNS leak test:"
+          curl -s https://raw.githubusercontent.com/macvk/dnsleaktest/b03ab54d574adbe322ca48cbcb0523be720ad38d/dnsleaktest.sh -o dnsleaktest.sh
+          chmod +x dnsleaktest.sh
+          ./dnsleaktest.sh
+
+          echo "resolv:"
+          ls /etc/resolv.conf
+        '';
+      };
+    in "${vpn-test}/bin/vpn-test";
+  };
+
   systemd.services.vpn-test-service = {
     vpnconfinement = {
       enable = true;
