@@ -34,13 +34,9 @@
   # Base packages
   environment.systemPackages = with pkgs; [
     zip unzip
-    (btop.override {rocmSupport = true;})
+    btop
+    #(btop.override {rocmSupport = true;})
   ];
-
-  # Shell
-  programs.zsh.enable = true;
-  environment.pathsToLink = [ "/share/zsh" ]; # Needed for zsh completion for system packages
-  users.defaultUserShell = pkgs.zsh;
 
   # Remove sudo lectures
   security.sudo.extraConfig = ''

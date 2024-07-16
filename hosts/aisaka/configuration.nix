@@ -44,7 +44,6 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     btop
-    neofetch
     eww
 
     inotify-tools

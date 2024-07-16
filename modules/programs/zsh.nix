@@ -1,4 +1,4 @@
-{ lib, config, username, ... }:
+{ pkgs, lib, config, username, ... }:
 with lib;
 let
   module_name = "zsh";
@@ -11,6 +11,11 @@ in {
 
   config = mkMerge [
     (mkIf cfg.enable {
+      # Not sure why this is needed when we also enable the home-manager module
+      programs.zsh.enable = true;
+      environment.pathsToLink = [ "/share/zsh" ]; # Needed for zsh completion for system packages
+      users.defaultUserShell = pkgs.zsh;
+
       home-manager.users.${username} = {
         programs.zsh = {
           enable = true;

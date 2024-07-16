@@ -58,9 +58,7 @@ in
   };
 
   programs = {
-    alacritty = {
-      enable = true;
-    };
+    alacritty.enable = true;
     password-store.enable = true;
     gpg.enable = true;
     git = {
