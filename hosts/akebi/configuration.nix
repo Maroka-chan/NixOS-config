@@ -133,12 +133,6 @@
   # Set users to be immutable
   users.mutableUsers = false;
 
-  # Secrets
-  sops.defaultSopsFile = ./secrets/secrets.yaml;
-  sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-  sops.age.keyFile = "/var/lib/sops-nix/keys.txt";
-  sops.age.generateKey = true;
-
   # Filesystem
   filesystem.btrfs = {
     enable = true;

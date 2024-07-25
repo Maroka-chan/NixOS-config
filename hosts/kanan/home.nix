@@ -95,7 +95,6 @@ in
       ".cache/gitstatus/gitstatusd-linux-x86_64"
       ".config/btop/btop.conf"
       ".local/share/nvim/telescope_history"
-      ".config/sops/age/keys.txt"
       ".config/vesktop/settings/settings.json"
       ".config/vesktop/settings.json"
       ".config/vesktop/state.json"

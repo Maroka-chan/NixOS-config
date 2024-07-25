@@ -4,7 +4,7 @@ let
     ../modules
     ../modules/development
     impermanence.nixosModules.impermanence
-    sops-nix.nixosModules.sops
+    agenix.nixosModules.default
     disko.nixosModules.disko
   ];
 
@@ -27,6 +27,7 @@ let
         ++ [
           { networking.hostName = name; }
           { nixpkgs.overlays = [ overlay ]; }
+          { age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ]; }
           (import (./. + "/${name}/configuration.nix"))
         ];
       specialArgs = { inherit inputs username; };

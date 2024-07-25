@@ -15,14 +15,6 @@
     impermanence.enable = true;
   };
 
-  # Secrets
-  sops.defaultSopsFile = ./secrets/secrets.yaml;
-  sops.age.keyFile = "/persist/home/maroka/.config/sops/age/keys.txt";
-
-  sops.secrets.maroka-password = {
-      neededForUsers = true;
-  };
-
   # Home Manager
   home-manager.users.maroka = {
     home = {
@@ -78,10 +70,11 @@
   services.tailscale.enable = true;
 
   # Users
+  age.secrets.maroka-password.file = ../../secrets/maroka-password.age;
   users.users.maroka = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
-    hashedPasswordFile = config.sops.secrets.maroka-password.path;
+    hashedPasswordFile = config.age.secrets.maroka-password.path;
   };
 
   # Set shell

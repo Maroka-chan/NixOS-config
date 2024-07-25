@@ -1,12 +1,10 @@
-{ pkgs, config, ... }:
+{ config, ... }:
 {
-  sops.secrets = {
-    tailscale_authkey = {};
-  };
+  age.secrets.tailscale-authkey.file = ../../../../secrets/tailscale-authkey.age;
 
   services.tailscale = {
     enable = true;
     openFirewall = true;
-    authKeyFile = config.sops.secrets.tailscale_authkey.path;
+    authKeyFile = config.age.secrets.tailscale-authkey.path;
   };
 }

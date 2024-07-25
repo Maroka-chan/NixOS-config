@@ -1,25 +1,17 @@
-{ pkgs, config, ... }:
+{ config, ... }:
 {
-  sops.secrets = {
-    restic_pass = {};
-    restic_memories_repo = {};
-    restic_access_key_id = {};
-    restic_secret_access_key = {};
-  };
-
-  sops.templates."restic.env".content = ''
-    AWS_ACCESS_KEY_ID=${config.sops.placeholder.restic_access_key_id}
-    AWS_SECRET_ACCESS_KEY=${config.sops.placeholder.restic_secret_access_key}
-  '';
+  age.secrets.restic-env.file = ../../../../secrets/restic-env.age;
+  age.secrets.restic-pass.file = ../../../../secrets/restic-pass.age;
+  age.secrets.restic-repo.file = ../../../../secrets/restic-repo.age;
 
   services.restic = {
     backups = {
       memories = {
         # user = "backup";
         initialize = true;
-        repositoryFile = config.sops.secrets.restic_memories_repo.path;
-        passwordFile = config.sops.secrets.restic_pass.path;
-        environmentFile = config.sops.templates."restic.env".path;
+        repositoryFile = config.age.secrets.restic-repo.path;
+        passwordFile = config.age.secrets.restic-pass.path;
+        environmentFile = config.age.secrets.restic-env.path;
         paths = [
           "/data/networkshare/Pictures/Memories"
           "/data/networkshare/Videos/Memories"

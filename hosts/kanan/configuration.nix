@@ -9,11 +9,6 @@
     ../../modules/input/japanese.nix
   ];
 
-  # Secrets
-  sops.defaultSopsFile = ./secrets/secrets.yaml;
-  sops.age.keyFile = "/persist/home/${username}/.config/sops/age/keys.txt";
-  sops.secrets."${username}-password" = { neededForUsers = true; };
-
   # Networking
   services.resolved.enable = true;
   networking.networkmanager.enable = true;
@@ -25,11 +20,12 @@
   };
 
   # Users
+  age.secrets.maroka-password.file = ../../secrets/maroka-password.age;
   users.mutableUsers = false;
   users.users.${username} = {
     isNormalUser = true;
     extraGroups = [ "wheel" "networkmanager" ];
-    hashedPasswordFile = config.sops.secrets."${username}-password".path;
+    hashedPasswordFile = config.age.secrets."${username}-password".path;
   };
 
   # Create persist directories
