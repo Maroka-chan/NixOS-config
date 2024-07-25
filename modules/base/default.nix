@@ -34,8 +34,7 @@
   # Base packages
   environment.systemPackages = with pkgs; [
     zip unzip
-    btop
-    #(btop.override {rocmSupport = true;})
+    (btop.override {rocmSupport = true;})
   ];
 
   # Remove sudo lectures
