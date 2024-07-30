@@ -153,6 +153,9 @@
     };
   };
 
+  # Application Launcher
+  configured.programs.rofi.enable = true;
+
   # Podman
   virtualisation.podman = {
     enable = true;
