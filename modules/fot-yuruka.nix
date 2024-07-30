@@ -1,23 +1,15 @@
 { pkgs }:
-
 pkgs.stdenv.mkDerivation {
   pname = "fot-yuruka";
   version = "1.0";
 
-  src = ./. + "/FOT-Yuruka Std.ttf";
+  src = ./. + "/fot-yuruka_std.ttf";
 
-  #unpackPhase = ''
-  #  runHook preUnpack
-  #  ${pkgs.unzip}/bin/unzip $src
-
-  #  runHook postUnpack
-  #'';
-
-  installPhase = ''
-    runHook preInstall
-
-    install -Dm644 *.ttf -t $out/share/fonts/truetype
-
-    runHook postInstall
+  unpackPhase = ''
+   install -Dm644 $src -t $out/share/fonts/truetype
   '';
+
+  dontConfigure = true;
+  dontBuild = true;
+  dontInstall = true;
 }
