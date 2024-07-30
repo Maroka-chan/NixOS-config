@@ -108,6 +108,7 @@
   fonts.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
     noto-fonts
+    (pkgs.callPackage ../../modules/fot-yuruka.nix { inherit pkgs; })
   ];
 
   virtualisation.podman = {
