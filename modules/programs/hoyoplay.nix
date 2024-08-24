@@ -74,6 +74,45 @@ in {
           in "${launch}/bin/${module_name}";
           categories = [ "Game" ];
         })
+        (let
+          fps_unlocker = pkgs.fetchurl {
+            url = "https://codeberg.org/mkrsym1/fpsunlock/releases/download/v1.2.0/fpsunlock.exe";
+            hash = "sha256-KMEXjVwSgMjwPP6pM6UZgeHb9Ot2oiw5Vjm1q+4K0Dw=";
+          };
+        in pkgs.makeDesktopItem {
+          name = "Genshin Impact";
+          desktopName = "Genshin Impact";
+          #icon = ./. + "/zzz.ico";
+          exec = let
+            launch = pkgs.writeShellApplication {
+              name = module_name;
+              runtimeInputs = [
+                inputs.umu.packages.${pkgs.system}.umu
+              ];
+              text = let
+                genshin_path = "$HOME/.umu/hoyoplay/drive_c/Program Files/HoYoPlay/games/GenshinImpact";
+                start_batch = pkgs.writeTextFile {
+                  name = "genshin_launch.bat";
+                  text = ''
+                    cd "Z:\home\${username}\.umu\hoyoplay\drive_c\Program Files\HoYoPlay\games\GenshinImpact"
+                    start GenshinImpact.exe
+                    cd "Z:\nix\store"
+                    start ${builtins.baseNameOf fps_unlocker} 240 5000
+                  '';
+                };
+              in ''
+                if [ ! -f "${genshin_path}/GenshinImpact.exe" ]; then
+                  "${hoyoplay-script}/bin/${module_name}"
+                  exit 0
+                fi
+
+                export XCURSOR_SIZE=${toString config.home-manager.users.${username}.home.pointerCursor.size}
+                WINEPREFIX=$HOME/.umu/hoyoplay GAMEID=${module_name} umu "${start_batch}"
+              '';
+            };
+          in "${launch}/bin/${module_name}";
+          categories = [ "Game" ];
+        })
       ];
     })
     (mkIf cfg.persist {
