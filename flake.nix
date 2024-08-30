@@ -5,6 +5,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-small.url = "github:NixOS/nixpkgs/nixos-24.05-small";
+    nixpkgs-master.url = "github:NixOS/nixpkgs";
     impermanence.url = "github:nix-community/impermanence";
     agenix.url = "github:ryantm/agenix";
     nixos-generators.url = "github:nix-community/nixos-generators";
@@ -37,9 +38,9 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
-    umu = {
-      url = "path:///home/maroka/Documents/umu-launcher";
-      inputs.nixpkgs.follows = "nixpkgs";
+    umu= {
+      url = "git+https://github.com/Open-Wine-Components/umu-launcher/?dir=packaging\/nix&submodules=1";
+      inputs.nixpkgs.follows = "nixpkgs-master";
     };
   };
 

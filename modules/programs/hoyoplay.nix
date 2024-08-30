@@ -38,7 +38,7 @@ in {
             fi
 
             export XCURSOR_SIZE=${toString config.home-manager.users.${username}.home.pointerCursor.size}
-            WINEPREFIX=$HOME/.umu/hoyoplay GAMEID=${module_name} umu "${hoyoplay_path}/launcher.exe"
+            WINEPREFIX=$HOME/.umu/hoyoplay GAMEID=${module_name} umu-run "${hoyoplay_path}/launcher.exe"
           '';
         };
       in [
@@ -68,7 +68,7 @@ in {
                 fi
 
                 export XCURSOR_SIZE=${toString config.home-manager.users.${username}.home.pointerCursor.size}
-                WINEPREFIX=$HOME/.umu/hoyoplay GAMEID=${module_name} umu "${zzz_path}/ZenlessZoneZero.exe"
+                WINEPREFIX=$HOME/.umu/hoyoplay GAMEID=${module_name} umu-run "${zzz_path}/ZenlessZoneZero.exe"
               '';
             };
           in "${launch}/bin/${module_name}";
@@ -106,8 +106,10 @@ in {
                   exit 0
                 fi
 
+                # AMD_VULKAN_ICD fixes global illumination
+                # see https://github.com/an-anime-team/an-anime-game-launcher/issues/397
                 export XCURSOR_SIZE=${toString config.home-manager.users.${username}.home.pointerCursor.size}
-                WINEPREFIX=$HOME/.umu/hoyoplay GAMEID=${module_name} umu "${start_batch}"
+                WINEPREFIX=$HOME/.umu/hoyoplay GAMEID=${module_name} AMD_VULKAN_ICD=RADV umu-run "${start_batch}"
               '';
             };
           in "${launch}/bin/${module_name}";
