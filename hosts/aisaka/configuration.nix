@@ -201,9 +201,6 @@
       "/etc/mullvad-vpn"
       "/var/lib/fprint"
     ];
-    files = [
-      "/etc/machine-id"
-    ];
   };
 
   # Automatic Updates

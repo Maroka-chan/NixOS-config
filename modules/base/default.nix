@@ -53,4 +53,15 @@
     item = "nofile";
     value = "16384";
   }];
+
+  # Files to persist
+  environment.persistence."/persist" = {
+    hideMounts = true;
+    directories = [
+      "/var/lib/nixos"
+    ];
+    files = [
+      "/etc/machine-id"
+    ];
+  };
 }

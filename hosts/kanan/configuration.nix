@@ -144,9 +144,6 @@
     directories = [
       "/etc/NetworkManager/system-connections"
     ];
-    files = [
-      "/etc/machine-id"
-    ];
     users.${username} = {
       directories = [
         ".gnupg"
