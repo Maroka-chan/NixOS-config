@@ -82,7 +82,7 @@ in {
         in pkgs.makeDesktopItem {
           name = "Genshin Impact";
           desktopName = "Genshin Impact";
-          #icon = ./. + "/zzz.ico";
+          icon = ./. + "/genshin.ico";
           exec = let
             launch = pkgs.writeShellApplication {
               name = module_name;
