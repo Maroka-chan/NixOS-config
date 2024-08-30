@@ -94,10 +94,15 @@ in {
                 start_batch = pkgs.writeTextFile {
                   name = "genshin_launch.bat";
                   text = ''
-                    cd "Z:\home\${username}\.umu\hoyoplay\drive_c\Program Files\HoYoPlay\games\GenshinImpact"
-                    start GenshinImpact.exe
-                    cd "Z:\nix\store"
-                    start ${builtins.baseNameOf fps_unlocker} 240 5000
+                    start "" "Z:\home\${username}\.umu\hoyoplay\drive_c\Program Files\HoYoPlay\games\GenshinImpact\GenshinImpact.exe"
+                    start "" "Z:\nix\store\${builtins.baseNameOf fps_unlocker}" 240 5000
+                  '';
+                };
+                # Launching the batch script with VBScript like this prevents a terminal pop up
+                vbs_launch = pkgs.writeTextFile {
+                  name = "genshin_launch_no_terminal.vbs";
+                  text = ''
+                    CreateObject("Wscript.Shell").Run "${start_batch}", 0, True
                   '';
                 };
               in ''
@@ -109,7 +114,7 @@ in {
                 # AMD_VULKAN_ICD fixes global illumination
                 # see https://github.com/an-anime-team/an-anime-game-launcher/issues/397
                 export XCURSOR_SIZE=${toString config.home-manager.users.${username}.home.pointerCursor.size}
-                WINEPREFIX=$HOME/.umu/hoyoplay GAMEID=${module_name} AMD_VULKAN_ICD=RADV umu-run "${start_batch}"
+                WINEPREFIX=$HOME/.umu/hoyoplay GAMEID=${module_name} AMD_VULKAN_ICD=RADV umu-run "${vbs_launch}"
               '';
             };
           in "${launch}/bin/${module_name}";
