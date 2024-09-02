@@ -1,6 +1,7 @@
 let
   kanan = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDyMZKyptGPtS/osbdmDrhnn2J08Iiy/i+BrvqvyNBpJ";
-  users = [ kanan ];
+  aisaka = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGqzG8P89pW2HiMb7zfJgp22t968eHuOsheYEHtuhshl";
+  users = [ kanan aisaka ];
 
   akebi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINSF3y6vy+X6MJ6Nu8UBFQnTd/iFc+xyypCzEdn9UoT2";
   systems = [ akebi ];
