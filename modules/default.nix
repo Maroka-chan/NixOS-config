@@ -4,5 +4,6 @@
     ./base
     ./filesystem
     ./programs
+    ./services
   ];
 }

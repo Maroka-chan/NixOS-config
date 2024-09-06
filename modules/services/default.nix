@@ -1,0 +1,7 @@
+{ ... }:
+{
+  imports = [
+    ./stremio-server.nix
+  ];
+}
+

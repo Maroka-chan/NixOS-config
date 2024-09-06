@@ -782,6 +782,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-stremio-server": {
+      "locked": {
+        "lastModified": 1654603751,
+        "narHash": "sha256-kjwCdgdWuAJWvt8ZBxBFerQtSfsIhDkeflk4ZeQGj7E=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "aae94e56a7b905281f007a5b70aa7ffff89aee57",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "aae94e56a7b905281f007a5b70aa7ffff89aee57",
+        "type": "github"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1724819573,
@@ -878,6 +894,7 @@
         "nixpkgs": "nixpkgs_4",
         "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-small": "nixpkgs-small",
+        "nixpkgs-stremio-server": "nixpkgs-stremio-server",
         "nixpkgs-unstable": "nixpkgs-unstable",
         "shutoku": "shutoku",
         "split-monitor-workspaces": "split-monitor-workspaces",

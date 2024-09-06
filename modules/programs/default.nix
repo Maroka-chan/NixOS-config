@@ -10,6 +10,7 @@
    ./thunar.nix
    ./pipewire.nix
    ./hoyoplay.nix
+   ./stremio.nix
   ];
 }
 

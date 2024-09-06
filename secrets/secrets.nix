@@ -17,4 +17,5 @@ in
   "restic-env.age".publicKeys = users ++ systems;
   "restic-pass.age".publicKeys = users ++ systems;
   "restic-repo.age".publicKeys = users ++ systems;
+  "lego-env.age".publicKeys = users ++ systems;
 }

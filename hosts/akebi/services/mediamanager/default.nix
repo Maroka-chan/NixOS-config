@@ -8,21 +8,6 @@
   age.secrets.vpn-wireguard.file = ../../../../secrets/vpn-wireguard.age;
   age.secrets.shutoku-settings.file = ../../../../secrets/shutoku-settings.age;
 
-  vpnnamespaces.wg = {
-    enable = true;
-    accessibleFrom = [
-      "192.168.1.0/24"
-    ];
-    wireguardConfigFile = config.age.secrets.vpn-wireguard.path;
-    portMappings = [
-      { from = 9091; to = 9091; }
-      { from = 3000; to = 3000; }
-    ];
-    openVPNPorts = [
-      { port = 12340; protocol = "both"; }
-    ];
-  };
-
   users.groups.media = {};
 
   systemd.services.transmission = {

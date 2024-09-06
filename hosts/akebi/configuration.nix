@@ -11,6 +11,80 @@
 
   nix.settings.trusted-users = [ "deploy" ];
 
+  ### Reverse Proxy ###
+  age.secrets.lego-env.file = ../../secrets/lego-env.age;
+
+  security.acme.acceptTerms = true;
+  security.acme.defaults.email = "acme.lxd3v@simplelogin.com";
+
+  security.acme.certs."yuttari.moe" = {
+    domain = "*.yuttari.moe";
+    dnsProvider = "cloudflare";
+    dnsResolver = "1.1.1.1:53";
+    #server = "https://acme-staging-v02.api.letsencrypt.org/directory";
+    credentialFiles."CF_DNS_API_TOKEN_FILE" = config.age.secrets.lego-env.path;
+    group = "nginx";
+  };
+
+  networking.firewall.allowedTCPPorts = [ 80 443 ];
+
+  services.nginx = {
+      enable = true;
+
+      recommendedGzipSettings = true;
+      recommendedOptimisation = true;
+      recommendedProxySettings = true;
+      recommendedTlsSettings = true;
+
+      # Only allow PFS-enabled ciphers with AES256
+      sslCiphers = "AES256+EECDH:AES256+EDH:!aNULL";
+
+      appendHttpConfig = ''
+        # Minimize information leaked to other domains
+        add_header 'Referrer-Policy' 'origin-when-cross-origin';
+
+        # Disable embedding as a frame
+        add_header X-Frame-Options DENY;
+
+        # Prevent injection of code in other mime types (XSS Attacks)
+        add_header X-Content-Type-Options nosniff;
+
+        # This might create errors
+        proxy_cookie_path / "/; secure; HttpOnly; SameSite=strict";
+      '';
+
+      # other Nginx options
+      virtualHosts."media.yuttari.moe" =  {
+        useACMEHost = "yuttari.moe";
+        forceSSL = true;
+        locations."/".proxyPass = "http://192.168.15.1:11470/";
+      };
+  };
+  #####################
+
+  vpnnamespaces.wg = {
+    enable = true;
+    accessibleFrom = [
+      "192.168.1.0/24"
+    ];
+    wireguardConfigFile = config.age.secrets.vpn-wireguard.path;
+    portMappings = [
+      { from = 9091; to = 9091; }
+      { from = 3000; to = 3000; }
+      { from = 11470; to = 11470; }
+      { from = 12470; to = 12470; }
+    ];
+    openVPNPorts = [
+      { port = 12340; protocol = "both"; }
+    ];
+  };
+
+  services.stremio-server.enable = true;
+  systemd.services.stremio-server.vpnconfinement = {
+    enable = true;
+    vpnnamespace = "wg";
+  };
+
   systemd.services.dnstest = {
     vpnconfinement = {
       enable = true;
