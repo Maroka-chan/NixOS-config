@@ -90,11 +90,11 @@ in {
                 inputs.umu.packages.${pkgs.system}.umu
               ];
               text = let
-                genshin_path = "$HOME/.umu/hoyoplay/drive_c/Program Files/HoYoPlay/games/GenshinImpact";
+                genshin_path = "$HOME/.umu/hoyoplay/drive_c/Program Files/HoYoPlay/games/Genshin Impact game";
                 start_batch = pkgs.writeTextFile {
                   name = "genshin_launch.bat";
                   text = ''
-                    start "" "Z:\home\${username}\.umu\hoyoplay\drive_c\Program Files\HoYoPlay\games\GenshinImpact\GenshinImpact.exe"
+                    start "" "Z:\home\${username}\.umu\hoyoplay\drive_c\Program Files\HoYoPlay\games\Genshin Impact game\GenshinImpact.exe"
                     start "" "Z:\nix\store\${builtins.baseNameOf fps_unlocker}" 240 5000
                   '';
                 };
