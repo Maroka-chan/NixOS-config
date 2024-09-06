@@ -14,11 +14,9 @@
     home = {
       username = "maroka";
       homeDirectory = "/home/maroka";
-      packages = [ inputs.anyrun.packages.${pkgs.system}.anyrun ];
     };
     imports = [
       inputs.impermanence.nixosModules.home-manager.impermanence
-      inputs.anyrun.homeManagerModules.default
       ./home.nix
     ];
   };
@@ -65,6 +63,9 @@
 
   # GNUPG
   programs.gnupg.agent.enable = true;
+
+  # Application Launcher
+  configured.programs.rofi.enable = true;
 
   # Pipewire
   security.rtkit.enable = true;
@@ -119,9 +120,9 @@
   configured.programs.hyprland.extraConfig = let
     dotfiles = config.home-manager.users.${username}.lib.file.mkOutOfStoreSymlink "/home/${username}/.dotfiles";
   in ''
-    monitor=eDP-1,1920x1200,2560x0,1
+    monitor=DP-3,3840x2160,-1440x-560,1.5,transform,1
     monitor=HDMI-A-1,3840x2160,0x0,1.5
-    monitor=DP-1,3840x2160,-2560x0,1.5
+    monitor=eDP-1,preferred,auto,1
 
     exec-once = swaybg -i ${dotfiles}/wallpapers/yume_no_kissaten_yumegatari.png -m fill
     exec-once = eww daemon & eww open statusbar

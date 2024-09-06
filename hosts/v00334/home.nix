@@ -29,25 +29,6 @@ in
     alacritty = {
       enable = true;
     };
-    anyrun = {
-      enable = true;
-      config = {
-        plugins = [ inputs.anyrun.packages.${pkgs.system}.applications ];
-        width = { fraction = 0.3; };
-        hideIcons = false;
-        ignoreExclusiveZones = false;
-        layer = "overlay";
-        hidePluginInfo = false;
-        closeOnClick = true;
-        showResultsImmediately = false;
-        maxEntries = null;
-      };
-      extraCss = ''
-        window {
-          background: transparent;
-        }
-      '';
-    };
     zsh = {
       enable = true;
       autosuggestion.enable = true;
