@@ -20,11 +20,9 @@
     home = {
       username = "maroka";
       homeDirectory = "/home/maroka";
-      packages = [ inputs.anyrun.packages.${pkgs.system}.anyrun ];
     };
     imports = [
       inputs.impermanence.nixosModules.home-manager.impermanence
-      inputs.anyrun.homeManagerModules.default
       ./home.nix
     ];
   };
