@@ -11,9 +11,9 @@
   users.groups.media = {};
 
   systemd.services.transmission = {
-    vpnconfinement = {
+    vpnConfinement = {
       enable = true;
-      vpnnamespace = "wg";
+      vpnNamespace = "wg";
     };
   };
 
@@ -52,9 +52,9 @@
     };
   };
 
-  systemd.services.shutoku.vpnconfinement = {
+  systemd.services.shutoku.vpnConfinement = {
     enable = true;
-    vpnnamespace = "wg";
+    vpnNamespace = "wg";
   };
 
   services.shutoku = {

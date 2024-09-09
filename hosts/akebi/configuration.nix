@@ -6,7 +6,7 @@
     ./deployment-user.nix
     ./networkshare-user.nix
     ./services
-    inputs.vpnconfinement.nixosModules.default
+    inputs.vpn-confinement.nixosModules.default
   ];
 
   nix.settings.trusted-users = [ "deploy" ];
@@ -62,7 +62,7 @@
   };
   #####################
 
-  vpnnamespaces.wg = {
+  vpnNamespaces.wg = {
     enable = true;
     accessibleFrom = [
       "192.168.1.0/24"
@@ -80,15 +80,15 @@
   };
 
   services.stremio-server.enable = true;
-  systemd.services.stremio-server.vpnconfinement = {
+  systemd.services.stremio-server.vpnConfinement = {
     enable = true;
-    vpnnamespace = "wg";
+    vpnNamespace = "wg";
   };
 
   systemd.services.dnstest = {
-    vpnconfinement = {
+    vpnConfinement = {
       enable = true;
-      vpnnamespace = "wg";
+      vpnNamespace = "wg";
     };
 
     script = let
@@ -126,9 +126,9 @@
   };
 
   systemd.services.vpn-test-service = {
-    vpnconfinement = {
+    vpnConfinement = {
       enable = true;
-      vpnnamespace = "wg";
+      vpnNamespace = "wg";
     };
 
     script = let

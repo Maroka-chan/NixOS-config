@@ -26,8 +26,8 @@
     hyprlock.inputs.nixpkgs.follows = "nixpkgs";
     shutoku.url = "git+ssh://git@github.com/Maroka-chan/Shutoku-rs";
     shutoku.inputs.nixpkgs.follows = "nixpkgs-unstable";
-    vpnconfinement.url = "github:Maroka-chan/VPN-Confinement";
-    vpnconfinement.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    vpn-confinement.url = "github:Maroka-chan/VPN-Confinement";
+    vpn-confinement.inputs.nixpkgs.follows = "nixpkgs-unstable";
     neovim.url = "github:Maroka-chan/nvim-config";
     neovim.inputs.nixpkgs.follows = "nixpkgs-unstable";
     tlock.url = "git+https://github.com/eklairs/tlock?submodules=1";
