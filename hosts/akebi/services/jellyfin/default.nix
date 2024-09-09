@@ -20,4 +20,10 @@
       intel-compute-runtime # OpenCL filter support (hardware tonemapping and subtitle burn-in)
     ];
   };
+
+  environment.persistence."/persist" = {
+    directories = [
+      "/var/lib/jellyfin"
+    ];
+  };
 }

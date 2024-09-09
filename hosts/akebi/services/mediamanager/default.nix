@@ -10,6 +10,17 @@
 
   users.groups.media = {};
 
+  environment.persistence."/persist" = {
+    directories = [
+      "/var/lib/transmission/.config/transmission-daemon/blocklists"
+      "/var/lib/transmission/.config/transmission-daemon/resume"
+      "/var/lib/transmission/.config/transmission-daemon/torrents"
+    ];
+    files = [
+      "/var/lib/transmission/.config/transmission-daemon/stats.json"
+    ];
+  };
+
   systemd.services.transmission = {
     vpnConfinement = {
       enable = true;

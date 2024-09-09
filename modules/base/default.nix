@@ -59,9 +59,12 @@
     hideMounts = true;
     directories = [
       "/var/lib/nixos"
+      "/var/lib/fwupd"
     ];
     files = [
       "/etc/machine-id"
+      "/var/lib/systemd/random-seed"
+      "/var/lib/logrotate.status"
     ];
   };
 }

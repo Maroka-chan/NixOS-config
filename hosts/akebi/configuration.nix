@@ -216,9 +216,9 @@
   # State to persist.
   environment.persistence."/persist" = {
     directories = [
-      "/var/lib/private/uptime-kuma"
-      "/var/lib/jellyfin"
-      "/var/lib/tailscale"
+      "/var/lib/acme/yuttari.moe"
+      "/var/lib/acme/.lego/yuttari.moe"
+      "/var/lib/acme/.lego/accounts"
     ];
     files = [
       "/etc/ssh/ssh_host_ed25519_key"

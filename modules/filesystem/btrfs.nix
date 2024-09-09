@@ -54,6 +54,12 @@ in {
         umount /mnt
       '';
 
+      environment.persistence."/persist" = {
+        directories = [
+          "/var/lib/btrfs"
+        ];
+      };
+
       environment.systemPackages = 
       let
         # Tools
