@@ -37,10 +37,13 @@
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
 
-    umu= {
+    umu = {
       url = "git+https://github.com/Open-Wine-Components/umu-launcher/?dir=packaging\/nix&submodules=1";
       inputs.nixpkgs.follows = "nixpkgs-master";
     };
+
+    hoyonix.url = "path:///home/maroka/Documents/hoyonix";
+    hoyonix.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 
   outputs = inputs @ { self, nixos-generators, deploy-rs, ... }:

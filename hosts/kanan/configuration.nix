@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, username, ... }:
+{ config, lib, pkgs, inputs, username, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -7,6 +7,7 @@
     ../../modules/base/home-manager.nix
     ../../modules/hardware/gpu/amd.nix
     ../../modules/input/japanese.nix
+    inputs.hoyonix.nixosModules.genshin
   ];
 
   # Networking
@@ -50,10 +51,7 @@
     wl-clipboard # Wayland Clipboard Utilities
   ];
 
-  # Programs
-  # HoYoPlay
-  configured.programs.hoyoplay.enable = true;
-  configured.programs.hoyoplay.persist = true;
+  ### Programs ###
   # VPN
   configured.programs.mullvad.enable = true;
   configured.programs.mullvad.persist = true;
@@ -84,6 +82,13 @@
   configured.programs.thunar.enable = true;
   # Pipewire
   configured.programs.pipewire.enable = true;
+  # Games
+  programs.genshin = {
+    enable = true;
+    hdr.enable = true;
+    fpsunlock.enable = true;
+    mangohud.enable = true;
+  };
 
   programs.steam.enable = true;
 
@@ -147,6 +152,10 @@
     users.${username} = {
       directories = [
         ".gnupg"
+
+        ".umu/hoyoplay"
+        ".local/share/umu"
+        ".local/share/Steam/compatibilitytools.d"
       ];
     };
   };
