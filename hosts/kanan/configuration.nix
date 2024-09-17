@@ -136,7 +136,7 @@
     storeOnly = true;
   };
 
-  security.pam.services.swaylock = {};
+  security.pam.services.hyprlock = {};
 
   # Files to persist
   environment.persistence."/persist" = {
