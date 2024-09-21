@@ -74,52 +74,6 @@ in {
           in "${launch}/bin/${module_name}";
           categories = [ "Game" ];
         })
-        (let
-          fps_unlocker = pkgs.fetchurl {
-            url = "https://codeberg.org/mkrsym1/fpsunlock/releases/download/v1.2.0/fpsunlock.exe";
-            hash = "sha256-KMEXjVwSgMjwPP6pM6UZgeHb9Ot2oiw5Vjm1q+4K0Dw=";
-          };
-        in pkgs.makeDesktopItem {
-          name = "Genshin Impact";
-          desktopName = "Genshin Impact";
-          icon = ./. + "/genshin.ico";
-          exec = let
-            launch = pkgs.writeShellApplication {
-              name = module_name;
-              runtimeInputs = [
-                inputs.umu.packages.${pkgs.system}.umu
-              ];
-              text = let
-                genshin_path = "$HOME/.umu/hoyoplay/drive_c/Program Files/HoYoPlay/games/Genshin Impact game";
-                start_batch = pkgs.writeTextFile {
-                  name = "genshin_launch.bat";
-                  text = ''
-                    start "" "Z:\home\${username}\.umu\hoyoplay\drive_c\Program Files\HoYoPlay\games\Genshin Impact game\GenshinImpact.exe"
-                    start "" "Z:\nix\store\${builtins.baseNameOf fps_unlocker}" 240 5000
-                  '';
-                };
-                # Launching the batch script with VBScript like this prevents a terminal pop up
-                vbs_launch = pkgs.writeTextFile {
-                  name = "genshin_launch_no_terminal.vbs";
-                  text = ''
-                    CreateObject("Wscript.Shell").Run "${start_batch}", 0, True
-                  '';
-                };
-              in ''
-                if [ ! -f "${genshin_path}/GenshinImpact.exe" ]; then
-                  "${hoyoplay-script}/bin/${module_name}"
-                  exit 0
-                fi
-
-                # AMD_VULKAN_ICD fixes global illumination
-                # see https://github.com/an-anime-team/an-anime-game-launcher/issues/397
-                export XCURSOR_SIZE=${toString config.home-manager.users.${username}.home.pointerCursor.size}
-                WINEPREFIX=$HOME/.umu/hoyoplay GAMEID=${module_name} AMD_VULKAN_ICD=RADV umu-run "${vbs_launch}"
-              '';
-            };
-          in "${launch}/bin/${module_name}";
-          categories = [ "Game" ];
-        })
       ];
     })
     (mkIf cfg.persist {

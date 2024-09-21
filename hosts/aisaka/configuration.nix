@@ -43,8 +43,8 @@
   ];
 
   # Window Manager / Compositor
-  configured.programs.hyprland.enable = true;
-  configured.programs.hyprland.extraConfig = let
+  desktops.hyprland.enable = true;
+  desktops.hyprland.extraConfig = let
     dotfiles = config.home-manager.users.${username}.lib.file.mkOutOfStoreSymlink "/home/${username}/.dotfiles";
   in ''
     monitor=,preferred,auto,1

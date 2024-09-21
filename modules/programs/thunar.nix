@@ -1,4 +1,4 @@
-{ pkgs, lib, config, username, ... }:
+{ inputs, pkgs, lib, config, username, ... }:
 with lib;
 let
   module_name = "thunar";
@@ -7,6 +7,10 @@ in {
   options.configured.programs."${module_name}" = {
     enable = mkEnableOption "Enable Thunar File Manager";
   };
+
+  imports = [
+    inputs.home-manager.nixosModule
+  ];
 
   config = mkIf cfg.enable {
     programs.thunar = {

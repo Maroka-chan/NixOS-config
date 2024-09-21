@@ -6,6 +6,8 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   hardware.enableAllFirmware = true;
 
+  boot.blacklistedKernelModules = [ "hid_logitech_dj" "hid_logitech_hidpp" ];
+
   time.timeZone = "Europe/Copenhagen";
   i18n.defaultLocale = "en_US.UTF-8";
   nixpkgs.config.allowUnfree = true;

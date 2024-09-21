@@ -1,7 +1,5 @@
 const hyprland = await Service.import('hyprland')
 
-//App.resetCss();
-
 const date = Variable('', {
     poll: [1000, 'date'],
 })
@@ -12,11 +10,9 @@ const focusedTitle = Widget.Label({
         .as(addr => !!addr),
 })
 
-const dispatch = ws => hyprland.messageAsync(`dispatch workspace ${ws}`);
+const dispatch = ws => hyprland.messageAsync(`dispatch split-workspace ${ws}`);
 
 const Workspaces = () => Widget.EventBox({
-    onScrollUp: () => dispatch('+1'),
-    onScrollDown: () => dispatch('-1'),
     child: Widget.CenterBox({
       vertical: true,
       centerWidget: Widget.Box({
@@ -36,7 +32,7 @@ const Bar = () => Widget.Window({
     name: 'bar',
     exclusivity: 'exclusive',
     anchor: ['left', 'top', 'bottom'],
-    child: Workspaces()
+    child: Workspaces(),
 })
 
 App.config({

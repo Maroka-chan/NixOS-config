@@ -116,8 +116,8 @@
   services.upower.enable = true;
 
   # Window Manager / Compositor
-  configured.programs.hyprland.enable = true;
-  configured.programs.hyprland.extraConfig = let
+  desktops.hyprland.enable = true;
+  desktops.hyprland.extraConfig = let
     dotfiles = config.home-manager.users.${username}.lib.file.mkOutOfStoreSymlink "/home/${username}/.dotfiles";
   in ''
     monitor=DP-3,3840x2160,-1440x-560,1.5,transform,1

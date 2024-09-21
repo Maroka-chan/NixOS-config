@@ -5,5 +5,6 @@
     ./filesystem
     ./programs
     ./services
+    ./desktops
   ];
 }

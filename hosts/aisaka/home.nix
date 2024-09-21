@@ -18,7 +18,6 @@ in
     sioyek    # Document Viewer
     brave     # Browser
     swaybg    # Wallpaper Tool
-    swayidle  # Idle management
 
     # Screenshot
     swappy
@@ -71,9 +70,9 @@ in
 
       zplug = {
         enable = true;
-	plugins = [
-          { name = "romkatv/powerlevel10k"; tags = [ as:theme depth:1 ]; }
-	];
+        plugins = [
+          { name = "romkatv/powerlevel10k"; tags = [ "as:theme" "depth:1" ]; }
+        ];
       };
     };
     git = {
@@ -90,9 +89,6 @@ in
       enable = true;
     };
     firefox = {
-      enable = true;
-    };
-    swaylock = {
       enable = true;
     };
   };
@@ -128,39 +124,6 @@ in
       ".config/github-copilot"
       ".local/state/nvim/swap"
       ".local/state/nvim/shada"
-    ];
-  };
-
-  gtk = {
-    enable = true;
-    theme = {
-      package = pkgs.dracula-theme;
-      name = "Dracula";
-    };
-    iconTheme = {
-      package = pkgs.dracula-icon-theme;
-      name = "Dracula";
-    };
-  };
-
-  home.pointerCursor = {
-    gtk.enable = true;
-    x11.enable = true;
-    package = pkgs.bibata-cursors;
-    name = "Bibata-Modern-Ice";
-    size = 24;
-  };
-
-  # Idle Daemon
-  services.swayidle = {
-    enable = true;
-    systemdTarget = "hyprland-session.target";
-    events = [
-      { event = "before-sleep"; command = "${pkgs.swaylock}/bin/swaylock -f -c 000000"; }
-    ];
-    timeouts = [
-      { timeout = 300; command = "${pkgs.hyprland}/bin/hyprctl dispatch dpms off"; resumeCommand = "${pkgs.hyprland}/bin/hyprctl dispatch dpms on"; }
-      { timeout = 320; command = "${pkgs.swaylock}/bin/swaylock -f -c 000000"; }
     ];
   };
 

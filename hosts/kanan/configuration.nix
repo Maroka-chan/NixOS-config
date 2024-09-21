@@ -10,6 +10,13 @@
     inputs.hoyonix.nixosModules.genshin
   ];
 
+  #boot.kernelPatches = [
+  #{
+  #  name = "amd-hdr";
+  #  patch = ./hdr.patch;
+  #}
+  #];
+
   # Networking
   services.resolved.enable = true;
   networking.networkmanager.enable = true;
@@ -38,7 +45,6 @@
   home-manager.users.${username} = {
     imports = [
       inputs.impermanence.nixosModules.home-manager.impermanence
-      inputs.ags.homeManagerModules.default
       ./home.nix
     ];
   };
@@ -49,6 +55,7 @@
     eww
     protonmail-bridge-gui
     wl-clipboard # Wayland Clipboard Utilities
+    youtube-music
   ];
 
   ### Programs ###
@@ -60,8 +67,8 @@
   configured.programs.librewolf.persist = true;
   configured.programs.librewolf.defaultBrowser = true;
   # Window Manager / Compositor
-  configured.programs.hyprland.enable = true;
-  configured.programs.hyprland.extraConfig = let
+  desktops.hyprland.enable = true;
+  desktops.hyprland.extraConfig = let
     dotfiles = config.home-manager.users.${username}.lib.file.mkOutOfStoreSymlink "/home/${username}/.dotfiles";
   in ''
     monitor=DP-3,2560x1440@240,1080x240,1
@@ -82,6 +89,8 @@
   configured.programs.thunar.enable = true;
   # Pipewire
   configured.programs.pipewire.enable = true;
+  # Stremio
+  configured.programs.stremio.enable = true;
   # Games
   programs.genshin = {
     enable = true;
@@ -140,8 +149,6 @@
     noAutostart = true;
     storeOnly = true;
   };
-
-  security.pam.services.hyprlock = {};
 
   # Files to persist
   environment.persistence."/persist" = {
