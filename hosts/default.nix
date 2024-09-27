@@ -10,7 +10,8 @@ let
 
   mkSystem = name: {
     system,
-    channel
+    channel,
+    isServer ? false
   }:
     let
       lib = channel.lib;
@@ -27,7 +28,10 @@ let
         ++ [
           { networking.hostName = name; }
           { nixpkgs.overlays = [ overlay ]; }
-          { age.identityPaths = [ "/persist/etc/ssh/ssh_host_ed25519_key" "/persist/home/${username}/.ssh/id_ed25519" ]; }
+          { age.identityPaths = if isServer
+            then [ "/persist/etc/ssh/ssh_host_ed25519_key" ]
+            else [ "/persist/home/${username}/.ssh/id_ed25519" ];
+          }
           (import (./. + "/${name}/configuration.nix"))
         ];
       specialArgs = { inherit inputs username; };
@@ -36,7 +40,7 @@ let
   systems = {
     aisaka    = { system = "x86_64-linux"; channel = inputs.nixpkgs-unstable; };
     kanan     = { system = "x86_64-linux"; channel = inputs.nixpkgs-unstable; };
-    akebi     = { system = "x86_64-linux"; channel = inputs.nixpkgs-small; };
+    akebi     = { system = "x86_64-linux"; channel = inputs.nixpkgs-small; isServer = true; };
     v00334    = { system = "x86_64-linux"; channel = inputs.nixpkgs-unstable; };
   };
 
