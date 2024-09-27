@@ -45,7 +45,7 @@
 
   };
 
-  outputs = inputs @ { self, nixos-generators, deploy-rs, ... }:
+  outputs = inputs @ { self, nixpkgs, deploy-rs, ... }:
   {
     nixosConfigurations = import ./hosts { inherit inputs; };
 
@@ -66,6 +66,10 @@
       builtins.mapAttrs
         (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
 
+    devShells.x86_64-linux.default = let
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+    in pkgs.mkShell {
+      packages = [ pkgs.deploy-rs ];
     };
   };
 }

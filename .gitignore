@@ -2,6 +2,8 @@
 result
 *.qcow2
 
+# direnv
+.direnv/
 
 # Directory for test VMs
 testvm/root/
