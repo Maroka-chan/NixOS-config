@@ -1,4 +1,4 @@
-{ config, ... }:
+{ inputs, config, ... }:
 {
   age.secrets.restic-env.file = ../../../../secrets/restic-env.age;
   age.secrets.restic-pass.file = ../../../../secrets/restic-pass.age;
@@ -14,7 +14,11 @@
         environmentFile = config.age.secrets.restic-env.path;
         paths = [
           "/data/networkshare/Pictures/Memories"
+          "/data/networkshare/Pictures/Projects"
+          "/data/networkshare/Pictures/Screenshots"
+          "/data/networkshare/Pictures/Anime"
           "/data/networkshare/Videos/Memories"
+          "/data/networkshare/Documents"
         ];
         timerConfig = {
           OnCalendar = "00:05";
