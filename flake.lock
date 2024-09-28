@@ -619,6 +619,18 @@
         "type": "github"
       }
     },
+    "nixpkgs-fork": {
+      "locked": {
+        "lastModified": 1727484047,
+        "narHash": "sha256-eAsLC1wvsYxi6osgelKSaRvfe1HiC5EawxggeohdpAU=",
+        "path": "/home/maroka/Documents/nixpkgs",
+        "type": "path"
+      },
+      "original": {
+        "path": "/home/maroka/Documents/nixpkgs",
+        "type": "path"
+      }
+    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1717284937,
@@ -800,6 +812,7 @@
         "impermanence": "impermanence",
         "neovim": "neovim",
         "nixpkgs": "nixpkgs_4",
+        "nixpkgs-fork": "nixpkgs-fork",
         "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-small": "nixpkgs-small",
         "nixpkgs-stremio-server": "nixpkgs-stremio-server",

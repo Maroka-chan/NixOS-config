@@ -7,6 +7,7 @@
     nixpkgs-small.url = "github:NixOS/nixpkgs/nixos-24.05-small";
     nixpkgs-master.url = "github:NixOS/nixpkgs";
     nixpkgs-stremio-server.url = "github:NixOS/nixpkgs/aae94e56a7b905281f007a5b70aa7ffff89aee57";
+    nixpkgs-fork.url = "path:///home/maroka/Documents/nixpkgs";
 
     impermanence.url = "github:nix-community/impermanence";
     agenix.url = "github:ryantm/agenix";
