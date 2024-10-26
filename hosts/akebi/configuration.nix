@@ -66,6 +66,7 @@
     enable = true;
     accessibleFrom = [
       "192.168.1.0/24"
+      "fd25:9ab6:6133::/64"
     ];
     wireguardConfigFile = config.age.secrets.vpn-wireguard.path;
     portMappings = [
