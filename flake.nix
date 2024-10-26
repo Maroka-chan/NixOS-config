@@ -34,7 +34,6 @@
     shutoku.url = "git+ssh://git@github.com/Maroka-chan/Shutoku-rs";
     shutoku.inputs.nixpkgs.follows = "nixpkgs-unstable";
     vpn-confinement.url = "github:Maroka-chan/VPN-Confinement";
-    vpn-confinement.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     umu = {
       url = "git+https://github.com/Open-Wine-Components/umu-launcher/?dir=packaging\/nix&submodules=1";
