@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ ... }:
 {
   services.samba = {
     enable = true;
@@ -19,16 +19,6 @@
         "guest ok" = "yes";
         "create mask" = "0444";
         "directory mask" = "0555";
-      };
-      media = {
-        path = "/data/media";
-        comment = "Share for media";
-        browseable = "yes";
-        "read only" = true;
-        "guest ok" = "yes";
-        "create mask" = "0444";
-        "directory mask" = "0555";
-        "force group" = "media";
       };
     };
   };
