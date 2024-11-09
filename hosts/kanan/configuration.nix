@@ -10,13 +10,6 @@
     inputs.hoyonix.nixosModules.genshin
   ];
 
-  #boot.kernelPatches = [
-  #{
-  #  name = "amd-hdr";
-  #  patch = ./hdr.patch;
-  #}
-  #];
-
   # Networking
   services.resolved.enable = true;
   networking.networkmanager.enable = true;
@@ -53,10 +46,16 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     eww
-    protonmail-bridge-gui
     wl-clipboard # Wayland Clipboard Utilities
     youtube-music
   ];
+
+  # Protonmail Bridge
+  systemd.user.services.protonmail-bridge.environment.PASSWORD_STORE_DIR = "/home/maroka/.local/share/password-store";
+  services.protonmail-bridge = {
+    enable = true;
+    path = [ pkgs.pass ];
+  };
 
   ### Programs ###
   # VPN
@@ -149,6 +148,9 @@
     noAutostart = true;
     storeOnly = true;
   };
+
+
+  configured.programs.hoyoplay.enable = true;
 
   # Files to persist
   environment.persistence."/persist" = {
