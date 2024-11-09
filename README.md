@@ -1,7 +1,8 @@
-<center>
+<p align="center">
 <img src="https://raw.githubusercontent.com/NixOS/nixos-artwork/ea1384e183f556a94df85c7aa1dcd411f5a69646/logo/nix-snowflake-colours.svg" alt="nix logo" width="100"/>
-<h1>✨ Maroka's Config ✨</h1>
-</center>
+</p>
+
+<h1 align="center">✨ Maroka's Config ✨</h1>
 
 This config is intended for my own use and won't work for you out of the box. Feel free to use as inspiration ✨
 
