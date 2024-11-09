@@ -6,10 +6,11 @@ let
 in {
   options.services."${module_name}" = {
     enable = mkEnableOption "Enable the Stremio streaming server";
+    openFirewall = mkEnableOption "Opens default ports used by stremio";
   };
 
   config = mkIf cfg.enable {
-    networking.firewall.allowedTCPPorts = [ 11470 12470 ];
+    networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [ 11470 12470 ];
 
     systemd.tmpfiles.settings.stremioServerDirs = {
       "/var/lib/stremio-server"."d".mode = "700";
