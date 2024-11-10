@@ -10,7 +10,7 @@ This config is intended for my own use and won't work for you out of the box. Fe
 
 1. Add a nixosConfiguration for the new machine and set up [secrets](#setting-up-secrets).
 2. Boot into the Nix minimal installer on the target machine and run `pass` so we can ssh to it.
-3. Add a (Disko)[hosts/kanan/disko-config.nix] config for the new machine.
+3. Add a [Disko](hosts/kanan/disko-config.nix) config for the new machine.
 4. Generate a hardware-configuration for the target machine.
 ```bash
 # On target machine
