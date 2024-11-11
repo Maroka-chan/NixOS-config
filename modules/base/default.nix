@@ -14,9 +14,15 @@
 
   # Networking
   networking = {
-    nameservers = [ "1.1.1.2" "1.0.0.2" ];
+    #nameservers = [ "1.1.1.2" "1.0.0.2" ];
     dhcpcd.extraConfig = "nohook resolv.conf";
   };
+
+  ## Remove fallbackDNS
+  services.resolved.extraConfig =
+  ''
+    FallbackDNS=
+  '';
 
   # Firewall
   networking.firewall = {
@@ -74,4 +80,16 @@
   # see: https://github.com/nix-community/impermanence/issues/229
   boot.initrd.systemd.suppressedUnits = [ "systemd-machine-id-commit.service" ];
   systemd.suppressedSystemUnits = [ "systemd-machine-id-commit.service" ];
+
+  nix.settings = {
+    auto-optimise-store = true;
+    builders-use-substitutes = true;
+    substituters = [
+      "https://nix-community.cachix.org"
+    ];
+    trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+    ];
+    experimental-features = "nix-command flakes";
+  };
 }
