@@ -64,7 +64,6 @@
         "https://adguardteam.github.io/HostlistsRegistry/assets/filter_55.txt"  # HaGeZi's Badware Hoster blocklist
         "https://adguardteam.github.io/HostlistsRegistry/assets/filter_54.txt"  # HaGeZi's DynDNS Blocklist
         "https://adguardteam.github.io/HostlistsRegistry/assets/filter_56.txt"  # HaGeZi's The World's Most Abused TLDs
-        "https://adguardteam.github.io/HostlistsRegistry/assets/filter_52.txt"  # HaGeZi's Encrypted DNS/VPN/TOR/Proxy Bypass
         "https://adguardteam.github.io/HostlistsRegistry/assets/filter_44.txt"  # HaGeZi's Threat Intelligence Feeds
       ];
     };
