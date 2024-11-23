@@ -1,4 +1,4 @@
-{ config, lib, username, inputs, ... }:
+{ config, pkgs, lib, username, inputs, ... }:
 with lib;
 let
   module_name = "hyprland";
@@ -28,6 +28,11 @@ in {
     };
 
     security.pam.services.hyprlock = {};
+
+    environment.systemPackages = with pkgs; [
+      hyprpolkitagent
+      hyprsunset
+    ];
 
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
     programs.hyprland.enable = true;

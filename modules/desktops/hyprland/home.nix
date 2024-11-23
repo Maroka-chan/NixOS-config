@@ -115,6 +115,8 @@ in
       inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
     ];
     extraConfig = extraHyprConfig + ''
+      exec-once = systemctl --user start hyprpolkitagent
+
       input {
         kb_layout = us,dk
         kb_options = grp:alt_caps_toggle
@@ -152,7 +154,9 @@ in
 
       decoration {
         rounding = 0
-        drop_shadow = false
+        shadow {
+          enabled = false
+        }
         blur {
           enabled = true
         }
@@ -161,9 +165,12 @@ in
       # Animations
       animation=workspaces,1,4,default
       animation=windows,1,4,default
+      animation = fade, 0
 
       # Bindings
       $mainMod = SUPER
+
+      bind = $mainMod, TAB, exec, ags -r "reveal_bar.value = !reveal_bar.value"
 
       bind = $mainMod SHIFT, Q, killactive
       bind = $mainMod, F, fullscreen
