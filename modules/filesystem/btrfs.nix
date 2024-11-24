@@ -1,4 +1,4 @@
-{ lib, pkgs, config, ... }:
+{ lib, pkgs, config, username, ... }:
 with lib;
 let
   module_name = "btrfs";
@@ -34,7 +34,7 @@ in {
     })
     (mkIf cfg.impermanence.enable {
       # Wipe the root subvolume on boot.
-      boot.initrd.postDeviceCommands = pkgs.lib.mkBefore ''
+      boot.initrd.postDeviceCommands = lib.mkBefore ''
         mkdir -p /mnt
 
         mount -t btrfs ${cfg.impermanence.root} /mnt
@@ -53,6 +53,14 @@ in {
 
         umount /mnt
       '';
+
+      # Create directories
+      systemd.tmpfiles.rules = [
+        "d /persist/home/${username} 0700 ${username} users"
+        # We need to explicitly set ownership on the home directory when using impermanence.
+        # Otherwise, it will be owned as root, and home-manager will fail.
+        "d /home/${username} 0700 ${username} users"
+      ];
 
       environment.persistence."/persist" = {
         directories = [

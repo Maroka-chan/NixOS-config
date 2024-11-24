@@ -186,11 +186,6 @@
   # PAM
   security.pam.services.swaylock = {};
 
-  # Create persist directories
-  systemd.tmpfiles.rules = [
-    "d /persist/home/maroka 0700 maroka users"
-  ];
-
   # Files to persist
   environment.persistence."/persist" = {
     hideMounts = true;

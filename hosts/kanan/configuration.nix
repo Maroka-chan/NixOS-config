@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, username, ... }:
+{ config, pkgs, inputs, username, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -29,18 +29,11 @@
     hashedPasswordFile = config.age.secrets."${username}-password".path;
   };
 
-  # Create persist directories
-  systemd.tmpfiles.rules = [
-    "d /persist/home/${username} 0700 ${username} users"
-  ];
-
   # Home Manager
-  home-manager.users.${username} = {
-    imports = [
-      inputs.impermanence.nixosModules.home-manager.impermanence
-      ./home.nix
-    ];
-  };
+  home-manager.users.${username}.imports = [
+    inputs.impermanence.nixosModules.home-manager.impermanence
+    ./home.nix
+  ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -97,6 +90,7 @@
     fpsunlock.enable = true;
     mangohud.enable = true;
   };
+  configured.programs.hoyoplay.enable = true;
 
   programs.steam.enable = true;
 
@@ -124,6 +118,7 @@
     (pkgs.callPackage ../../modules/fot-yuruka.nix { inherit pkgs; })
   ];
 
+  # Podman
   virtualisation.podman = {
     enable = true;
     dockerCompat = true;
@@ -148,9 +143,6 @@
     noAutostart = true;
     storeOnly = true;
   };
-
-
-  configured.programs.hoyoplay.enable = true;
 
   # Files to persist
   environment.persistence."/persist" = {
