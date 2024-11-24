@@ -42,10 +42,6 @@ in
     inputs.tlock.packages.${pkgs.system}.default
   ];
 
-  programs.obs-studio = {
-    enable = true;
-  };
-
   programs = {
     alacritty.enable = true;
     password-store.enable = true;
@@ -60,9 +56,8 @@ in
       enableZshIntegration = true;
       nix-direnv.enable = true;
     };
-    firefox = {
-      enable = true;
-    };
+    firefox.enable = true;
+    obs-studio.enable = true;
   };
 
   # Home Manager Persistence
