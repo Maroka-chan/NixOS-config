@@ -79,3 +79,10 @@ nix run github:ryantm/agenix -- -e secret.age
 ```bash
 mkpasswd -m sha-512
 ```
+
+# Run in VM
+
+We can use `vmWithDisko` to build a VM that uses the Disko config to format and create the filesystems.
+```bash
+nix run -L '.#nixosConfigurations.kanan.config.system.build.vmWithDisko'
+```
