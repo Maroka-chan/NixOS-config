@@ -3,8 +3,8 @@
     disk.nixos = {
       type = "disk";
       device = "/dev/nvme0n1";
-      imageSize = "50G";
       content.type = "gpt";
+      imageSize = "50G";  # Disk size when running as VM
 
       content.partitions.ESP = {
         type = "EF00";
@@ -14,7 +14,7 @@
           type = "filesystem";
           format = "vfat";
           mountpoint = "/boot";
-          extraArgs = [ "-n BOOT" ];
+          extraArgs = [ "-n" "BOOT" ];
           mountOptions = [
             "defaults"
           ];
@@ -38,7 +38,7 @@
 
         content.content = {
           type = "btrfs";
-          extraArgs = [ "-f" "-L NIXOS" ];
+          extraArgs = [ "-f" "-L" "NIXOS" ];
 
           postCreateHook = ''
             MNTPOINT=$(mktemp -d)
@@ -51,7 +51,6 @@
             mountOptions = [ "compress=zstd" "noatime" "ssd" "autodefrag" "discard=async" ];
           in {
             "root"     = { mountpoint = "/";        inherit mountOptions; };
-            "home"     = { mountpoint = "/home";    inherit mountOptions; };
             "nix"      = { mountpoint = "/nix";     inherit mountOptions; };
             "persist"  = { mountpoint = "/persist"; inherit mountOptions; };
             "log"      = { mountpoint = "/var/log"; inherit mountOptions; };

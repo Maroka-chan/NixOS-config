@@ -1,10 +1,11 @@
-{ config, pkgs, inputs, ...}:
+{ config, pkgs, inputs, username, ... }:
 let
-  dotfiles = config.lib.file.mkOutOfStoreSymlink "/home/maroka/.dotfiles";
+
+  homeDirectory = "/home/${username}";
+  dotfiles = config.lib.file.mkOutOfStoreSymlink "${homeDirectory}/.dotfiles";
 in
 {
   home.packages = with pkgs; [
-    alacritty # Terminal emulator
     pavucontrol # Audio control gui
     
     # Media players
@@ -12,11 +13,15 @@ in
 
     feh # Image Viewer
 
-    cava # Audio Visualizer
+    #cava # Audio Visualizer
 
     sioyek    # Document Viewer
-    brave     # Browser
     swaybg    # Wallpaper Tool
+
+    # Screenshot
+    swappy
+    grim
+    slurp
 
     material-design-icons # Icons
     slack
@@ -25,42 +30,7 @@ in
   ];
 
   programs = {
-    alacritty = {
-      enable = true;
-    };
-    zsh = {
-      enable = true;
-      autosuggestion.enable = true;
-      enableCompletion = true;
-      syntaxHighlighting.enable = true;
-
-      history = {
-        size = 10000;
-        #path = "/persist/home/maroka/.local/share/zsh/.zsh_history";
-      };
-
-      initExtraFirst = ''
-        # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-        # Initialization code that may require console input (password prompts, [y/n]
-        # confirmations, etc.) must go above this block; everything else may go below.
-        if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-          source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
-        fi
-
-      '';
-
-      initExtra = ''
-        # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-        [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-      '';
-
-      zplug = {
-        enable = true;
-        plugins = [
-          { name = "romkatv/powerlevel10k"; tags = [ "as:theme" "depth:1" ]; }
-        ];
-      };
-    };
+    alacritty.enable = true;
     git = {
       enable = true;
       userName = "Maroka-chan";
@@ -71,49 +41,44 @@ in
       enableZshIntegration = true;
       nix-direnv.enable = true;
     };
-    librewolf = {
-      enable = true;
-    };
-    firefox = {
-      enable = true;
-    };
+    firefox.enable = true;
   };
 
   # Home Manager Persistence
- # home.persistence."/persist/home/maroka" = {
- #   allowOther = true;
- #   files = [
- #     ".p10k.zsh"
- #     ".cache/gitstatus/gitstatusd-linux-x86_64"
- #     ".config/Mullvad VPN/gui_settings.json"
- #     ".config/WebCord/config.json"
- #     ".config/btop/btop.conf"
- #     ".config/cat_installer/ca.pem" # eduroam wifi certificate
- #     ".local/share/nvim/telescope_history"
- #     ".config/sops/age/keys.txt" # age key for sops-nix
- #     ".gnupg"
- #     ".config/JetBrains"
- #   ];
- #   directories = [
- #     "Downloads"
- #     "Documents"
- #     "Pictures"
- #     "Videos"
- #     "Music"
- #     ".ssh"
- #     ".dotfiles"
- #     ".config/BraveSoftware/Brave-Browser"
- #     ".librewolf"
- #     ".zplug"
- #     ".local/share/Jellyfin Media Player/QtWebEngine/Default/Local Storage/leveldb"
- #     ".config/WebCord/Local Storage/leveldb"
- #     ".local/share/direnv/allow"
- #     ".config/github-copilot"
- #     ".local/state/nvim/swap"
- #     ".local/state/nvim/shada"
- #   ];
- # };
+  home.persistence."/persist${homeDirectory}" = {
+    allowOther = true;
+    files = [
+      ".cache/gitstatus/gitstatusd-linux-x86_64"
+      ".config/btop/btop.conf"
+      ".local/share/nvim/telescope_history"
+      ".pam-gnupg"
+    ];
+    directories = [
+      "Downloads"
+      "Documents"
+      "Pictures"
+      "Videos"
+      "Music"
+      ".ssh"
+      ".dotfiles"
+      ".zplug"
+      ".local/share/direnv/allow"
+      ".local/state/nvim/swap"
+      ".local/state/nvim/shada"
+      ".local/share/password-store"
+      ".local/state/wireplumber"
+    ];
+  };
 
+  services.pass-secret-service.enable = true;
+  services.gpg-agent = {
+    enable = true;
+    enableZshIntegration = true;
+    pinentryPackage = pkgs.pinentry-gtk2;
+    extraConfig = ''
+      allow-preset-passphrase
+    '';
+  };
 
   # Eww
   xdg.configFile."eww".source = "${dotfiles}/config/eww";
