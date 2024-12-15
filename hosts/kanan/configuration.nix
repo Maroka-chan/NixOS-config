@@ -55,9 +55,9 @@
   configured.programs.mullvad.enable = true;
   configured.programs.mullvad.persist = true;
   # Browser
-  configured.programs.librewolf.enable = true;
-  configured.programs.librewolf.persist = true;
-  configured.programs.librewolf.defaultBrowser = true;
+  configured.programs.firefox.enable = true;
+  configured.programs.firefox.persist = true;
+  configured.programs.firefox.defaultBrowser = true;
   # Window Manager / Compositor
   desktops.hyprland.enable = true;
   desktops.hyprland.extraConfig = let
@@ -113,7 +113,7 @@
 
   # Fonts
   fonts.packages = with pkgs; [
-    (nerdfonts.override { fonts = [ "CascadiaCode" ]; })
+    nerd-fonts.caskaydia-cove
     noto-fonts
     (pkgs.callPackage ../../modules/fot-yuruka.nix { inherit pkgs; })
   ];
@@ -156,7 +156,6 @@
 
         ".umu/hoyoplay"
         ".local/share/umu"
-        ".local/share/Steam/compatibilitytools.d"
       ];
     };
   };

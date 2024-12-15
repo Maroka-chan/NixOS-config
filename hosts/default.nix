@@ -6,6 +6,7 @@ let
     impermanence.nixosModules.impermanence
     agenix.nixosModules.default
     disko.nixosModules.disko
+    nur.modules.nixos.default
   ];
 
   mkSystem = name: {

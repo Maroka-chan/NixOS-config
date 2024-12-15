@@ -1,0 +1,26 @@
+--- userChrome.css	2024-12-15 01:53:12.659064120 +0100
++++ userChrome.css	2024-12-15 01:54:51.333109730 +0100
+@@ -263,9 +263,6 @@
+   max-width: 120px !important;
+   min-width: 80px !important;
+ }
+-.tabbrowser-tab .tab-background:not([selected]) {
+-  background: var(--item) !important;
+-}
+ .tab-label-container:not([selected]) {
+   opacity: 0.5 !important;
+ }
+@@ -387,8 +384,11 @@
+   transform: translateX(-50%) !important;
+ }
+ #nav-bar {
+-  height: var(--tab-min-height) !important;
+-  background-color: transparent !important;
++  position: absolute !important;
++  top: -100px !important; /* Move it completely out of view */
++  width: 100% !important; /* Ensure it doesn't collapse */
++  height: 0 !important; /* Minimize its footprint */
++  overflow: hidden !important; /* Prevent any visual artifacts */
+ }
+ 
+ /* 📐 Click Tab to Focus Urlbar */
