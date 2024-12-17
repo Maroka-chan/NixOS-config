@@ -1,6 +1,14 @@
---- userChrome.css	2024-12-15 01:53:12.659064120 +0100
-+++ userChrome.css	2024-12-15 01:54:51.333109730 +0100
-@@ -263,9 +263,6 @@
+--- userChrome.css	2024-12-17 02:35:56.642212408 +0100
++++ userChrome.css	2024-12-17 02:45:10.271768615 +0100
+@@ -171,6 +171,7 @@
+   position: relative;
+   margin: var(--6) var(--6) 0 var(--6);
+   z-index: 3;
++  display: none;
+ }
+ 
+ 
+@@ -263,9 +264,6 @@
    max-width: 120px !important;
    min-width: 80px !important;
  }
@@ -10,17 +18,35 @@
  .tab-label-container:not([selected]) {
    opacity: 0.5 !important;
  }
-@@ -387,8 +384,11 @@
+@@ -326,6 +324,7 @@
+   padding: 0 !important;
+   margin: 0 !important;
+   max-height: none !important;
++  width: 100%;
+ }
+ #PlacesToolbarItems {
+   display: flex;
+@@ -386,10 +385,6 @@
+   width: max(50vw, 320px) !important;
    transform: translateX(-50%) !important;
  }
- #nav-bar {
+-#nav-bar {
 -  height: var(--tab-min-height) !important;
 -  background-color: transparent !important;
-+  position: absolute !important;
-+  top: -100px !important; /* Move it completely out of view */
-+  width: 100% !important; /* Ensure it doesn't collapse */
-+  height: 0 !important; /* Minimize its footprint */
-+  overflow: hidden !important; /* Prevent any visual artifacts */
- }
+-}
  
  /* 📐 Click Tab to Focus Urlbar */
+ /* Source: https://github.com/MrOtherGuy/firefox-csshacks/.../click_selected_tab_to_focus_urlbar.css*/
+@@ -430,6 +425,12 @@
+   pointer-events: none;
+ }
+ 
++#navigator-toolbox {
++  display: flex;
++  flex-direction: row;
++  flex-wrap: wrap;
++}
++
+ /* Tab Focus => Url Select */
+ #navigator-toolbox:focus-within
+   .tabbrowser-tab:not([pinned])[selected]
