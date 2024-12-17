@@ -115,8 +115,6 @@ in
       inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
     ];
     extraConfig = extraHyprConfig + ''
-      exec-once = systemctl --user start hyprpolkitagent
-
       input {
         kb_layout = us,dk
         kb_options = grp:alt_caps_toggle
@@ -178,7 +176,7 @@ in
       bind = $mainMod, D, exec, rofi -show drun
       bind = $mainMod, Return, exec, alacritty
       bind = $mainMod, V, togglefloating
-      bind = $mainMod, B, exec, librewolf
+      bind = $mainMod, B, exec, firefox
 
       bind = $mainMod SHIFT, S, exec, grim -g "$(slurp)" - | swappy -f -
 

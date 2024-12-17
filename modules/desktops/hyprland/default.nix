@@ -30,8 +30,8 @@ in {
     security.pam.services.hyprlock = {};
 
     environment.systemPackages = with pkgs; [
-      hyprpolkitagent
-      hyprsunset
+      #hyprpolkitagent
+      #hyprsunset
     ];
 
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
