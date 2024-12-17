@@ -3,6 +3,7 @@
   imports = [
    ./mullvad.nix
    ./librewolf.nix
+   ./firefox
    ./rofi.nix
    ./zsh.nix
    ./thunderbird.nix
