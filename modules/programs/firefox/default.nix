@@ -6,29 +6,31 @@ let
 
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
 
-  userChrome = pkgs.stdenvNoCC.mkDerivation {
-    name = "userChrome";
+  #userChrome = pkgs.stdenvNoCC.mkDerivation {
+  #  name = "userChrome";
 
-    src = builtins.fetchurl {
-      url = "https://github.com/Tagggar/Firefox-Alpha/raw/refs/heads/main/chrome/userChrome.css";
-      sha256 = "sha256:1bw5szkqxdmkr2lpmaxz0z7rkbwm87n64b6ihgvrw5w8jqcr0hxq";
-    };
+  #  src = builtins.fetchurl {
+  #    url = "https://github.com/Tagggar/Firefox-Alpha/raw/refs/heads/main/chrome/userChrome.css";
+  #    sha256 = "sha256:1bw5szkqxdmkr2lpmaxz0z7rkbwm87n64b6ihgvrw5w8jqcr0hxq";
+  #  };
 
-    unpackPhase = ''
-      cp $src ./userChrome.css
-    '';
+  #  unpackPhase = ''
+  #    cp $src ./userChrome.css
+  #  '';
 
-    patchFlags = [ "-p0" ];
-    patches = [ ./userChrome.patch ];
+  #  patchFlags = [ "-p0" ];
+  #  patches = [ ./userChrome.patch ];
 
-    dontConfigure = true;
-    dontBuild = true;
-    dontFixup = true;
+  #  dontConfigure = true;
+  #  dontBuild = true;
+  #  dontFixup = true;
 
-    installPhase = ''
-      cp ./userChrome.css $out
-    '';
-  };
+  #  installPhase = ''
+  #    cp ./userChrome.css $out
+  #  '';
+  #};
+
+  userChrome = ./userChrome.css;
 in {
   options.configured.programs."${module_name}" = {
     enable = mkEnableOption "Enable the Firefox browser";
@@ -79,8 +81,8 @@ in {
               "signon.rememberSignons" = false;
               "webgl.disabled" = true;
 
-              ### Disable location bar dropdown
-              "browser.urlbar.maxRichResults" = 0;
+              ### Only give one history suggestion for autocompletion
+              "browser.urlbar.maxRichResults" = 1;
 
               ### Disable form autofill
               "extensions.formautofill.addresses.enabled" = false;
@@ -123,7 +125,7 @@ in {
     (mkIf cfg.persist {
       home-manager.users.${username}.home.persistence
         ."/persist/home/${username}".directories = [
-          ".firefox"
+          ".mozilla/firefox"
         ];
     })
   ];

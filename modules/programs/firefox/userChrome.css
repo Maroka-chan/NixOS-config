@@ -1,0 +1,61 @@
+:root {
+  --red: #ff000070;
+}
+
+/* Clean UI */
+* {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
+#navigator-toolbox {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+/* Make bookmarks wrap to be below nav-bar */
+#PersonalToolbar {
+  width: 100%;
+}
+
+/* Hide elements */
+#TabsToolbar
+  > :is(.titlebar-spacer, .titlebar-buttonbox-container),
+#tabs-newtab-button,
+.tab-close-button,
+.tab-secondary-label,
+#urlbar .search-one-offs:not([hidden]),
+#alltabs-button,
+#back-button, #forward-button,
+#stop-reload-button,
+#reader-mode-button, #star-button-box,
+#tracking-protection-icon-container,
+#picture-in-picture-button,
+#unified-extensions-button,
+#customizableui-special-spring1,
+#customizableui-special-spring2,
+#toolbar-menubar {
+  display: none !important;
+}
+
+#identity-box.localResource,
+#PanelUI-button {
+  visibility: hidden;
+  max-width: 5px;
+}
+
+#TabsToolbar {
+  align-items: center;
+}
+
+.tab-background,
+#tabbrowser-tabs {
+  min-height: unset !important;
+}
+
+/* Tabs playing audio */
+#tabbrowser-tabs .tabbrowser-tab:is([soundplaying]) .tab-background {
+  background-color: var(--red);
+}
