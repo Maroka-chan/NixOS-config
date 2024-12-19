@@ -331,6 +331,7 @@ in
       ".local/share/bottles"
       ".local/share/tlock"
       ".local/state/wireplumber"
+      ".local/share/Steam"
     ];
   };
 
