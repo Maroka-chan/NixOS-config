@@ -58,7 +58,6 @@
         "https://adguardteam.github.io/HostlistsRegistry/assets/filter_48.txt"  # HaGeZi's Pro Blocklist
         "https://adguardteam.github.io/HostlistsRegistry/assets/filter_50.txt"  # uBlock₀ filters – Badware risks
         "https://adguardteam.github.io/HostlistsRegistry/assets/filter_45.txt"  # HaGeZi's Allowlist Referral
-        "https://adguardteam.github.io/HostlistsRegistry/assets/filter_46.txt"  # HaGeZi's Anti-Piracy Blocklist
         "https://adguardteam.github.io/HostlistsRegistry/assets/filter_47.txt"  # HaGeZi's Gambling Blocklist
         "https://adguardteam.github.io/HostlistsRegistry/assets/filter_12.txt"  # Dandelion Sprout's Anti-Malware List
         "https://adguardteam.github.io/HostlistsRegistry/assets/filter_55.txt"  # HaGeZi's Badware Hoster blocklist
