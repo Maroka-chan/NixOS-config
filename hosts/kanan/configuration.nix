@@ -32,6 +32,7 @@
   # Home Manager
   home-manager.users.${username}.imports = [
     inputs.impermanence.nixosModules.home-manager.impermanence
+    inputs.walker.homeManagerModules.default
     ./home.nix
   ];
 

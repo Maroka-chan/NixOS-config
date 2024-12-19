@@ -7,7 +7,10 @@
     nixpkgs-small.url = "github:NixOS/nixpkgs/nixos-24.05-small";
     nixpkgs-master.url = "github:NixOS/nixpkgs";
     nixpkgs-stremio-server.url = "github:NixOS/nixpkgs/aae94e56a7b905281f007a5b70aa7ffff89aee57";
-    nixpkgs-fork.url = "path:///home/maroka/Documents/nixpkgs";
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     impermanence.url = "github:nix-community/impermanence";
     agenix.url = "github:ryantm/agenix";
@@ -21,6 +24,7 @@
       inputs.hyprland.follows = "hyprland";
     };
     ags.url = "github:Aylur/ags";
+    walker.url = "github:abenz1267/walker";
 
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs";
