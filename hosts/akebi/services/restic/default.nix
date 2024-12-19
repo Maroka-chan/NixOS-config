@@ -1,4 +1,4 @@
-{ inputs, config, ... }:
+{ config, ... }:
 {
   age.secrets.restic-env.file = ../../../../secrets/restic-env.age;
   age.secrets.restic-pass.file = ../../../../secrets/restic-pass.age;
@@ -7,7 +7,6 @@
   services.restic = {
     backups = {
       memories = {
-        # user = "backup";
         initialize = true;
         repositoryFile = config.age.secrets.restic-repo.path;
         passwordFile = config.age.secrets.restic-pass.path;
@@ -29,25 +28,11 @@
     };
   };
 
-  services.restic.server.prometheus = true;
-
-  # Use my own prometheus module w/ repositoryFile option
-  disabledModules = [ "services/monitoring/prometheus/exporters.nix" ];
-  imports = [ "${inputs.nixpkgs-fork}/nixos/modules/services/monitoring/prometheus/exporters.nix" ];
-
   # Metrics Monitoring
   services.prometheus = {
     enable = true;
     port = 9001;
   };
-
-  services.prometheus.exporters.restic = {
-    enable = true;
-    repositoryFile = config.age.secrets.restic-repo.path;
-    passwordFile = config.age.secrets.restic-pass.path;
-    environmentFile = config.age.secrets.restic-env.path;
-  };
-
 
   services.prometheus.exporters.node = {
     enable = true;
@@ -56,12 +41,6 @@
   };
 
   services.prometheus.scrapeConfigs = [
-    {
-      job_name = "restic";
-      static_configs = [{
-        targets = [ "127.0.0.1:9753" ];
-      }];
-    }
     {
       job_name = "node";
       static_configs = [{
