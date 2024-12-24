@@ -487,11 +487,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1733684019,
-        "narHash": "sha256-2kYREgmSmbLsmDpLEq96hxVAU3qz8aCvVhF65yCFZHY=",
+        "lastModified": 1734541191,
+        "narHash": "sha256-t+JObKGYWck1UCg8IhdLtImzXcgYz5qJ9XN+GrQbenw=",
         "owner": "hyprwm",
         "repo": "hyprgraphics",
-        "rev": "fb2c0268645a77403af3b8a4ce8fa7ba5917f15d",
+        "rev": "0f9b8ca692b319c3cadd10175518805dbdc33ef0",
         "type": "github"
       },
       "original": {
@@ -519,18 +519,16 @@
       },
       "locked": {
         "lastModified": 1734639812,
-        "narHash": "sha256-OxrpnYxFcnh7m6oUeD1zJnqTizTBTsPYz6PjiU1/wuk=",
-        "ref": "refs/heads/main",
+        "narHash": "sha256-MbE5G26NM18O9+VnYW5hweAv28o7RJaVFOrZT0gIvr0=",
+        "owner": "hyprwm",
+        "repo": "Hyprland",
         "rev": "71dc9f6128b8d2e382b2a574d2d5f15e2d907f3a",
-        "revCount": 5573,
-        "submodules": true,
-        "type": "git",
-        "url": "https://github.com/hyprwm/Hyprland"
+        "type": "github"
       },
       "original": {
-        "submodules": true,
-        "type": "git",
-        "url": "https://github.com/hyprwm/Hyprland"
+        "owner": "hyprwm",
+        "repo": "Hyprland",
+        "type": "github"
       }
     },
     "hyprland-protocols": {
@@ -689,11 +687,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1717793913,
-        "narHash": "sha256-q5cY1gAhVd183P2AH9hA4QqrNHZncyY1OaxLv/4md7k=",
+        "lastModified": 1734796247,
+        "narHash": "sha256-vuavkEWRIyIRSRP8R79pxTi3p5Lmc7DfGKCdoEq72V8=",
         "owner": "Maroka-chan",
         "repo": "nvim-config",
-        "rev": "b0443818d6f77917eb224bd86b1df2fed62266e5",
+        "rev": "428ec5dc4a2095925e9d1aa54602fa8bc2388339",
         "type": "github"
       },
       "original": {
@@ -967,11 +965,11 @@
         "nixpkgs-stable": "nixpkgs-stable"
       },
       "locked": {
-        "lastModified": 1734379367,
-        "narHash": "sha256-Keu8z5VgT5gnCF4pmB+g7XZFftHpfl4qOn7nqBcywdE=",
+        "lastModified": 1734425854,
+        "narHash": "sha256-nzE5UbJ41aPEKf8R2ZFYtLkqPmF7EIUbNEdHMBLg0Ig=",
         "owner": "cachix",
         "repo": "git-hooks.nix",
-        "rev": "0bb4be58f21ff38fc3cdbd6c778eb67db97f0b99",
+        "rev": "0ddd26d0925f618c3a5d85a4fa5eb1e23a09491d",
         "type": "github"
       },
       "original": {

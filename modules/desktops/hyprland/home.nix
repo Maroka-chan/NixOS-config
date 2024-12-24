@@ -50,11 +50,12 @@ in
   # Status Bar
   programs.ags = {
     enable = true;
-    configDir = "${dotfiles}/config/ags";
+    configDir = "${dotfiles}/config/ags_new";
     extraPackages = with pkgs; [
       gtksourceview
       webkitgtk
       accountsservice
+      inputs.ags.packages.${pkgs.system}.hyprland
     ];
   };
 
@@ -168,7 +169,7 @@ in
       # Bindings
       $mainMod = SUPER
 
-      bind = $mainMod, TAB, exec, ags -r "reveal_bar.value = !reveal_bar.value"
+      bind = $mainMod, TAB, exec, ${inputs.ags.packages.${pkgs.stdenv.hostPlatform.system}.io}/bin/astal -t bar
 
       bind = $mainMod SHIFT, Q, killactive
       bind = $mainMod, F, fullscreen
@@ -195,10 +196,6 @@ in
       # Move/resize windows with mainMod + LMB/RMB and dragging
       bindm = $mainMod, mouse:272, movewindow
       bindm = $mainMod, mouse:273, resizewindow
-
-      # to switch between windows in a floating workspace
-      bind = SUPER,Tab,cyclenext,          # change focus to another window
-      bind = SUPER,Tab,bringactivetotop,   # bring it to the top
 
       # Volume button that allows press and hold, volume limited to 100%
       binde = , XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+
