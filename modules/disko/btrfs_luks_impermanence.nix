@@ -1,10 +1,12 @@
-{
+{ config, lib, OSDisk ? "/dev/nvme0n1", ... }: let
+  inherit (lib) mkIf;
+in {
   disko.devices = {
     disk.nixos = {
       type = "disk";
-      device = "/dev/nvme0n1";
-      imageSize = "50G";
+      device = OSDisk;
       content.type = "gpt";
+      imageSize = "50G"; # Disk size when running as VM
 
       content.partitions.ESP = {
         type = "EF00";
@@ -40,6 +42,8 @@
           type = "btrfs";
           extraArgs = [ "-f" "-L" "NIXOS" ];
 
+          # Create snapshot regardless of if impermanence is enabled
+          # This way we can enable impermanence later on if we want
           postCreateHook = ''
             MNTPOINT=$(mktemp -d)
             mount -t btrfs "/dev/mapper/crypt-nixos" "$MNTPOINT"
@@ -67,7 +71,8 @@
     };
   };
 
-  fileSystems."/persist".neededForBoot = true;
+  fileSystems."/persist".neededForBoot = mkIf config.impermanence.enable true;
   fileSystems."/var/log".neededForBoot = true;
   fileSystems."/swap".neededForBoot = true;
 }
+

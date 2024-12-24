@@ -1,14 +1,13 @@
 { lib, pkgs, config, username, ... }:
-with lib;
 let
   module_name = "btrfs";
   cfg = config.filesystem."${module_name}";
+  inherit (lib) mkEnableOption mkOption mkMerge mkIf types;
 in {
   options.filesystem."${module_name}" = {
     enable = mkEnableOption "Set system up for BTRFS";
 
     impermanence = {
-      enable = mkEnableOption "Wipe root and restore blank root BTRFS subvolume on boot.";
       root = mkOption {
         type = types.str;
         default = "/dev/mapper/crypt-nixos";
@@ -32,7 +31,7 @@ in {
       boot.supportedFilesystems = [ "btrfs" ];
       services.btrfs.autoScrub.enable = true;
     })
-    (mkIf cfg.impermanence.enable {
+    (mkIf config.impermanence.enable {
       # Wipe the root subvolume on boot.
       boot.initrd.postDeviceCommands = lib.mkBefore ''
         mkdir -p /mnt

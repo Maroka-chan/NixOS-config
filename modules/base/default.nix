@@ -45,11 +45,6 @@
     zip unzip
     (btop.override {rocmSupport = true;})
     comma
-
-    # VM
-    #spice
-    #spice-gtk
-    #spice-protocol
   ];
 
   # Remove sudo lectures
@@ -69,52 +64,23 @@
     value = "16384";
   }];
 
-  # Files to persist
-  environment.persistence."/persist" = {
-    hideMounts = true;
-    directories = [
-      "/var/lib/nixos"
-      "/var/lib/fwupd"
-    ];
-    files = [
-      "/etc/machine-id"
-      "/var/lib/systemd/random-seed"
-    ];
-  };
-
   # Configure Disko VM
-  # Assumes impermanence is used
   virtualisation.vmVariantWithDisko = {
     virtualisation = {
       cores = 4;
       memorySize = 8096;
       qemu.options = [ "-enable-kvm" "-vga virtio" "-display gtk,gl=on" ];
-      #resolution = { x = 1920; y = 1080; };
       writableStoreUseTmpfs = false;
 
-      fileSystems."/persist".neededForBoot = true;
       fileSystems."/var/log".neededForBoot = true;
       fileSystems."/swap".neededForBoot = true;
 
       # Mount local .ssh directory, so the secrets can be decrypted.
       sharedDirectories."secrets_decryption_key" = {
-        source = "/persist/home/$USER/.ssh";
+        source = "/home/$USER/.ssh";
         target = dirOf (builtins.head config.age.identityPaths);
       };
     };
-
-    #virtualisation = {
-    #  libvirtd = {
-    #    enable = true;
-    #    qemu = {
-    #      package = pkgs.qemu_kvm;
-    #      swtpm.enable = true;
-    #      ovmf.enable = true;
-    #      ovmf.packages = [ pkgs.OVMFFull.fd ];
-    #    };
-    #  };
-    #  spiceUSBRedirection.enable = true;
-    #};
 
     # Add dummy cryptkey for VM
     disko.devices.disk.cryptkey = {
@@ -133,26 +99,14 @@
     };
   };
 
-  #services.qemuGuest.enable = true;       # VM time syncing and scripting
-  #services.spice-vdagentd.enable = true;  # VM clipboard sharing
-  #users.users.maroka.extraGroups = [ "kvm" "libvirtd" ];
+  # Garbage collection
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 14d";
+  };
 
-  #virtualisation.vmVariantWithDisko.disko.devices.disk.nixos.content.preCreateHook = ''
-  #  mkdir -p /dev/disk/by-partlabel/
-  #  dd bs=1024 count=4 if=/dev/zero of=/dev/disk/by-partlabel/CRYPTKEY iflag=fullblock
-  #  chmod 0400 /dev/disk/by-partlabel/CRYPTKEY
-  #'';
-  #virtualisation.vmVariantWithDisko.disko.devices.disk.nixos.content.postCreateHook = ''
-  #  mkdir -p /dev/disk/by-partlabel/
-  #  dd bs=1024 count=4 if=/dev/zero of=/dev/disk/by-partlabel/CRYPTKEY iflag=fullblock
-  #  chmod 0400 /dev/disk/by-partlabel/CRYPTKEY
-  #'';
-
-  # Workaround for the following service failing with a bind mount for /etc/machine-id
-  # see: https://github.com/nix-community/impermanence/issues/229
-  boot.initrd.systemd.suppressedUnits = [ "systemd-machine-id-commit.service" ];
-  systemd.suppressedSystemUnits = [ "systemd-machine-id-commit.service" ];
-
+  # Nix Settings
   nix.settings = {
     auto-optimise-store = true;
     builders-use-substitutes = true;

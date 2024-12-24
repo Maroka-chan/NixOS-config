@@ -6,7 +6,6 @@ let
 in {
   options.configured.programs."${module_name}" = {
     enable = mkEnableOption "Enable the Librewolf browser";
-    persist = mkEnableOption "Persist state";
     defaultBrowser = mkEnableOption "Set as default browser";
   };
 
@@ -27,7 +26,7 @@ in {
         "x-scheme-handler/https"        = [ "librewolf.desktop" ];
       };
     })
-    (mkIf cfg.persist {
+    (mkIf config.impermanence.enable {
       home-manager.users.${username}.home.persistence
         ."/persist/home/${username}".directories = [
           ".librewolf"

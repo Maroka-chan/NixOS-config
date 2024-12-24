@@ -1,48 +1,67 @@
-{ inputs, ... }:
+inputs:
 let
   baseModules = with inputs; [
     ../modules
-    ../modules/development
     impermanence.nixosModules.impermanence
     agenix.nixosModules.default
     disko.nixosModules.disko
+    {
+      users.mutableUsers = false;
+    }
+  ];
+
+  desktopModules = with inputs; [
+    ../modules/development
+    home-manager.nixosModule
+    hyprland.nixosModules.default
     nur.modules.nixos.default
+    ({ username, ... }: {
+      home-manager.enable = true;
+      users.users.${username} = {
+        isNormalUser = true;
+        extraGroups = [ "wheel" ];
+      };
+    })
+  ];
+
+  serverModules = with inputs; [
   ];
 
   mkSystem = name: {
-    system,
-    channel,
-    isServer ? false
-  }:
-    let
-      lib = channel.lib;
-      overlay = final: prev: {
-        mpv = prev.mpv.override {
-          scripts = [ final.mpvScripts.mpris ];
-        };
-      };
-      username = "maroka";
-    in lib.nixosSystem {
+    system ? "x86_64-linux",
+    channel ? inputs.nixpkgs-unstable,
+    useImpermanence ? true,
+    isServer ? false,
+    username ? "maroka"
+  }: channel.lib.nixosSystem {
       inherit system;
+      specialArgs = { inherit inputs username isServer; };
       modules =
         baseModules
-        ++ [
-          { networking.hostName = name; }
-          { nixpkgs.overlays = [ overlay ]; }
-          { age.identityPaths = if isServer
-            then [ "/persist/etc/ssh/ssh_host_ed25519_key" ]
-            else [ "/persist/home/${username}/.ssh/id_ed25519" ];
-          }
-          (import (./. + "/${name}/configuration.nix"))
-        ];
-      specialArgs = { inherit inputs username; };
+        ++
+        (if isServer then serverModules else desktopModules)
+        ++
+        [({ lib, ... }: {
+          imports = [ ./${name}/configuration.nix ];
+          networking.hostName = name;
+          impermanence.enable = lib.mkIf useImpermanence true;
+          age.identityPaths = [(
+            lib.optionalString useImpermanence "/persist"
+            +
+            (if isServer
+              then "/etc/ssh/ssh_host_ed25519_key"
+              else "/home/${username}/.ssh/id_ed25519"
+            )
+          )];
+        })];
     };
 
-  systems = {
-    aisaka    = { system = "x86_64-linux"; channel = inputs.nixpkgs-unstable; };
-    kanan     = { system = "x86_64-linux"; channel = inputs.nixpkgs-unstable; };
-    akebi     = { system = "x86_64-linux"; channel = inputs.nixpkgs-small; isServer = true; };
-    v00334    = { system = "x86_64-linux"; channel = inputs.nixpkgs-unstable; };
+in inputs.nixpkgs.lib.mapAttrs mkSystem {
+  aisaka = {};  # Laptop
+  kanan  = {};  # Desktop
+  v00334 = {};  # Work Laptop
+  akebi  = {    # Home Server
+    channel = inputs.nixpkgs-small;
+    isServer = true;
   };
-
-in inputs.nixpkgs.lib.mapAttrs mkSystem systems
+}

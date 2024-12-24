@@ -8,10 +8,6 @@ in {
     enable = mkEnableOption "Enable Thunar File Manager";
   };
 
-  imports = [
-    inputs.home-manager.nixosModule
-  ];
-
   config = mkIf cfg.enable {
     programs.thunar = {
       enable = true;

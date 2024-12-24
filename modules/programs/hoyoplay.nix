@@ -6,7 +6,6 @@ let
 in {
   options.configured.programs."${module_name}" = {
     enable = mkEnableOption "Enable HoYoPlay";
-    persist = mkEnableOption "Persist state";
   };
 
   config = mkMerge [
@@ -75,16 +74,14 @@ in {
           categories = [ "Game" ];
         })
       ];
+
+
     })
-    (mkIf cfg.persist {
-      environment.persistence."/persist" = {
-        users.${username} = {
-          directories = [
-            ".umu/${module_name}"
-            ".local/share/umu"
-          ];
-        };
-      };
+    (mkIf config.impermanence.enable {
+      environment.persistence."/persist".users.${username}.directories = [
+        ".umu/${module_name}"
+        ".local/share/umu"
+      ];
     })
   ];
 }

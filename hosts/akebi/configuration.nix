@@ -11,6 +11,9 @@
 
   nix.settings.trusted-users = [ "deploy" ];
 
+  impermanence.enable = true;
+  filesystem.btrfs.enable = true;
+
   ### Reverse Proxy ###
   age.secrets.lego-env.file = ../../secrets/lego-env.age;
 
@@ -249,15 +252,6 @@
 
   boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 0;
 
-  # Set users to be immutable
-  users.mutableUsers = false;
-
-  # Filesystem
-  filesystem.btrfs = {
-    enable = true;
-    impermanence.enable = true;
-  };
-
   # State to persist.
   environment.persistence."/persist" = {
     directories = [
@@ -265,7 +259,7 @@
       "/var/lib/acme/.lego/yuttari.moe"
       "/var/lib/acme/.lego/accounts"
     ];
-    files = [
+    files = [ # TODO: Are these needed here? Just read directly from /persist?
       "/etc/ssh/ssh_host_ed25519_key"
       "/etc/ssh/ssh_host_ed25519_key.pub"
     ];
@@ -292,27 +286,12 @@
     };
   };
 
-  # Automatic Updates
-  system.autoUpgrade = {
-    enable = true;
-    allowReboot = true;
-    channel = "https://nixos.org/channels/nixos-24.05-small";
-  };
-
-  # Optimise nix store
-  nix.settings.auto-optimise-store = true;
-  # Garbage collection
-  nix.gc = {
-    automatic = true;
-    dates = "weekly";
-    options = "--delete-older-than 30d";
-  };
-
+  # TODO: add stateversion globally for all configs?
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "23.05"; # Did you read the comment?
+  system.stateVersion = "23.11"; # Did you read the comment?
 }

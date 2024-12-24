@@ -432,14 +432,17 @@
         "umu": "umu"
       },
       "locked": {
-        "lastModified": 1732932534,
-        "narHash": "sha256-BCYlZwpHz8SmH5xa1+O4zH7N/UEdv7Mb+4MoTQ2m0W8=",
-        "path": "/home/maroka/Documents/hoyonix",
-        "type": "path"
+        "lastModified": 1729897704,
+        "narHash": "sha256-ldEzShkG9vCfKkIBHeTIklWHnphvDnyyER8HDbrZpx4=",
+        "ref": "refs/heads/master",
+        "rev": "9a2b59664d3f8147838ec8ebee2197b7d4da45c3",
+        "revCount": 4,
+        "type": "git",
+        "url": "ssh://git@github.com/Maroka-chan/hoyonix"
       },
       "original": {
-        "path": "/home/maroka/Documents/hoyonix",
-        "type": "path"
+        "type": "git",
+        "url": "ssh://git@github.com/Maroka-chan/hoyonix"
       }
     },
     "hyprcursor": {

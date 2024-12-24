@@ -6,5 +6,7 @@
     ./programs
     ./services
     ./desktops
+    ./home-manager.nix
+    ./impermanence.nix
   ];
 }

@@ -6,7 +6,6 @@ let
 in {
   options.configured.programs."${module_name}" = {
     enable = mkEnableOption "Enable Mullvad VPN Client";
-    persist = mkEnableOption "Persist state";
   };
 
   config = mkMerge [
@@ -16,7 +15,7 @@ in {
         package = pkgs.mullvad-vpn;
       };
     })
-    (mkIf cfg.persist {
+    (mkIf config.impermanence.enable {
       environment.persistence."/persist" = {
         directories = [
           "/etc/mullvad-vpn"

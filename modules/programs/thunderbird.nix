@@ -6,7 +6,6 @@ let
 in {
   options.configured.programs."${module_name}" = {
     enable = mkEnableOption "Enable Thunderbird Email Client";
-    persist = mkEnableOption "Persist state";
   };
 
   config = mkMerge [
@@ -24,7 +23,7 @@ in {
         };
       };
     })
-    (mkIf cfg.persist {
+    (mkIf config.impermanence.enable {
       home-manager.users.${username}.home.persistence
       ."/persist/home/${username}".directories = [
         ".thunderbird"
