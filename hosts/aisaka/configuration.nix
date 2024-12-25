@@ -2,7 +2,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    #../../modules/disko/btrfs_luks_impermanence.nix
+    ../../modules/disko/btrfs_luks_impermanence.nix
   ];
 
   impermanence.enable = true;
@@ -27,7 +27,7 @@
     monitor=,preferred,auto,1
 
     exec-once = swaybg -i ${dotfiles}/wallpapers/yume_no_kissaten_yumegatari.png -m fill
-    exec-once = eww daemon & eww open-many statusbar radio controls
+    exec-once = ags run
   '';
 
   # Git
@@ -79,7 +79,6 @@
   # Files to persist
   environment.persistence."/persist" = {
     directories = [
-      "/etc/mullvad-vpn"
       "/var/lib/fprint"
     ];
   };

@@ -1,67 +1,9 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ config, lib, ... }:
 {
-  boot.initrd.availableKernelModules = [ "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
-  boot.initrd.kernelModules = [ "uas" "usbcore" "usb_storage" "vfat" "nls_cp437" "nls_iso8859_1" ];
+  boot.initrd.availableKernelModules = [ "ahci" "xhci_pci" "thunderbolt" "nvme" "usb_storage" "sd_mod" ];
+  boot.initrd.kernelModules = [ "usb_storage" ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
-
-  boot.initrd.luks.devices = {
-    "crypt-nixos" = {
-      device = "/dev/disk/by-label/CRYPT_NIXOS";
-      keyFile = "/key/aisaka-crypt.key";
-      fallbackToPassword = true;
-      allowDiscards = true;
-      preOpenCommands = ''
-        mkdir -m 0755 -p /key
-        sleep 2
-        mount -n -t vfat -o ro /dev/disk/by-label/CRYPTKEY /key
-      '';
-      postOpenCommands = ''
-        umount /key
-        rm -rf /key
-      '';
-    };
-  };
-
-  fileSystems."/" =
-    { device = "/dev/disk/by-label/NIXOS";
-      fsType = "btrfs";
-      options = [ "subvol=root" "compress=zstd" "noatime" "ssd" "autodefrag" "discard=async" ];
-    };
-
-  fileSystems."/nix" =
-    { device = "/dev/disk/by-label/NIXOS";
-      fsType = "btrfs";
-      options = [ "subvol=nix" "compress=zstd" "noatime" "ssd" "autodefrag" "discard=async" ];
-    };
-
-  fileSystems."/persist" =
-    { device = "/dev/disk/by-label/NIXOS";
-      fsType = "btrfs";
-      options = [ "subvol=persist" "compress=zstd" "noatime" "ssd" "autodefrag" "discard=async" ];
-      neededForBoot = true;
-    };
-
-  fileSystems."/var/log" =
-    { device = "/dev/disk/by-label/NIXOS";
-      fsType = "btrfs";
-      options = [ "subvol=log" "compress=zstd" "noatime" "ssd" "autodefrag" "discard=async" ];
-      neededForBoot = true;
-    };
-
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-label/BOOT";
-      fsType = "vfat";
-    };
-
-  fileSystems."/swap" =
-    { device = "/dev/disk/by-label/NIXOS";
-      fsType = "btrfs";
-      options = [ "subvol=swap" "noatime" ];
-      neededForBoot = true;
-    };
-
-  swapDevices = [ { device = "/swap/swapfile"; } ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
