@@ -2,7 +2,7 @@
   inherit (lib) mkIf;
 in {
   disko.devices = {
-    disk.nixos = {
+    disk.daanixos = {
       type = "disk";
       device = OSDisk;
       content.type = "gpt";
@@ -17,9 +17,7 @@ in {
           format = "vfat";
           mountpoint = "/boot";
           extraArgs = [ "-n" "BOOT" ];
-          mountOptions = [
-            "defaults"
-          ];
+          mountOptions = [ "umask=0077" ];
         };
       };
 
@@ -67,7 +65,6 @@ in {
 
         };
       };
-
     };
   };
 

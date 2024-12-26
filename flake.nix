@@ -28,9 +28,9 @@
   };
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nixpkgs-small.url = "github:NixOS/nixpkgs/nixos-24.05-small";
+    nixpkgs-small.url = "github:NixOS/nixpkgs/nixos-24.11-small";
     nixpkgs-master.url = "github:NixOS/nixpkgs";
     nixpkgs-stremio-server.url = "github:NixOS/nixpkgs/aae94e56a7b905281f007a5b70aa7ffff89aee57";
     nur = {

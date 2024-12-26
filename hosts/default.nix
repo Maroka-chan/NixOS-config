@@ -5,16 +5,17 @@ let
     impermanence.nixosModules.impermanence
     agenix.nixosModules.default
     disko.nixosModules.disko
+    home-manager.nixosModule
+    hyprland.nixosModules.default
+    nur.modules.nixos.default
     {
       users.mutableUsers = false;
     }
   ];
 
   desktopModules = with inputs; [
+    ../modules/unstable.nix
     ../modules/development
-    home-manager.nixosModule
-    hyprland.nixosModules.default
-    nur.modules.nixos.default
     ({ username, ... }: {
       home-manager.enable = true;
       users.users.${username} = {

@@ -1,8 +1,8 @@
 { inputs, pkgs, lib, config, ... }:
-with lib;
 let
   module_name = "stremio-server";
   cfg = config.services."${module_name}";
+  inherit (lib) mkEnableOption mkIf;
 in {
   options.services."${module_name}" = {
     enable = mkEnableOption "Enable the Stremio streaming server";
