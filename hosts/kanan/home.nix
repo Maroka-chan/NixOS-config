@@ -19,7 +19,10 @@ in
     bottles
     inkscape
 
+    prismlauncher # Minecraft Launcher
+
     inputs.neovim.packages.${pkgs.system}.default
+    wl-clipboard
   ];
 
   programs = {
@@ -56,7 +59,8 @@ in
       ".local/share/osu"
       ".local/share/DaVinciResolve"
       ".local/share/bottles"
-      ".local/share/Steam"
+      ".local/share/PrismLauncher"
+      {directory = ".local/share/Steam"; method = "symlink";}
     ];
   };
 
