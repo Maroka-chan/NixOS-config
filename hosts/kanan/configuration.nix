@@ -11,9 +11,27 @@
   impermanence.enable = true;
   filesystem.btrfs.enable = true;
 
+  # Needed for uxplay
+  #services.avahi = {
+  #  nssmdns = true;
+  #  enable = true;
+  #  publish = {
+  #    enable = true;
+  #    userServices = true;
+  #    domain = true;
+  #  };
+  #};
+
   # Users
   age.secrets."${username}-password".file = ../../secrets/${username}-password.age;
   users.users.${username}.hashedPasswordFile = config.age.secrets."${username}-password".path;
+
+  # Home Manager
+  home-manager.users.maroka = {
+    imports = [
+      ./home.nix
+    ];
+  };
 
   # Desktop Environment
   desktops.hyprland.enable = true;
