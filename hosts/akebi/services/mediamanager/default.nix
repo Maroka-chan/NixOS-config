@@ -31,7 +31,7 @@
   services.transmission = {
     enable = true;
     group = "media";
-    package = pkgs.transmission_4;
+    package = (import inputs.transmission_4_5 { system = pkgs.system; }).transmission_4;
     credentialsFile = config.age.secrets.transmission-settings.path;
     settings = {
       "download-dir" = "/data/media/downloads";

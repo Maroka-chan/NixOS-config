@@ -86,7 +86,7 @@ mkMerge [{
     configDir = "${dotfiles}/config/ags_new";
     extraPackages = with pkgs; [
       gtksourceview
-      webkitgtk
+      webkitgtk_6_0
       accountsservice
       inputs.ags.packages.${pkgs.system}.hyprland
     ];

@@ -38,6 +38,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    transmission_4_5.url = "github:NixOS/nixpkgs/0c19708cf035f50d28eb4b2b8e7a79d4dc52f6bb";
+
     impermanence.url = "github:nix-community/impermanence";
     agenix.url = "github:ryantm/agenix";
     home-manager.url = "github:nix-community/home-manager";
@@ -60,7 +62,6 @@
     tlock.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     neovim.url = "github:Maroka-chan/nvim-config";
-    neovim.inputs.nixpkgs.follows = "nixpkgs-unstable";
     shutoku.url = "git+ssh://git@github.com/Maroka-chan/Shutoku-rs";
     shutoku.inputs.nixpkgs.follows = "nixpkgs-unstable";
     vpn-confinement.url = "github:Maroka-chan/VPN-Confinement";
@@ -72,6 +73,5 @@
 
     hoyonix.url = "git+ssh://git@github.com/Maroka-chan/hoyonix";
     hoyonix.inputs.nixpkgs.follows = "nixpkgs-unstable";
-
   };
 }
