@@ -12,6 +12,10 @@ mkMerge [{
     grim
     slurp
 
+    # Clipboard utilities
+    # Needed to make Vim use global clipboard
+    wl-clipboard
+
     pavucontrol # Audio control gui
     feh         # Image Viewer
     mpv         # Media Player
