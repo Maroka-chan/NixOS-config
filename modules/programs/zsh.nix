@@ -10,7 +10,6 @@ in {
 
   config = mkMerge [
     (mkIf cfg.enable {
-      # Not sure why this is needed when we also enable the home-manager module
       programs.zsh.enable = true;
       environment.pathsToLink = [ "/share/zsh" ]; # Needed for zsh completion for system packages
       users.defaultUserShell = pkgs.zsh;
@@ -26,29 +25,11 @@ in {
             size = 10000;
             path = "/persist/home/${username}/.local/share/zsh/.zsh_history";
           };
-
-          initExtraFirst = ''
-            # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-            # Initialization code that may require console input (password prompts, [y/n]
-            # confirmations, etc.) must go above this block; everything else may go below.
-            if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-              source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
-            fi
-
-          '';
-
-          initExtra = ''
-            # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-            [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-          '';
-
-          zplug = {
-            enable = true;
-            plugins = [
-              { name = "romkatv/powerlevel10k"; tags = [ "as:theme" "depth:1" ]; }
-            ];
-          };
         };
+
+        programs.starship.enable = true;
+        programs.starship.enableZshIntegration = true;
+        programs.starship.enableTransience = true;
       };
     })
     (mkIf config.impermanence.enable {
