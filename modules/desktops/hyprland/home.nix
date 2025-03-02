@@ -27,16 +27,44 @@ mkMerge [{
   ];
 
   # Terminal Emulator
-  programs.wezterm.enable = true;
-  programs.wezterm.enableZshIntegration = true;
-  programs.wezterm.extraConfig = ''
-    local config = wezterm.config_builder()
+  programs.foot.enable = true;
+  programs.foot.settings = {
+    main = {
+      font = "monospace:size=11";
+      dpi-aware = "yes";
+    };
+    colors = {
+      alpha = 0.9;
 
-    config.window_background_opacity = 0.9
-    config.color_scheme = 'alacritty'
+      # Kanagawa Dragon
+      foreground = "c5c9c5";
+      background = "181616";
 
-    return config
-  '';
+      selection-foreground = "C8C093";
+      selection-background = "2D4F67";
+
+      regular0 = "0d0c0c";
+      regular1 = "c4746e";
+      regular2 = "8a9a7b";
+      regular3 = "c4b28a";
+      regular4 = "8ba4b0";
+      regular5 = "a292a3";
+      regular6 = "8ea4a2";
+      regular7 = "C8C093";
+
+      bright0  = "a6a69c";
+      bright1  = "E46876";
+      bright2  = "87a987";
+      bright3  = "E6C384";
+      bright4  = "7FB4CA";
+      bright5  = "938AA9";
+      bright6  = "7AA89F";
+      bright7  = "c5c9c5";
+
+      "16"     = "b6927b";
+      "17"     = "b98d7b";
+    };
+  };
 
   # GPG & Password Store
   programs.password-store.enable = true;
@@ -205,6 +233,8 @@ mkMerge [{
         }
         blur {
           enabled = true
+          size = 4
+          passes = 2
         }
       }
 
@@ -225,7 +255,7 @@ mkMerge [{
       bind = $mainMod, F, fullscreen
       bind = $mainMod, M, fullscreen, 1
       bind = $mainMod, D, exec, rofi -show drun
-      bind = $mainMod, Return, exec, wezterm
+      bind = $mainMod, Return, exec, foot
       bind = $mainMod, V, togglefloating
       bind = $mainMod, B, exec, firefox
 
