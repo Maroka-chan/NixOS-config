@@ -58,20 +58,19 @@
     disko.inputs.nixpkgs.follows = "nixpkgs";
     deploy-rs.url = "github:serokell/deploy-rs";
 
-    tlock.url = "git+https://github.com/eklairs/tlock?submodules=1";
-    tlock.inputs.nixpkgs.follows = "nixpkgs-unstable";
-
     neovim.url = "github:Maroka-chan/nvim-config";
     shutoku.url = "git+ssh://git@github.com/Maroka-chan/Shutoku-rs";
     shutoku.inputs.nixpkgs.follows = "nixpkgs-unstable";
-    vpn-confinement.url = "github:Maroka-chan/VPN-Confinement";
+    #vpn-confinement.url = "github:Maroka-chan/VPN-Confinement";
+    vpn-confinement.url = "path:///home/maroka/Documents/VPN-Confinement";
 
     umu = {
-      url = "git+https://github.com/Open-Wine-Components/umu-launcher/?dir=packaging\/nix&submodules=1";
+      url = "github:Open-Wine-Components/umu-launcher?dir=packaging\/nix&submodules=1";
       inputs.nixpkgs.follows = "nixpkgs-master";
     };
 
     hoyonix.url = "git+ssh://git@github.com/Maroka-chan/hoyonix";
     hoyonix.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    hoyonix.inputs.umu.follows = "umu";
   };
 }
