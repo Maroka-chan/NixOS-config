@@ -13,16 +13,17 @@
   ];
 
   nix.settings.trusted-users = [ "deploy" ];
+  #documentation.nixos.includeAllModules = true;
+  #documentation.nixos.extraModules = [inputs.vpn-confinement.nixosModules.default];
 
   impermanence.enable = true;
   filesystem.btrfs.enable = true;
 
-  #boot.initrd.luks.devices = {
-  #  "crypt-nixos".device = lib.mkForce "/dev/disk/by-label/CRYPT_NIXOS";
-  #  "crypt-data-1".device = lib.mkForce "/dev/disk/by-label/CRYPT_DATA_1";
-  #  "crypt-data-2".device = lib.mkForce "/dev/disk/by-label/CRYPT_DATA_2";
-  #  "crypt-data-3".device = lib.mkForce "/dev/disk/by-label/CRYPT_DATA_3";
-  #};
+  #boot.initrd.luks.devices."crypt-data-1".device = lib.mkForce "/dev/disk/by-label/CRYPT_DATA_1";
+  #boot.initrd.luks.devices."crypt-data-2".device = lib.mkForce "/dev/disk/by-label/CRYPT_DATA_2";
+  #boot.initrd.luks.devices."crypt-data-3".device = lib.mkForce "/dev/disk/by-label/CRYPT_DATA_3";
+
+  #fileSystems."/data".device = lib.mkForce "/dev/disk/by-label/DATA";
 
   #fileSystems."/".device = lib.mkForce "/dev/disk/by-label/NIXOS";
   #fileSystems."/nix".device = lib.mkForce "/dev/disk/by-label/NIXOS";
@@ -33,6 +34,8 @@
   #fileSystems."/data".device = lib.mkForce "/dev/disk/by-label/DATA";
 
   #swapDevices = lib.mkForce [ { device = "/swap/swapfile"; } ];
+
+  #fileSystems."/data".device = lib.mkForce "/dev/disk/by-label/DATA";
 
   boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 0;
 
