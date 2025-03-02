@@ -27,34 +27,4 @@
       };
     };
   };
-
-  # Metrics Monitoring
-  services.prometheus = {
-    enable = true;
-    port = 9001;
-  };
-
-  services.prometheus.exporters.node = {
-    enable = true;
-    enabledCollectors = [ "systemd" "processes" ];
-    port = 9002;
-  };
-
-  services.prometheus.scrapeConfigs = [
-    {
-      job_name = "node";
-      static_configs = [{
-        targets = [ "127.0.0.1:9002" ];
-      }];
-    }
-  ];
-
-  services.grafana = {
-    enable = true;
-    settings.server = {
-      http_port = 3002;
-      http_addr = "0.0.0.0";
-    };
-  };
-  networking.firewall.allowedTCPPorts = [ 3002 ];
 }
