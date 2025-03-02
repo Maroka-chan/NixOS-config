@@ -1,12 +1,7 @@
 { pkgs, config, inputs, ... }:
 {
-  imports = [
-    inputs.shutoku.nixosModule
-  ];
-
   age.secrets.transmission-settings.file = ../../../../secrets/transmission-settings.age;
   age.secrets.vpn-wireguard.file = ../../../../secrets/vpn-wireguard.age;
-  age.secrets.shutoku-settings.file = ../../../../secrets/shutoku-settings.age;
 
   users.groups.media = {};
 
@@ -61,17 +56,5 @@
       "anti-brute-force-enabled" = true;
       "anti-brute-force-threshold" = 10;
     };
-  };
-
-  systemd.services.shutoku.vpnConfinement = {
-    enable = true;
-    vpnNamespace = "wg";
-  };
-
-  services.shutoku = {
-    enable = true;
-    group = "media";
-    listenAddr = "192.168.15.1:3000";
-    settingsFile = config.age.secrets.shutoku-settings.path;
   };
 }

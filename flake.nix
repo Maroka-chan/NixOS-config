@@ -59,8 +59,6 @@
     deploy-rs.url = "github:serokell/deploy-rs";
 
     neovim.url = "github:Maroka-chan/nvim-config";
-    shutoku.url = "git+ssh://git@github.com/Maroka-chan/Shutoku-rs";
-    shutoku.inputs.nixpkgs.follows = "nixpkgs-unstable";
     #vpn-confinement.url = "github:Maroka-chan/VPN-Confinement";
     vpn-confinement.url = "path:///home/maroka/Documents/VPN-Confinement";
 
