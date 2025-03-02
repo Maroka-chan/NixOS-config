@@ -27,8 +27,16 @@ mkMerge [{
   ];
 
   # Terminal Emulator
-  programs.alacritty.enable = true;
-  xdg.configFile."alacritty".source = "${dotfiles}/config/alacritty";
+  programs.wezterm.enable = true;
+  programs.wezterm.enableZshIntegration = true;
+  programs.wezterm.extraConfig = ''
+    local config = wezterm.config_builder()
+
+    config.window_background_opacity = 0.9
+    config.color_scheme = 'alacritty'
+
+    return config
+  '';
 
   # GPG & Password Store
   programs.password-store.enable = true;
@@ -148,7 +156,9 @@ mkMerge [{
 
   wayland.windowManager.hyprland = {
     enable = true;
-    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    #package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    package = null;
+    portalPackage = null;
     plugins = [
       inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
     ];
@@ -199,9 +209,12 @@ mkMerge [{
       }
 
       # Animations
-      animation=workspaces,1,4,default
-      animation=windows,1,4,default
-      animation = fade, 0
+      animations {
+        enabled = false
+      }
+      #animation=workspaces,0,4,default
+      #animation=windows,1,4,default
+      #animation = fade, 0
 
       # Bindings
       $mainMod = SUPER
@@ -212,7 +225,7 @@ mkMerge [{
       bind = $mainMod, F, fullscreen
       bind = $mainMod, M, fullscreen, 1
       bind = $mainMod, D, exec, rofi -show drun
-      bind = $mainMod, Return, exec, alacritty
+      bind = $mainMod, Return, exec, wezterm
       bind = $mainMod, V, togglefloating
       bind = $mainMod, B, exec, firefox
 
@@ -273,7 +286,7 @@ mkMerge [{
   };
 
 
-  programs.walker.enable = true;
+  #programs.walker.enable = true;
   programs.walker.theme = {
     layout = {
       "ui" = {
