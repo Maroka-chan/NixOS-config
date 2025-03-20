@@ -65,9 +65,11 @@
   }];
 
   # Configure Disko VM
+  services.spice-vdagentd.enable = true;
+  services.qemuGuest.enable = true;
   virtualisation.vmVariantWithDisko = {
     virtualisation = {
-      cores = 4;
+      cores = 8;
       memorySize = 8096;
       qemu.options = [ "-enable-kvm" "-vga virtio" "-display gtk,gl=on" ];
       writableStoreUseTmpfs = false;
