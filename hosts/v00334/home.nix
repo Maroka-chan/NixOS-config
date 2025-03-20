@@ -3,11 +3,14 @@ let
   homeDirectory = "/home/${username}";
 in
 {
+  home = { inherit username homeDirectory; };
+
   home.packages = with pkgs; [
     swaybg    # Wallpaper Tool
     slack
 
     inputs.neovim.packages.${pkgs.system}.default
+    wl-clipboard
   ];
 
   programs = {

@@ -12,6 +12,13 @@
   age.secrets.v00334-password.file = ../../secrets/v00334-password.age;
   users.users.${username}.hashedPasswordFile = config.age.secrets."v00334-password".path;
 
+  # Home Manager
+  home-manager.users.${username} = {
+    imports = [
+      ./home.nix
+    ];
+  };
+
   # Desktop Environment
   desktops.hyprland.enable = true;
   desktops.hyprland.extraConfig = let
