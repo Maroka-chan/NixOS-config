@@ -99,7 +99,7 @@ in {
         home.file = mkMerge (flip mapAttrsToList hmConfig.programs.firefox.profiles (_: profile: {
           "${profilesPath}/${profile.path}/user.js".text = readFile (builtins.fetchurl {
             url = "https://github.com/arkenfox/user.js/raw/refs/heads/master/user.js";
-            sha256 = "sha256:0rpi1z2xq6fbak3bxx32mavggvwi4l9wnzghl2ri641ahvdhgxxc";
+            sha256 = "sha256:06qwfqdmn6d2pdnpdxdmiaphvfd4ad01s5q4p3cf8nzji07am1ik";
           });
         }));
 
