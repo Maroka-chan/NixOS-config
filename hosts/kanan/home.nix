@@ -41,7 +41,6 @@ in
 
   # Home Manager Persistence
   home.persistence."/persist${homeDirectory}" = {
-    allowOther = true;
     files = [
       ".cache/gitstatus/gitstatusd-linux-x86_64"
       ".config/btop/btop.conf"

@@ -27,7 +27,7 @@
   users.users.${username}.hashedPasswordFile = config.age.secrets."${username}-password".path;
 
   # Home Manager
-  home-manager.users.maroka = {
+  home-manager.users.${username} = {
     imports = [
       ./home.nix
     ];
