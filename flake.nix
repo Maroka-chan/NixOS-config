@@ -2,6 +2,15 @@
   outputs = inputs @ { self, nixpkgs, deploy-rs, ... }:
   {
     nixosConfigurations = import ./hosts inputs;
+    #homeConfigurations = {
+    #  "maroka@kanan" = inputs.home-manager.lib.homeManagerConfiguration {
+    #    pkgs = nixpkgs.legacyPackages.x86_64-linux;
+    #    extraSpecialArgs = { inherit inputs; username = "maroka"; };
+    #    modules = [
+    #      (self.nixosConfigurations.kanan.config.home-manager)
+    #    ];
+    #  };
+    #};
 
     deploy.nodes.akebi = {
       hostname = "akebi";
@@ -59,8 +68,10 @@
     deploy-rs.url = "github:serokell/deploy-rs";
 
     neovim.url = "github:Maroka-chan/nvim-config";
-    #vpn-confinement.url = "github:Maroka-chan/VPN-Confinement";
-    vpn-confinement.url = "path:///home/maroka/Documents/VPN-Confinement";
+    #neovim.url = "path:///home/maroka/Documents/nvim-config";
+    vpn-confinement.url = "github:Maroka-chan/VPN-Confinement";
+    #vpn-confinement.url = "path:///home/maroka/Documents/VPN-Confinement";
+    yuttari.url = "path:///home/maroka/Documents/yuttari-rs";
 
     umu = {
       url = "github:Open-Wine-Components/umu-launcher?dir=packaging\/nix&submodules=1";

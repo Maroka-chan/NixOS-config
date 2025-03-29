@@ -63,6 +63,14 @@
   };
   configured.programs.hoyoplay.enable = true;
 
+  # Editor
+  configured.programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+  };
+
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.11";
