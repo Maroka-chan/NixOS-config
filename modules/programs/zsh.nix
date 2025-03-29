@@ -23,7 +23,7 @@ in {
 
           history = {
             size = 10000;
-            path = "/persist/home/${username}/.local/share/zsh/.zsh_history";
+            path = (lib.optionalString config.impermanence.enable "/persist") + "/home/${username}/.local/share/zsh/.zsh_history";
           };
         };
 
