@@ -3,6 +3,27 @@ with lib;
 let
   module_name = "hyprland";
   cfg = config.desktops."${module_name}";
+
+  Hyprland = pkgs.writeShellApplication {
+    name = "Hyprland";
+    runtimeInputs = [ inputs.hyprland.packages.${pkgs.system}.hyprland ];
+    runtimeEnv = {
+      #XDG_CONFIG_HOME = ../../../dotfiles;
+      HYPRPLUGIN_PATH = pkgs.symlinkJoin {
+        name = "hyprland-plugins";
+        paths = [ inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces ];
+      };
+    };
+    text = let
+      path = lib.makeBinPath [ inputs.ags.packages.${pkgs.system}.io ];
+    in "
+      export PATH=${path}:$PATH
+      Hyprland
+    ";
+  };
+
+  #xdg.configFile."hypr/hyprland.conf".source = ../../../dotfiles/hypr/hyprland.conf;
+  #specialisation.dotfiles.configuration.xdg.configFile."hypr/hyprland.conf".source = lib.mkForce (config.lib.file.mkOutOfStoreSymlink "/home/maroka/Documents/NixOS-config/dotfiles/hypr/hyprland.conf");
 in {
   options.desktops."${module_name}" = {
     enable = mkEnableOption "Enable the Hyprland Wayland Compositor";
@@ -16,14 +37,14 @@ in {
     ../../home-manager.nix
   ];
 
-  config = mkMerge [(mkIf cfg.enable {
+  config = mkIf cfg.enable ( mkMerge [{
     home-manager.extraSpecialArgs = {
       extraHyprConfig = cfg.extraConfig;
       useImpermanence = config.impermanence.enable;
     };
     home-manager.users.${username} = {
       imports = [
-        inputs.hyprland.homeManagerModules.default
+        #inputs.hyprland.homeManagerModules.default
         inputs.ags.homeManagerModules.default
         inputs.walker.homeManagerModules.default
         ./home.nix
@@ -31,10 +52,10 @@ in {
     };
 
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
-    environment.systemPackages = with pkgs; [
-      #hyprpolkitagent
-      #hyprsunset
-    ];
+    #environment.systemPackages = with pkgs; [
+    #  #hyprpolkitagent
+    #  #hyprsunset
+    #];
 
     # PAM
     security.pam.services.hyprlock = {};
@@ -49,9 +70,38 @@ in {
     networking.networkmanager.enable = true;
     users.users.${username}.extraGroups = [ "networkmanager" ];
 
+
+
     # Compositor
-    programs.hyprland.enable = true;
-    programs.hyprland.package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+    #programs.hyprland.enable = true;
+    #programs.hyprland.package = let
+    #in Hyprland;
+    environment.systemPackages = [ Hyprland ];
+
+    xdg.portal = {
+      enable = true;
+      extraPortals = [ (pkgs.xdg-desktop-portal-hyprland.override { hyprland = Hyprland; }) ];
+      configPackages = lib.mkDefault [ Hyprland ];
+    };
+
+    security.polkit.enable = true;
+    programs.xwayland.enable = true;
+    programs.dconf.enable = true;
+
+    # NOTE: Do we need this?
+    # Window manager only sessions (unlike DEs) don't handle XDG
+    # autostart files, so force them to run the service
+    services.xserver.desktopManager.runXdgAutostartIfNone = true;
+
+    #systemd.user.tmpfiles.rules = [ "L+ %h - - - " ];
+    systemd.user.tmpfiles.rules = [
+      "L+ %h/.config/hypr/hyprland.conf - - - - ${../../../dotfiles/hypr/hyprland.conf}"
+    ];
+    #specialisation.dotfiles.configuration.systemd.user.tmpfiles.rules = [
+    #  "L+ %h/.config/hypr/hyprland.conf - - - - %h/Documents/NixOS-config/dotfiles/hypr/hyprland.conf"
+    #];
+
+
 
     # Display Manager
     services.greetd = {
@@ -111,12 +161,18 @@ in {
 
     # Podman
     virtualisation.containers.enable = true;
-    virtualisation.podman = {
+    virtualisation.docker.enable = true;
+    virtualisation.docker.storageDriver = "btrfs";
+    virtualisation.docker.rootless = {
       enable = true;
-      dockerCompat = true;
-      dockerSocket.enable = true;
-      defaultNetwork.settings.dns_enabled = true;
+      setSocketVariable = true;
     };
+    #virtualisation.podman = {
+    #  enable = true;
+    #  dockerCompat = true;
+    #  dockerSocket.enable = true;
+    #  defaultNetwork.settings.dns_enabled = true;
+    #};
 
     # Nix Settings
     nix.settings = {
@@ -125,7 +181,7 @@ in {
         "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
       ];
     };
-  })
+  }
   (mkIf config.impermanence.enable {
     environment.persistence."/persist" = {
       directories = [
@@ -135,6 +191,6 @@ in {
         ".gnupg"
       ];
     };
-  })];
+  })]);
 }
 

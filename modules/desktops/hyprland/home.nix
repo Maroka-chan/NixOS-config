@@ -182,138 +182,144 @@ mkMerge [{
     };
   };
 
-  wayland.windowManager.hyprland = {
-    enable = true;
-    #package = inputs.hyprland.packages.${pkgs.system}.hyprland;
-    package = null;
-    portalPackage = null;
-    plugins = [
-      inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
-    ];
-    extraConfig = extraHyprConfig + ''
-      input {
-        kb_layout = us,dk
-        kb_options = grp:alt_caps_toggle
-        repeat_rate = 25
-        repeat_delay = 200
+  #xdg.configFile."hypr/hyprland.conf".source = ../../../dotfiles/hypr/hyprland.conf;
+  #specialisation.dotfiles.configuration.xdg.configFile."hypr/hyprland.conf".source = lib.mkForce (config.lib.file.mkOutOfStoreSymlink "/home/maroka/Documents/NixOS-config/dotfiles/hypr/hyprland.conf");
 
-        sensitivity = -0.3
-        accel_profile = flat
-      }
+  #wayland.windowManager.hyprland = {
+  #  enable = true;
+  #  #package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+  #  package = null;
+  #  portalPackage = null;
+  #  #plugins = [
+  #  #  inputs.split-monitor-workspaces.packages.${pkgs.system}.split-monitor-workspaces
+  #  #];
+  #  #extraConfig = extraHyprConfig + ''
+  #  #  input {
+  #  #    kb_layout = us,dk
+  #  #    kb_options = grp:alt_caps_toggle
+  #  #    repeat_rate = 25
+  #  #    repeat_delay = 200
 
-      cursor {
-        no_warps = true
-      }
+  #  #    sensitivity = -0.3
+  #  #    accel_profile = flat
+  #  #  }
 
-      gestures {
-        workspace_swipe = true
-        workspace_swipe_create_new = false
-      }
-      
-      misc {
-        disable_hyprland_logo = true
-        disable_splash_rendering = true
-      }
+  #  #  cursor {
+  #  #    no_warps = true
+  #  #  }
 
-      general {
-        border_size = 0
-        gaps_in = 0
-        gaps_out = 0
+  #  #  gestures {
+  #  #    workspace_swipe = true
+  #  #    workspace_swipe_create_new = false
+  #  #  }
+  #  #  
+  #  #  misc {
+  #  #    disable_hyprland_logo = true
+  #  #    disable_splash_rendering = true
+  #  #  }
 
-        col.active_border = rgba(fffc7fff)
-        col.inactive_border = rgba(595959ff)
+  #  #  general {
+  #  #    border_size = 0
+  #  #    gaps_in = 0
+  #  #    gaps_out = 0
 
-        layout = dwindle
-      }
+  #  #    #col.active_border = rgb(8ea4a2)
+  #  #    #col.inactive_border = rgb(000000)
 
-      decoration {
-        rounding = 0
-        shadow {
-          enabled = false
-        }
-        blur {
-          enabled = true
-          size = 4
-          passes = 2
-        }
-      }
+  #  #    layout = dwindle
+  #  #  }
 
-      # Animations
-      animations {
-        enabled = false
-      }
-      #animation=workspaces,0,4,default
-      #animation=windows,1,4,default
-      #animation = fade, 0
+  #  #  # Remove border when workspace only has one window
+  #  #  windowrulev2 = noborder, onworkspace:w[t1]
 
-      # Bindings
-      $mainMod = SUPER
+  #  #  decoration {
+  #  #    rounding = 0
+  #  #    shadow {
+  #  #      enabled = false
+  #  #    }
+  #  #    blur {
+  #  #      enabled = true
+  #  #      size = 4
+  #  #      passes = 2
+  #  #    }
+  #  #  }
 
-      bind = $mainMod, TAB, exec, ${inputs.ags.packages.${pkgs.stdenv.hostPlatform.system}.io}/bin/astal -t bar
+  #  #  # Animations
+  #  #  animations {
+  #  #    enabled = false
+  #  #  }
+  #  #  #animation=workspaces,0,4,default
+  #  #  #animation=windows,1,4,default
+  #  #  #animation = fade, 0
 
-      bind = $mainMod SHIFT, Q, killactive
-      bind = $mainMod, F, fullscreen
-      bind = $mainMod, M, fullscreen, 1
-      bind = $mainMod, D, exec, rofi -show drun
-      bind = $mainMod, Return, exec, foot
-      bind = $mainMod, V, togglefloating
-      bind = $mainMod, B, exec, firefox
+  #  #  # Bindings
+  #  #  $mainMod = SUPER
 
-      bind = $mainMod SHIFT, S, exec, grim -g "$(slurp)" - | swappy -f -
+  #  #  bind = $mainMod, TAB, exec, ${inputs.ags.packages.${pkgs.stdenv.hostPlatform.system}.io}/bin/astal -t bar
 
-      # Move focus with mainMod + arrow keys
-      bind = $mainMod, left, movefocus, l
-      bind = $mainMod, right, movefocus, r
-      bind = $mainMod, up, movefocus, u
-      bind = $mainMod, down, movefocus, d
+  #  #  bind = $mainMod SHIFT, Q, killactive
+  #  #  bind = $mainMod, F, fullscreen
+  #  #  bind = $mainMod, M, fullscreen, 1
+  #  #  bind = $mainMod, D, exec, rofi -show drun
+  #  #  bind = $mainMod, Return, exec, foot
+  #  #  bind = $mainMod, V, togglefloating
+  #  #  bind = $mainMod, B, exec, firefox
 
-      # Move active window with arrow keys
-      bind = $mainMod SHIFT, left, movewindow, l
-      bind = $mainMod SHIFT, right, movewindow, r
-      bind = $mainMod SHIFT, up, movewindow, u
-      bind = $mainMod SHIFT, down, movewindow, d
+  #  #  bind = $mainMod SHIFT, S, exec, grim -g "$(slurp)" - | swappy -f -
 
-      # Move/resize windows with mainMod + LMB/RMB and dragging
-      bindm = $mainMod, mouse:272, movewindow
-      bindm = $mainMod, mouse:273, resizewindow
+  #  #  # Move focus with mainMod + arrow keys
+  #  #  bind = $mainMod, left, movefocus, l
+  #  #  bind = $mainMod, right, movefocus, r
+  #  #  bind = $mainMod, up, movefocus, u
+  #  #  bind = $mainMod, down, movefocus, d
 
-      # Volume button that allows press and hold, volume limited to 100%
-      binde = , XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+
-      binde = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
-      bind = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+  #  #  # Move active window with arrow keys
+  #  #  bind = $mainMod SHIFT, left, movewindow, l
+  #  #  bind = $mainMod SHIFT, right, movewindow, r
+  #  #  bind = $mainMod SHIFT, up, movewindow, u
+  #  #  bind = $mainMod SHIFT, down, movewindow, d
 
-      # Brightness button that allows press and hold
-      binde = , XF86MonBrightnessUp, exec, tee /sys/class/backlight/intel_backlight/brightness <<< $(($(cat /sys/class/backlight/intel_backlight/brightness) + 1000))
-      binde = , XF86MonBrightnessDown, exec, tee /sys/class/backlight/intel_backlight/brightness <<< $(($(cat /sys/class/backlight/intel_backlight/brightness) - 1000))
+  #  #  # Move/resize windows with mainMod + LMB/RMB and dragging
+  #  #  bindm = $mainMod, mouse:272, movewindow
+  #  #  bindm = $mainMod, mouse:273, resizewindow
 
-      # Switch workspaces with mainMod + [0-9]
-      bind = $mainMod, 1, split-workspace, 1
-      bind = $mainMod, 2, split-workspace, 2
-      bind = $mainMod, 3, split-workspace, 3
-      bind = $mainMod, 4, split-workspace, 4
-      bind = $mainMod, 5, split-workspace, 5
-      bind = $mainMod, 6, split-workspace, 6
-      bind = $mainMod, 7, split-workspace, 7
-      bind = $mainMod, 8, split-workspace, 8
-      bind = $mainMod, 9, split-workspace, 9
-      bind = $mainMod, 0, split-workspace, 10
+  #  #  # Volume button that allows press and hold, volume limited to 100%
+  #  #  binde = , XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+
+  #  #  binde = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+  #  #  bind = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 
-      # Move active window to a workspace with mainMod + SHIFT + [0-9]
-      bind = $mainMod SHIFT, 1, split-movetoworkspace, 1
-      bind = $mainMod SHIFT, 2, split-movetoworkspace, 2
-      bind = $mainMod SHIFT, 3, split-movetoworkspace, 3
-      bind = $mainMod SHIFT, 4, split-movetoworkspace, 4
-      bind = $mainMod SHIFT, 5, split-movetoworkspace, 5
-      bind = $mainMod SHIFT, 6, split-movetoworkspace, 6
-      bind = $mainMod SHIFT, 7, split-movetoworkspace, 7
-      bind = $mainMod SHIFT, 8, split-movetoworkspace, 8
-      bind = $mainMod SHIFT, 9, split-movetoworkspace, 9
-      bind = $mainMod SHIFT, 0, split-movetoworkspace, 10
+  #  #  # Brightness button that allows press and hold
+  #  #  binde = , XF86MonBrightnessUp, exec, tee /sys/class/backlight/intel_backlight/brightness <<< $(($(cat /sys/class/backlight/intel_backlight/brightness) + 1000))
+  #  #  binde = , XF86MonBrightnessDown, exec, tee /sys/class/backlight/intel_backlight/brightness <<< $(($(cat /sys/class/backlight/intel_backlight/brightness) - 1000))
 
-      # Layer Rule
-      layerrule = blur,gtk-layer-shell
-    '';
-  };
+  #  #  # Switch workspaces with mainMod + [0-9]
+  #  #  bind = $mainMod, 1, split-workspace, 1
+  #  #  bind = $mainMod, 2, split-workspace, 2
+  #  #  bind = $mainMod, 3, split-workspace, 3
+  #  #  bind = $mainMod, 4, split-workspace, 4
+  #  #  bind = $mainMod, 5, split-workspace, 5
+  #  #  bind = $mainMod, 6, split-workspace, 6
+  #  #  bind = $mainMod, 7, split-workspace, 7
+  #  #  bind = $mainMod, 8, split-workspace, 8
+  #  #  bind = $mainMod, 9, split-workspace, 9
+  #  #  bind = $mainMod, 0, split-workspace, 10
+
+  #  #  # Move active window to a workspace with mainMod + SHIFT + [0-9]
+  #  #  bind = $mainMod SHIFT, 1, split-movetoworkspace, 1
+  #  #  bind = $mainMod SHIFT, 2, split-movetoworkspace, 2
+  #  #  bind = $mainMod SHIFT, 3, split-movetoworkspace, 3
+  #  #  bind = $mainMod SHIFT, 4, split-movetoworkspace, 4
+  #  #  bind = $mainMod SHIFT, 5, split-movetoworkspace, 5
+  #  #  bind = $mainMod SHIFT, 6, split-movetoworkspace, 6
+  #  #  bind = $mainMod SHIFT, 7, split-movetoworkspace, 7
+  #  #  bind = $mainMod SHIFT, 8, split-movetoworkspace, 8
+  #  #  bind = $mainMod SHIFT, 9, split-movetoworkspace, 9
+  #  #  bind = $mainMod SHIFT, 0, split-movetoworkspace, 10
+
+  #  #  # Layer Rule
+  #  #  layerrule = blur,gtk-layer-shell
+  #  #'';
+  #};
 
 
   #programs.walker.enable = true;
