@@ -21,7 +21,6 @@ in
 
     prismlauncher # Minecraft Launcher
 
-    inputs.neovim.packages.${pkgs.system}.default
     wl-clipboard
   ];
 
