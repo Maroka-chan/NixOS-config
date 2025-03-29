@@ -38,10 +38,9 @@
   desktops.hyprland.extraConfig = let
     dotfiles = config.home-manager.users.${username}.lib.file.mkOutOfStoreSymlink "/home/${username}/.dotfiles";
   in ''
-    monitor=DP-3,2560x1440@240,1080x240,1
-    monitor=HDMI-A-1,1920x1080@60,0x0,1,transform,3
+    monitor=DP-3,2560x1440@240,0x0,1
 
-    exec-once = swaybg -i ${dotfiles}/wallpapers/yume_no_kissaten_yumegatari.png -m fill
+    exec-once = swaybg -i ${dotfiles}/wallpapers/makima_2.png -m fill
     exec-once = ags run
   '';
 
