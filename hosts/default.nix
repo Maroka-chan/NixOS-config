@@ -8,9 +8,9 @@ let
     home-manager.nixosModules.default
     hyprland.nixosModules.default
     nur.modules.nixos.default
-    {
-      users.mutableUsers = false;
-    }
+    #{
+    #  users.mutableUsers = false;
+    #}
   ];
 
   desktopModules = with inputs; [
@@ -65,4 +65,5 @@ in inputs.nixpkgs.lib.mapAttrs mkSystem {
     channel = inputs.nixpkgs-small;
     isServer = true;
   };
+  BMJ-Desktop = { username = "alexbmj"; useImpermanence = false; };
 }
