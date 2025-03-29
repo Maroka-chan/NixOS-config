@@ -9,6 +9,9 @@ in {
   options.configured.programs."${module_name}" = {
     enable = mkEnableOption "Enable the Firefox browser";
     defaultBrowser = mkEnableOption "Set as default browser";
+    enableLocalExtensions = mkEnableOption "Enable if you do not use your Firefox login for extensions" // {
+      default = true;
+    };
   };
 
   config = mkMerge [
@@ -30,7 +33,7 @@ in {
             settings = {
               "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
               "browser.urlbar.clickSelectsAll" = true;
-              "extensions.autoDisableScopes" = 0; # Automatically enable extensions
+              "extensions.autoDisableScopes" = mkIf cfg.enableLocalExtensions 0; # Automatically enable extensions
 
               # Arkenfox user-overrides
               "privacy.sanitize.sanitizeOnShutdown" = false;
@@ -38,20 +41,6 @@ in {
 
               ## Enable Session Restore
               "browser.startup.page" = 3; # (resume previous session)
-              #"privacy.clearOnShutdown_v2.browsingHistoryAndDownloads" = false;
-              #"privacy.clearOnShutdown_v2.cache" = false;
-              #"privacy.clearOnShutdown_v2.cookiesAndStorage" = false;
-              #"privacy.clearOnShutdown_v2.downloads" = false;
-              #"privacy.clearOnShutdown_v2.formdata" = false;
-              #"privacy.clearOnShutdown_v2.historyFormDataAndDownloads" = false;
-
-              ### Enable sync retention
-              #"services.sync.prefs.sync-seen.privacy.clearOnShutdown_v2.browsingHistoryAndDownloads" = false;
-              #"services.sync.prefs.sync-seen.privacy.clearOnShutdown_v2.cache" = false;
-              #"services.sync.prefs.sync-seen.privacy.clearOnShutdown_v2.cookiesAndStorage" = false;
-              #"services.sync.prefs.sync-seen.privacy.clearOnShutdown_v2.downloads" = false;
-              #"services.sync.prefs.sync-seen.privacy.clearOnShutdown_v2.formdata" = false;
-              #"services.sync.prefs.sync-seen.privacy.clearOnShutdown_v2.historyFormDataAndDownloads" = false;
 
               ## Disable GMP (Gecko Media Plugins)
               "media.gmp-provider.enabled" = false;
@@ -73,7 +62,7 @@ in {
               "extensions.formautofill.addresses.enabled" = false;
               "extensions.formautofill.creditCards.enabled" = false;
             };
-            extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
+            extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; mkIf cfg.enableLocalExtensions [
               bitwarden
               ublock-origin
               adaptive-tab-bar-colour

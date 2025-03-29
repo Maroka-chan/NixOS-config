@@ -1,4 +1,4 @@
-{ config, username, ... }:
+{ username, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -25,6 +25,8 @@
     monitor=DP-3,2560x1440@144,2560x0,1
     monitor=DP-4,2560x1440@60,0x230,1
   '';
+
+  configured.programs.firefox.enableLocalExtensions = false;
 
   # Git
   #programs.git.config.user.signingkey = "6CF9E05D378A01C5";
