@@ -1,35 +1,9 @@
 { pkgs, lib, config, username, ... }:
-with lib;
 let
   module_name = "firefox";
   cfg = config.configured.programs."${module_name}";
-
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
-
-  #userChrome = pkgs.stdenvNoCC.mkDerivation {
-  #  name = "userChrome";
-
-  #  src = builtins.fetchurl {
-  #    url = "https://github.com/Tagggar/Firefox-Alpha/raw/refs/heads/main/chrome/userChrome.css";
-  #    sha256 = "sha256:1bw5szkqxdmkr2lpmaxz0z7rkbwm87n64b6ihgvrw5w8jqcr0hxq";
-  #  };
-
-  #  unpackPhase = ''
-  #    cp $src ./userChrome.css
-  #  '';
-
-  #  patchFlags = [ "-p0" ];
-  #  patches = [ ./userChrome.patch ];
-
-  #  dontConfigure = true;
-  #  dontBuild = true;
-  #  dontFixup = true;
-
-  #  installPhase = ''
-  #    cp ./userChrome.css $out
-  #  '';
-  #};
-
+  inherit (lib) mkEnableOption mkMerge mkIf flip readFile mapAttrsToList;
   userChrome = ./userChrome.css;
 in {
   options.configured.programs."${module_name}" = {
@@ -59,13 +33,25 @@ in {
               "extensions.autoDisableScopes" = 0; # Automatically enable extensions
 
               # Arkenfox user-overrides
+              "privacy.sanitize.sanitizeOnShutdown" = false;
+              "services.sync.prefs.sync.privacy.sanitize.sanitizeOnShutdown" = false;
 
               ## Enable Session Restore
               "browser.startup.page" = 3; # (resume previous session)
-              "privacy.clearOnShutdown_v2.historyFormDataAndDownloads" = false;
+              #"privacy.clearOnShutdown_v2.browsingHistoryAndDownloads" = false;
+              #"privacy.clearOnShutdown_v2.cache" = false;
+              #"privacy.clearOnShutdown_v2.cookiesAndStorage" = false;
+              #"privacy.clearOnShutdown_v2.downloads" = false;
+              #"privacy.clearOnShutdown_v2.formdata" = false;
+              #"privacy.clearOnShutdown_v2.historyFormDataAndDownloads" = false;
 
-              ## Keep Cookies
-              "privacy.clearOnShutdown_v2.cookiesAndStorage" = false;
+              ### Enable sync retention
+              #"services.sync.prefs.sync-seen.privacy.clearOnShutdown_v2.browsingHistoryAndDownloads" = false;
+              #"services.sync.prefs.sync-seen.privacy.clearOnShutdown_v2.cache" = false;
+              #"services.sync.prefs.sync-seen.privacy.clearOnShutdown_v2.cookiesAndStorage" = false;
+              #"services.sync.prefs.sync-seen.privacy.clearOnShutdown_v2.downloads" = false;
+              #"services.sync.prefs.sync-seen.privacy.clearOnShutdown_v2.formdata" = false;
+              #"services.sync.prefs.sync-seen.privacy.clearOnShutdown_v2.historyFormDataAndDownloads" = false;
 
               ## Disable GMP (Gecko Media Plugins)
               "media.gmp-provider.enabled" = false;
