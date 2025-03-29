@@ -11,6 +11,7 @@
    ./pipewire.nix
    ./hoyoplay.nix
    ./stremio.nix
+   ./neovim.nix
   ];
 }
 
