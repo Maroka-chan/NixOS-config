@@ -33,7 +33,7 @@
       "incomplete-dir" = "/data/media/.incomplete";
       "rpc-bind-address" = "192.168.15.1";
       "rpc-whitelist-enabled" = true;
-      "rpc-whitelist" = "192.168.1.*,192.168.15.1,127.0.0.1";
+      "rpc-whitelist" = "192.168.1.*,192.168.15.5,127.0.0.1";
       "rpc-authentication-required" = true;
       "message-level" = 3;
 
