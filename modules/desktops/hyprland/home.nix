@@ -1,7 +1,6 @@
-{ config, pkgs, lib, inputs, username, extraHyprConfig, useImpermanence, ... }:
+{ pkgs, lib, inputs, username, extraHyprConfig, useImpermanence, ... }:
 let
   homeDirectory = "/home/${username}";
-  dotfiles = config.lib.file.mkOutOfStoreSymlink "${homeDirectory}/.dotfiles";
   inherit (lib) mkMerge mkIf;
 in
 mkMerge [{
@@ -123,7 +122,7 @@ mkMerge [{
   # Status Bar
   programs.ags = {
     enable = true;
-    configDir = "${dotfiles}/config/ags_new";
+    configDir = ../../../dotfiles/ags;
     extraPackages = with pkgs; [
       gtksourceview
       webkitgtk_6_0
@@ -216,15 +215,18 @@ mkMerge [{
       }
 
       general {
-        border_size = 0
+        border_size = 1
         gaps_in = 0
         gaps_out = 0
 
-        col.active_border = rgba(fffc7fff)
-        col.inactive_border = rgba(595959ff)
+        col.active_border = rgb(606060)
+        col.inactive_border = rgb(0f0f0f)
 
         layout = dwindle
       }
+
+      windowrulev2 = noborder, onworkspace:w[t1]
+      windowrulev2 = noborder, fullscreen:1
 
       decoration {
         rounding = 0

@@ -21,14 +21,12 @@
 
   # Desktop Environment
   desktops.hyprland.enable = true;
-  desktops.hyprland.extraConfig = let
-    dotfiles = config.home-manager.users.${username}.lib.file.mkOutOfStoreSymlink "/home/${username}/.dotfiles";
-  in ''
+  desktops.hyprland.extraConfig = ''
     monitor=DP-3,3840x2160,-1440x-560,1.5,transform,1
     monitor=HDMI-A-1,3840x2160,0x0,1.5
     monitor=eDP-1,preferred,auto,1
 
-    exec-once = swaybg -i ${dotfiles}/wallpapers/yume_no_kissaten_yumegatari.png -m fill
+    exec-once = swaybg -i ${../../dotfiles/wallpapers/makima.png} -m fill
     exec-once = ags run
   '';
 

@@ -9,9 +9,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home-manager.users.${username} = {config, ...}: let
-      dotfiles = config.lib.file.mkOutOfStoreSymlink "/home/${username}/.dotfiles";
-    in {
+    home-manager.users.${username} = {config, ...}: {
       programs.rofi = {
         enable = true;
         package = pkgs.rofi-wayland;
@@ -63,7 +61,7 @@ in {
           imagebox = {
             padding = mkLiteral "20px";
             background-color = mkLiteral "transparent";
-            background-image = mkLiteral ("url(" + "\"${dotfiles}/images/b.png\"" + ", height)");
+            background-image = mkLiteral ("url(" + "\"${../../dotfiles/assets/rofi.png}\"" + ", height)");
             orientation = mkLiteral "vertical";
             children = [ "inputbar" "dummy" "mode-switcher" ];
           };

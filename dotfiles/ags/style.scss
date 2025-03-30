@@ -1,0 +1,46 @@
+// https://gitlab.gnome.org/GNOME/gtk/-/blob/gtk-3-24/gtk/theme/Adwaita/_colors-public.scss
+$theme_fg_color: "@theme_fg_color";
+$theme_bg_color: "@theme_bg_color";
+
+* {
+  border: none;
+  border-radius: 0;
+  outline: none;
+  box-shadow: none;
+  transition: none;
+}
+
+window.Bar {
+  background: #1e1e2e;
+  border-radius: 10px;
+  border: 2px solid #aeaeca;
+}
+
+.TimeButton {
+  //box-shadow: inset 5px 0 0 0 #FF5733;
+  background: #fab387;
+  //padding: 10px 15px 10px 15px;
+  //margin: 5px;
+  border-radius: 5px;
+}
+
+.TimeButton:hover {
+  background: #f89050;
+}
+
+//window.Bar {
+//    background: transparent;
+//    color: #{$theme_bg_color};
+//    font-weight: bold;
+//
+//    >centerbox {
+//        background: #{$theme_bg_color};
+//        border-radius: 10px;
+//        margin: 8px;
+//    }
+//
+//    button {
+//        border-radius: 8px;
+//        margin: 2px;
+//    }
+//}
