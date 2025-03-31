@@ -14,7 +14,7 @@ in {
       default = true;
     };
     maxSearchResults = mkOption {
-      type = ints.unsign;
+      type = ints.unsigned;
       default = 1;
       description = ''
          The amount of suggestions for autocompletion in searchbar.
