@@ -64,5 +64,5 @@ in inputs.nixpkgs.lib.mapAttrs mkSystem {
     channel = inputs.nixpkgs-small;
     isServer = true;
   };
-  BMJ-Desktop = { username = "alexbmj"; useImpermanence = false; };
+  BMJ-Desktop = { username = "albmj"; useImpermanence = false; };
 }
