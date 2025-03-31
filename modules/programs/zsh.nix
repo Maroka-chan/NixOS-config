@@ -21,6 +21,13 @@ in {
           enableCompletion = true;
           syntaxHighlighting.enable = true;
 
+          initExtra = ''
+            bindkey -e
+            bindkey "''${key[Up]}" up-line-or-search
+            bindkey "^[[1;5C" forward-word
+            bindkey "^[[1;5D" backward-word
+          '';
+
           history = {
             size = 10000;
             path = (lib.optionalString config.impermanence.enable "/persist") + "/home/${username}/.local/share/zsh/.zsh_history";
