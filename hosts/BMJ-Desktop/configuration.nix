@@ -30,6 +30,7 @@
   '';
 
   configured.programs.firefox.enableLocalExtensions = false;
+  configured.programs.firefox.maxSearchResults = 10;
 
   # Git
   #programs.git.config.user.signingkey = "6CF9E05D378A01C5";

@@ -3,7 +3,8 @@ let
   module_name = "firefox";
   cfg = config.configured.programs."${module_name}";
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
-  inherit (lib) mkEnableOption mkMerge mkIf flip readFile mapAttrsToList;
+  inherit (lib) mkEnableOption mkMerge mkOption mkIf flip readFile mapAttrsToList;
+  inherit (lib.types) ints;
   userChrome = ./userChrome.css;
 in {
   options.configured.programs."${module_name}" = {
@@ -11,6 +12,13 @@ in {
     defaultBrowser = mkEnableOption "Set as default browser";
     enableLocalExtensions = mkEnableOption "Enable if you do not use your Firefox login for extensions" // {
       default = true;
+    };
+    maxSearchResults = mkOption {
+      type = ints.unsign;
+      default = 1;
+      description = ''
+         The amount of suggestions for autocompletion in searchbar.
+      '';
     };
   };
 
@@ -56,7 +64,7 @@ in {
               "webgl.disabled" = true;
 
               ### Only give one history suggestion for autocompletion
-              "browser.urlbar.maxRichResults" = 1;
+              "browser.urlbar.maxRichResults" = cfg.maxSearchResults;
 
               ### Disable form autofill
               "extensions.formautofill.addresses.enabled" = false;
