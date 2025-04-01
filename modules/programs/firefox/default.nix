@@ -5,7 +5,7 @@ let
   inherit (pkgs.stdenv.hostPlatform) isDarwin;
   inherit (lib) mkEnableOption mkMerge mkOption mkIf flip readFile mapAttrsToList;
   inherit (lib.types) ints;
-  userChrome = ./userChrome.css;
+  userChrome = ./userChrome.css; # TODO: preferences > Search > Address Bar has options to disable suggestions for search engines, bookmarks etc. maybe use that instead of hiding the elements with css?
 in {
   options.configured.programs."${module_name}" = {
     enable = mkEnableOption "Enable the Firefox browser";
@@ -75,6 +75,14 @@ in {
               ublock-origin
               adaptive-tab-bar-colour
             ];
+            search.default = "brave-search";
+            search.engines = {
+              brave-search = {
+                name = "Brave Search";
+                urls = [{ template = "https://search.brave.com/search?q={searchTerms}"; }];
+                definedAliases = [ "@bs" ];
+              };
+            };
           };
         };
 
