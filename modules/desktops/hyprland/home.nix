@@ -226,6 +226,7 @@ mkMerge [{
       }
 
       windowrulev2 = noborder, onworkspace:w[t1]
+      windowrulev2 = noanim, onworkspace:w[t1]
       windowrulev2 = noborder, fullscreen:1
 
       decoration {
@@ -247,11 +248,12 @@ mkMerge [{
 
       # Animations
       animations {
-        enabled = false
+        enabled = true
+        first_launch_animation = false
       }
-      #animation=workspaces,0,4,default
-      #animation=windows,1,4,default
-      #animation = fade, 0
+      animation=workspaces,1,1,default
+      animation=windows,1,1,default,slide
+      animation = fade, 0
 
       # Bindings
       $mainMod = SUPER
