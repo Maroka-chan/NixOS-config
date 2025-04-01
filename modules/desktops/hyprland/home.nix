@@ -267,6 +267,7 @@ mkMerge [{
       bind = $mainMod, Return, exec, foot
       bind = $mainMod, V, togglefloating
       bind = $mainMod, B, exec, firefox
+      bind = $mainMod, E, exec, foot -e yazi
 
       bind = $mainMod SHIFT, S, exec, grim -g "$(slurp)" - | swappy -f -
 

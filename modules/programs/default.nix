@@ -12,6 +12,7 @@
    ./hoyoplay.nix
    ./stremio.nix
    ./neovim.nix
+   ./yazi.nix
   ];
 }
 

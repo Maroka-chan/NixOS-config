@@ -74,6 +74,7 @@ in {
     configured.programs.zsh.enable = true;
     # File Manager
     configured.programs.thunar.enable = true;
+    configured.programs.yazi.enable = true;
     # Pipewire
     configured.programs.pipewire.enable = true;
 
