@@ -1,4 +1,4 @@
-{ pkgs, inputs, username, ... }:
+{ pkgs, username, ... }:
 let
   homeDirectory = "/home/${username}";
 in
@@ -9,7 +9,6 @@ in
     swaybg    # Wallpaper Tool
     slack
 
-    inputs.neovim.packages.${pkgs.system}.default
     wl-clipboard
   ];
 

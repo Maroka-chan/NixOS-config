@@ -1,4 +1,4 @@
-{ pkgs, lib, inputs, username, ... }:
+{ pkgs, lib, username, ... }:
 let
   homeDirectory = "/home/${username}";
   custom-extensions = import ./vscode.nix { inherit pkgs lib; };
@@ -18,7 +18,6 @@ in
     inkscape
     prismlauncher # Minecraft Launcher
 
-    inputs.neovim.packages.${pkgs.system}.default
     wl-clipboard
   ];
 

@@ -33,6 +33,14 @@
   # Git
   programs.git.config.user.signingkey = "248853075BFB7C0E";
 
+  # Editor
+  configured.programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+  };
+
   # Power Management
   #services.tlp = {
   #  enable = true;

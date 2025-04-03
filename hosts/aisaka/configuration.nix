@@ -31,6 +31,14 @@
   # Git
   programs.git.config.user.signingkey = "D86778C9EE6F81D3";
 
+  # Editor
+  configured.programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+  };
+
   # Tailscale
   services.tailscale.enable = true;
 

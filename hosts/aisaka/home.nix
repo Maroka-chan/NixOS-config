@@ -1,4 +1,4 @@
-{ pkgs, inputs, ...}:
+{ pkgs, ...}:
 {
   home.packages = with pkgs; [
     # Media players
@@ -7,8 +7,6 @@
 
     sshfs       # Remote filesystems over SSH
     webcord   # Third-party Discord
-
-    inputs.neovim.packages.${pkgs.system}.default
   ];
 
   programs = {
