@@ -1,4 +1,4 @@
-{ username, ... }:
+{ username, lib, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -31,6 +31,32 @@
 
   configured.programs.firefox.enableLocalExtensions = false;
   configured.programs.firefox.maxSearchResults = 10;
+
+  services = {
+    tailscale = {
+      enable = true;
+      openFirewall = true;
+    };
+    mediamtx = {
+      enable = true;
+      settings = {
+        hlsSegmentDuration = "0.01s";
+        hlsPartDuration = "1ms";
+        hlsSegmentMaxSize = "10M";
+        paths = {
+          stream = {};
+        };
+      };
+    };
+  };
+
+  systemd.services.tailscaled.wantedBy = lib.mkForce [];
+  systemd.services.mediamtx.wantedBy = lib.mkForce [];
+
+  networking.firewall = {
+    allowedTCPPorts = [ 21412 8888 8890 8554 ];
+    allowedUDPPorts = [ 21412 8888 8890 8554 ];
+  };
 
   # Git
   #programs.git.config.user.signingkey = "6CF9E05D378A01C5";
