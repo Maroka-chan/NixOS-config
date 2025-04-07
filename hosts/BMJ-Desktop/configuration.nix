@@ -23,7 +23,7 @@
   desktops.hyprland.enable = true;
   desktops.hyprland.extraConfig = ''
     monitor=DP-3,2560x1440@144,2560x0,1
-    monitor=DP-4,2560x1440@60,0x230,1
+    monitor=,2560x1440@60,0x230,1
 
     exec-once = swaybg -i ${../../dotfiles/wallpapers/makima.png} -m fill
     exec-once = ags run
