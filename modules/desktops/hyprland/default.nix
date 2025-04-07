@@ -105,7 +105,7 @@ in {
     programs.git = {
       enable = true;
       config = {
-        commit.gpgsign = true;
+        commit.gpgsign = builtins.any (conf: lib.hasAttrByPath [ "user" "signingkey" ] conf) config.programs.git.config;
         core.autocrlf = "input";
       };
     };
