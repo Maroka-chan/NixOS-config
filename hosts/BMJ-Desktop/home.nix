@@ -38,6 +38,7 @@ in
       profiles.default = {
         enableUpdateCheck = false;
         extensions = with pkgs.vscode-extensions; with custom-extensions; [
+          jnoortheen.nix-ide
           rust-lang.rust-analyzer
           ms-python.python
           mads-hartmann.bash-ide-vscode
