@@ -76,6 +76,7 @@ in {
               adaptive-tab-bar-colour
             ];
             search.default = "brave-search";
+            search.force = true;
             search.engines = {
               brave-search = {
                 name = "Brave Search";
