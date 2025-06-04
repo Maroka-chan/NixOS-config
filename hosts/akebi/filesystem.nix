@@ -9,34 +9,34 @@
         "/" = {
             device  = "/dev/disk/by-label/NIXOS";
             fsType  = "btrfs";
-            options = [ "noatime" "compress=zstd" "autodefrag" "ssd" "space_cache" "subvol=root" ];
+            options = [ "noatime" "compress=zstd" "autodefrag" "ssd" "space_cache=v2" "subvol=root" ];
         };
         "/home" = {
             device  = "/dev/disk/by-label/NIXOS";
             fsType  = "btrfs";
-            options = [ "noatime" "compress=zstd" "autodefrag" "ssd" "space_cache" "subvol=home" ];
+            options = [ "noatime" "compress=zstd" "autodefrag" "ssd" "space_cache=v2" "subvol=home" ];
         };
         "/nix" = {
             device  = "/dev/disk/by-label/NIXOS";
             fsType  = "btrfs";
-            options = [ "noatime" "compress=zstd" "autodefrag" "ssd" "space_cache" "subvol=nix" ];
+            options = [ "noatime" "compress=zstd" "autodefrag" "ssd" "space_cache=v2" "subvol=nix" ];
         };
         "/persist" = {
             device  = "/dev/disk/by-label/NIXOS";
             fsType  = "btrfs";
-            options = [ "noatime" "compress=zstd" "autodefrag" "ssd" "space_cache" "subvol=persist" ];
+            options = [ "noatime" "compress=zstd" "autodefrag" "ssd" "space_cache=v2" "subvol=persist" ];
             neededForBoot = true;
         };
         "/var/log" = {
             device  = "/dev/disk/by-label/NIXOS";
             fsType  = "btrfs";
-            options = [ "noatime" "compress=zstd" "autodefrag" "ssd" "space_cache" "subvol=log" ];
+            options = [ "noatime" "compress=zstd" "autodefrag" "ssd" "space_cache=v2" "subvol=log" ];
             neededForBoot = true;
         };
         "/data" = {
             device  = "/dev/disk/by-label/DATA";
             fsType  = "btrfs";
-            options = [ "noatime" "compress=zstd" "autodefrag" "space_cache" "subvol=data" ];
+            options = [ "noatime" "compress=zstd" "autodefrag" "space_cache=v2" "subvol=data" ];
         };
     };
 }
