@@ -6,5 +6,6 @@
     ./tailscale
     ./samba
     ./restic
+    ./home-assistant.nix
   ];
 }
