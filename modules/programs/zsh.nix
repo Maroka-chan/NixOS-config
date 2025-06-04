@@ -21,7 +21,7 @@ in {
           enableCompletion = true;
           syntaxHighlighting.enable = true;
 
-          initExtra = ''
+          initContent = ''
             bindkey -e
             bindkey "''${key[Up]}" up-line-or-search
             bindkey "^[[1;5C" forward-word
