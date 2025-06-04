@@ -22,6 +22,10 @@ in
     prismlauncher # Minecraft Launcher
 
     wl-clipboard
+
+    freecad-wayland
+    blender-hip
+    azpainter
   ];
 
   programs = {
@@ -34,6 +38,7 @@ in
       enable = true;
       enableZshIntegration = true;
       nix-direnv.enable = true;
+      silent = true;
     };
     obs-studio.enable = true;
   };
@@ -47,6 +52,7 @@ in
       ".config/vesktop/settings/settings.json"
       ".config/vesktop/settings.json"
       ".config/vesktop/state.json"
+      ".flutter"
     ];
     directories = [
       ".local/share/Jellyfin Media Player/QtWebEngine/Default/Local Storage/leveldb"
@@ -58,6 +64,8 @@ in
       ".local/share/DaVinciResolve"
       ".local/share/bottles"
       ".local/share/PrismLauncher"
+      ".dart-tool"
+      ".pub-cache"
       {directory = ".local/share/Steam"; method = "symlink";}
     ];
   };
