@@ -11,6 +11,12 @@
   impermanence.enable = true;
   filesystem.btrfs.enable = true;
 
+  boot.plymouth = {
+    enable = true;
+    themePackages = [ pkgs.mikuboot ];
+    theme = "mikuboot";
+  };
+
   # Needed for uxplay
   #services.avahi = {
   #  nssmdns = true;

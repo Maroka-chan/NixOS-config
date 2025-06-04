@@ -8,6 +8,7 @@ let
     home-manager.nixosModules.default
     hyprland.nixosModules.default
     nur.modules.nixos.default
+    mikuboot.nixosModules.default
   ];
 
   desktopModules = [
