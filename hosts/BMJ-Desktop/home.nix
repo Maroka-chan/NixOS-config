@@ -17,6 +17,7 @@ in
 
     inkscape
     prismlauncher # Minecraft Launcher
+    davinci-resolve
 
     wl-clipboard
   ];
@@ -52,3 +53,4 @@ in
     };
   };
 }
+
