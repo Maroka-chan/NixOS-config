@@ -7,19 +7,29 @@ in
   home = { inherit username homeDirectory; };
 
   home.packages = with pkgs; [
-    # Media players
+    # Media Players
     jellyfin-media-player
 
+    # Tools
     swaybg    # Wallpaper Tool
-
     sshfs     # Remote filesystems over SSH
+    wl-clipboard # Clipboard Manager
+
+    # Communication Clients
     vesktop   # Third-party Discord
+    telegram-desktop # Telegram Client
 
+    # Creative Tools
     inkscape
-    prismlauncher # Minecraft Launcher
+    gimp3-with-plugins
     davinci-resolve
+    blender-hip
 
-    wl-clipboard
+    # Machine Learning
+    ollama-rocm # LLM Runner
+
+    # Games
+    prismlauncher # Minecraft Launcher
   ];
 
   programs = {
