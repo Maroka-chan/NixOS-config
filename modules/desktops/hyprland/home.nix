@@ -72,7 +72,7 @@ mkMerge [{
   services.gpg-agent = {
     enable = true;
     enableZshIntegration = true;
-    pinentryPackage = pkgs.pinentry-gtk2;
+    pinentry.package = pkgs.pinentry-gtk2;
     extraConfig = ''
       allow-preset-passphrase
     '';
