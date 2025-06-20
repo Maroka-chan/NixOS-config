@@ -44,7 +44,8 @@ chmod 0400 "$KEYPATH"
 ./utils/create_keypart.sh "$KEYPATH"
 ```
 
-> :warning: Backup the LUKS header(s) after installation!
+> [!IMPORTANT]
+> Backup the LUKS header(s) after installation!
 > ```bash
 > # On target machine
 > sudo cryptsetup luksHeaderBackup --header-backup-file ./"$(hostname)".luksheader <crypt-partition>
@@ -75,10 +76,11 @@ ssh-keygen -t ed25519
 nix run github:ryantm/agenix -- -e secret.age
 ```
 
-> :warning: To add a user password, use the sha hash given by executing:
-```bash
-mkpasswd -m sha-512
-```
+> [!WARNING]
+> To add a user password, use the sha hash given by executing:
+> ```bash
+> mkpasswd -m sha-512
+> ```
 
 # Run in VM
 
