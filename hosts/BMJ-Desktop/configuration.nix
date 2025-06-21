@@ -37,6 +37,10 @@
       enable = true;
       openFirewall = true;
     };
+    ollama = {
+      enable = true;
+      acceleration = "rocm";
+    };
     mediamtx = {
       enable = true;
       settings = {
