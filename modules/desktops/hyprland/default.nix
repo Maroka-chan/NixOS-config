@@ -99,7 +99,7 @@ in {
     ];
 
     # SSH
-    programs.ssh.startAgent = false; # gpg-agent emulates ssh-agent. So we can use both SSH and GPG keys.
+    programs.ssh.startAgent = true; # gpg-agent emulates ssh-agent. So we can use both SSH and GPG keys.
 
     # Git
     programs.git = {
