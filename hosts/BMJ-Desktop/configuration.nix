@@ -58,8 +58,8 @@
   systemd.services.mediamtx.wantedBy = lib.mkForce [];
 
   networking.firewall = {
-    allowedTCPPorts = [ 21412 8888 8890 8554 ];
-    allowedUDPPorts = [ 21412 8888 8890 8554 ];
+    allowedTCPPorts = [ 21412 8888 8890 8554 25565 ];
+    allowedUDPPorts = [ 21412 8888 8890 8554 25565 ];
   };
 
   # Git
