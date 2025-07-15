@@ -10,7 +10,7 @@
   filesystem.btrfs.enable = true;
 
   users.mutableUsers = true;
-  users.users.${username}.initialPassword = "test123";
+  users.users.${username}.initialPassword = "password";
 
   # Home Manager
   home-manager.users.${username} = {
@@ -20,31 +20,30 @@
   };
 
   # Desktop Environment
-  desktops.hyprland.enable = true;
-  desktops.hyprland.extraConfig = ''
-    monitor=DP-3,2560x1440@144,2560x0,1
-    monitor=,2560x1440@60,0x230,1
+  #desktops.hyprland.enable = true;
+  #desktops.hyprland.extraConfig = ''
+  #  monitor=DP-3,2560x1440@144,2560x0,1
+  #  monitor=,2560x1440@60,0x230,1
+  #
+  #  exec-once = swaybg -i ${../../dotfiles/wallpapers/makima.png} -m fill
+  #  exec-once = ags run
+  #'';
 
-    exec-once = swaybg -i ${../../dotfiles/wallpapers/makima.png} -m fill
-    exec-once = ags run
-  '';
+  #configured.programs.firefox.enableLocalExtensions = false;
+  #configured.programs.firefox.maxSearchResults = 10;
 
-  configured.programs.firefox.enableLocalExtensions = false;
-  configured.programs.firefox.maxSearchResults = 10;
+  #services = {
+  #  tailscale = {
+  #    enable = true;
+  #    openFirewall = true;
+  #  };
+  #  ollama = {
+  #    enable = true;
+  #    acceleration = "rocm";
+  #  };
+  #};
 
-  services = {
-    tailscale = {
-      enable = true;
-      openFirewall = true;
-    };
-    ollama = {
-      enable = true;
-      acceleration = "rocm";
-    };
-  };
-
-  systemd.services.tailscaled.wantedBy = lib.mkForce [];
-  systemd.services.mediamtx.wantedBy = lib.mkForce [];
+  #systemd.services.tailscaled.wantedBy = lib.mkForce [];
 
   networking.firewall = {
     allowedTCPPorts = [ ];
@@ -56,9 +55,9 @@
 
   ### Programs ###
   # VPN
-  configured.programs.mullvad.enable = true;
+  #configured.programs.mullvad.enable = true;
   # Games
-  programs.steam.enable = true;
+  #programs.steam.enable = true;
 
   # Editor
   configured.programs.neovim = {
