@@ -12,6 +12,8 @@
   users.mutableUsers = true;
   users.users.${username}.initialPassword = "test123";
 
+  nix.settings.trusted-users = [ "${username}" ];
+
   # Home Manager
   home-manager.users.${username} = {
     imports = [
@@ -33,6 +35,12 @@
   configured.programs.firefox.maxSearchResults = 10;
 
   services = {
+    openssh = {
+      enable = true;
+      settings = {
+        PasswordAuthentication = false;
+      };
+    };
     tailscale = {
       enable = true;
       openFirewall = true;
@@ -54,6 +62,7 @@
     };
   };
 
+  systemd.services.sshd.wantedBy = lib.mkForce [];
   systemd.services.tailscaled.wantedBy = lib.mkForce [];
   systemd.services.mediamtx.wantedBy = lib.mkForce [];
 
