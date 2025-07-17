@@ -41,6 +41,7 @@
     nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-small.url = "github:NixOS/nixpkgs/nixos-25.05-small";
     nixpkgs-master.url = "github:NixOS/nixpkgs";
+    nixos-hardware-gpdduo.url = "github:AlexBMJ/nixos-hardware/gpd-duo";
     nixpkgs-stremio-server.url = "github:NixOS/nixpkgs/aae94e56a7b905281f007a5b70aa7ffff89aee57";
     nur = {
       url = "github:nix-community/NUR";
