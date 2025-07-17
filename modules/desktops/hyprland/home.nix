@@ -14,6 +14,9 @@ mkMerge [{
     # Clipboard utilities
     # Needed to make Vim use global clipboard
     wl-clipboard
+    
+    # Backlight control
+    light
 
     pavucontrol # Audio control gui
     feh         # Image Viewer
@@ -291,8 +294,8 @@ mkMerge [{
       bind = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 
       # Brightness button that allows press and hold
-      binde = , XF86MonBrightnessUp, exec, tee /sys/class/backlight/intel_backlight/brightness <<< $(($(cat /sys/class/backlight/intel_backlight/brightness) + 1000))
-      binde = , XF86MonBrightnessDown, exec, tee /sys/class/backlight/intel_backlight/brightness <<< $(($(cat /sys/class/backlight/intel_backlight/brightness) - 1000))
+      binde = , XF86MonBrightnessUp, exec, ${pkgs.light}/bin/light -A 5
+      binde = , XF86MonBrightnessDown, exec, ${pkgs.light}/bin/light -U 5
 
       # Switch workspaces with mainMod + [0-9]
       bind = $mainMod, 1, split-workspace, 1
