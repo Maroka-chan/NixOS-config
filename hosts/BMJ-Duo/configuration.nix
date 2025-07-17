@@ -1,4 +1,4 @@
-{ username, lib, ... }:
+{ username, lib, pkgs, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -99,6 +99,10 @@
     viAlias = true;
     vimAlias = true;
   };
+
+  services.udev.extraRules = ''
+    ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="amdgpu_bl1", MODE="0666", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/class/backlight/%k/brightness"
+  '';
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "25.05";
