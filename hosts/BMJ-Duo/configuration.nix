@@ -45,10 +45,31 @@
   configured.programs.firefox.maxSearchResults = 10;
 
   services = {
+    auto-cpufreq = {
+      enable = true;
+      settings = {
+        battery = {
+          energy_performance_preference = "power";
+          governor = "powersave";
+          turbo = "auto";
+        };
+        charger = {
+          energy_performance_preference = "performance";
+          governor = "performance";
+          turbo = "always";
+        };
+      };
+    };
+    upower.enable = true;
+    logind.lidSwitch = "suspend";
+
+    fprintd.enable = true;
+
     tailscale = {
       enable = true;
       openFirewall = true;
     };
+
     ollama = {
       enable = true;
       acceleration = "rocm";
