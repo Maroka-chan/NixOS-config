@@ -734,6 +734,22 @@
         "type": "github"
       }
     },
+    "nixos-hardware-gpdduo": {
+      "locked": {
+        "lastModified": 1752763639,
+        "narHash": "sha256-JBXQOipt1MwYyHacRyhtJPrmaqutGPmzhQD6Lel0owA=",
+        "owner": "AlexBMJ",
+        "repo": "nixos-hardware",
+        "rev": "9050950382bc04ab79dcad229935061abd7b3f25",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AlexBMJ",
+        "ref": "gpd-duo",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1745391562,
@@ -1024,6 +1040,7 @@
         "impermanence": "impermanence",
         "mikuboot": "mikuboot",
         "neovim": "neovim",
+        "nixos-hardware-gpdduo": "nixos-hardware-gpdduo",
         "nixpkgs": "nixpkgs_6",
         "nixpkgs-master": "nixpkgs-master",
         "nixpkgs-small": "nixpkgs-small",

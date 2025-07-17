@@ -1,10 +1,11 @@
-{ username, lib, pkgs, ... }:
+{ username, lib, pkgs, inputs, ... }:
 {
   imports = [
     ./hardware-configuration.nix
     ../../modules/disko/btrfs.nix
     ../../modules/hardware/gpu/amd.nix
     ../../modules/development/default.nix
+    inputs.nixos-hardware-gpdduo.nixosModules.gpd-duo
   ];
 
   filesystem.btrfs.enable = true;
