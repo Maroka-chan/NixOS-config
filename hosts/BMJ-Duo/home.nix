@@ -26,6 +26,7 @@ in
     gimp3-with-plugins
     davinci-resolve
     blender-hip
+    freecad-qt6
 
     # Machine Learning
     ollama-rocm # LLM Runner
