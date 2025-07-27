@@ -9,6 +9,7 @@ in
   home.packages = with pkgs; [
     # Media Players
     jellyfin-media-player
+    qbittorrent
 
     # Tools
     swaybg    # Wallpaper Tool
