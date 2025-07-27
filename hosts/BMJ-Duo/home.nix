@@ -12,7 +12,7 @@ in
     qbittorrent
 
     # Tools
-    swaybg    # Wallpaper Tool
+    swaybg    # Wallpaper Tool 
     sshfs     # Remote filesystems over SSH
     wl-clipboard # Clipboard Manager
     fastfetch # Neofetch but faster
@@ -49,8 +49,10 @@ in
     obs-studio.enable = true;
     vscode = {
       enable = true;
+      mutableExtensionsDir = false;
       profiles.default = {
         enableUpdateCheck = false;
+        enableExtensionUpdateCheck = false;
         extensions = with pkgs.vscode-extensions; with custom-extensions; [
           jnoortheen.nix-ide
           rust-lang.rust-analyzer
@@ -58,9 +60,11 @@ in
           mads-hartmann.bash-ide-vscode
           github.copilot
           lakshits11.monokai-pirokai
+          arrterian.nix-env-selector
         ];
         userSettings = {
           "editor.fontFamily" = "'CaskaydiaCove Nerd Font', 'Droid Sans Mono', 'monospace', monospace";
+          "nixEnvSelector.useFlakes" = true;
         };
       };
     };
