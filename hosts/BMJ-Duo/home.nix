@@ -15,6 +15,7 @@ in
     swaybg    # Wallpaper Tool
     sshfs     # Remote filesystems over SSH
     wl-clipboard # Clipboard Manager
+    fastfetch # Neofetch but faster
 
     # Communication Clients
     vesktop   # Third-party Discord
