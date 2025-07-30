@@ -13,6 +13,7 @@
    ./stremio.nix
    ./neovim.nix
    ./yazi.nix
+   ./vscode.nix
   ];
 }
 
