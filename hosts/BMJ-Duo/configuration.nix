@@ -93,12 +93,16 @@
   # Games
   programs.steam.enable = true;
 
-  # Editor
+  # Editors
   configured.programs.neovim = {
     enable = true;
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
+  };
+
+  configured.programs.vscode = {
+    enable = true;
   };
 
   services.udev.extraRules = ''
