@@ -27,7 +27,7 @@
     monitor=eDP-1,preferred,auto,1
 
     exec-once = swaybg -i ${../../dotfiles/wallpapers/makima.png} -m fill
-    exec-once = ags run
+    exec-once = ags run --gtk 3
   '';
 
   # Git

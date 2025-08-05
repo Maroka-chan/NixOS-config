@@ -28,7 +28,7 @@
     monitor=,2560x1440@60,0x230,1
 
     exec-once = swaybg -i ${../../dotfiles/wallpapers/makima.png} -m fill
-    exec-once = ags run
+    exec-once = ags run --gtk 3
   '';
 
   configured.programs.firefox.enableLocalExtensions = false;

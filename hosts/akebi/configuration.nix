@@ -7,8 +7,8 @@
     ./networkshare-user.nix
     ./reverse-proxy.nix
     ./services
+    ./dns-test.nix
     inputs.vpn-confinement.nixosModules.default
-    inputs.yuttari.nixosModule
     #../../modules/disko/btrfs_luks_impermanence.nix
     #(import ../../modules/disko/btrfs_luks_raid1.nix [ "/dev/sda" "/dev/sdb" "/dev/sdc" ])
   ];
@@ -19,9 +19,6 @@
 
   impermanence.enable = true;
   filesystem.btrfs.enable = true;
-
-  services.yuttari.enable = true;
-  services.yuttari.openFirewall = true;
 
   #boot.initrd.luks.devices."crypt-data-1".device = lib.mkForce "/dev/disk/by-label/CRYPT_DATA_1";
   #boot.initrd.luks.devices."crypt-data-2".device = lib.mkForce "/dev/disk/by-label/CRYPT_DATA_2";

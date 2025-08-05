@@ -39,7 +39,7 @@
     }
 
     exec-once = swaybg -i ${../../dotfiles/wallpapers/makima.png} -m fill
-    exec-once = ags run
+    exec-once = ags run --gtk 3
   '';
 
   configured.programs.firefox.enableLocalExtensions = false;
