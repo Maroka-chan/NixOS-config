@@ -69,10 +69,8 @@
     deploy-rs.url = "github:serokell/deploy-rs";
 
     neovim.url = "github:Maroka-chan/nvim-config";
-    #neovim.url = "path:///home/maroka/Documents/nvim-config";
     vpn-confinement.url = "github:Maroka-chan/VPN-Confinement";
-    #vpn-confinement.url = "path:///home/maroka/Documents/VPN-Confinement";
-    yuttari.url = "path:///home/maroka/Documents/yuttari-rs";
+    yuttari.url = "git+ssh://git@github.com/Maroka-chan/yuttari-rs";
 
     umu = {
       url = "github:Open-Wine-Components/umu-launcher?dir=packaging\/nix&submodules=1";
@@ -85,6 +83,11 @@
 
     mikuboot = {
       url = "gitlab:evysgarden/mikuboot";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    quickshell = {
+      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
