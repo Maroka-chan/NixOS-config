@@ -2,7 +2,7 @@ let deployment_user = "deploy";
 in {
     users.users."${deployment_user}" = {
         isNormalUser = true;
-        extraGroups = [ "wheel" ];
+        extraGroups = [ "wheel" "media" ];
         openssh.authorizedKeys.keys = [
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGqzG8P89pW2HiMb7zfJgp22t968eHuOsheYEHtuhshl aisaka"
           "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDyMZKyptGPtS/osbdmDrhnn2J08Iiy/i+BrvqvyNBpJ kanan"
