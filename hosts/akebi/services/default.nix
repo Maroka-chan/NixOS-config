@@ -7,5 +7,6 @@
     ./samba
     ./restic
     ./home-assistant.nix
+    ./yuttari
   ];
 }
