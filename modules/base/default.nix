@@ -15,9 +15,10 @@
 
   # Networking
   networking = {
-    #nameservers = [ "1.1.1.2" "1.0.0.2" ];
+    nameservers = [ "1.1.1.2" "1.0.0.2" ];
     dhcpcd.extraConfig = "nohook resolv.conf";
   };
+  systemd.services.NetworkManager-wait-online.enable = false;
 
   ## Remove fallbackDNS
   services.resolved.extraConfig =
@@ -36,8 +37,8 @@
 
   # inotify
   boot.kernel.sysctl = {
-    "fs.inotify.max_user_watches" = "1048576";
-    "fs.inotify.max_user_instances" = "256";
+    "fs.inotify.max_user_watches" = "524288";
+    "fs.inotify.max_user_instances" = "524288";
   };
 
   # Base packages
@@ -45,6 +46,7 @@
     zip unzip
     (btop.override {rocmSupport = true;})
     comma
+    spice-vdagent
   ];
 
   # Remove sudo lectures
