@@ -835,11 +835,11 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1754437943,
-        "narHash": "sha256-iK9CfyziDjXjICcPSKaykQTwBVbfnbaUO0q+sC368zc=",
+        "lastModified": 1754521122,
+        "narHash": "sha256-dJd0A1xhVwS9BV5kbt0CfwPA9LlWH4eaDRewbrw7vqk=",
         "owner": "Maroka-chan",
         "repo": "nvim-config",
-        "rev": "6ef374b2b5e0ed04c9637f74b86ec95f1719543f",
+        "rev": "47f083c0b33d292daa1d11f2620ca6a0d8c060d9",
         "type": "github"
       },
       "original": {
