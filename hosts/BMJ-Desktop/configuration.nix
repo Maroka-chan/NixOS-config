@@ -88,7 +88,7 @@
     vimAlias = true;
   };
 
-  configured.programs.vscode = {
+  configured.programs.vscodium = {
     enable = true;
   };
 
