@@ -14,6 +14,7 @@
    ./neovim.nix
    ./yazi.nix
    ./vscode.nix
+   ./vscodium.nix
   ];
 }
 
