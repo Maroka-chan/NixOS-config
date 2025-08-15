@@ -22,7 +22,7 @@
       position = 4480x0
     }
 
-    exec-once = swaybg -i ${../../dotfiles/wallpapers/makima.png} -m fill
+    exec-once = swaybg -i ${../../dotfiles/wallpapers/island-coast.jpg} -m fill
     exec-once = ags run --gtk 3
   '';
 }
