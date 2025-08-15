@@ -1,15 +1,16 @@
-{ pkgs, lib, config, username, ... }:
+{ pkgs, lib, config, username, inputs, ... }:
 with lib;
 let
   module_name = "vscodium";
-  custom-extensions = import ./open-vsx.nix { inherit pkgs lib; };
   cfg = config.configured.programs."${module_name}";
 in {
   options.configured.programs."${module_name}" = {
     enable = mkEnableOption "Enable Microsoft Free Visual Studio Code Editor";
   };
-
   config = mkIf cfg.enable {
+    nixpkgs.overlays = [
+      inputs.nix-vscode-extensions.overlays.default
+    ];
     home-manager.users.${username} = {
       programs.vscode = {
         enable = true;
@@ -18,7 +19,7 @@ in {
         profiles.default = {
           enableUpdateCheck = false;
           enableExtensionUpdateCheck = false;
-          extensions = with pkgs.vscode-extensions; with custom-extensions; [
+          extensions = with pkgs.open-vsx; [
             jnoortheen.nix-ide
             rust-lang.rust-analyzer
             detachhead.basedpyright

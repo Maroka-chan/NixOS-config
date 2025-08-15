@@ -1,8 +1,7 @@
-{ pkgs, lib, config, username, ... }:
+{ pkgs, lib, config, username, inputs, ... }:
 with lib;
 let
   module_name = "vscode";
-  custom-extensions = import ./vscode-extensions.nix { inherit pkgs lib; };
   cfg = config.configured.programs."${module_name}";
 in {
   options.configured.programs."${module_name}" = {
@@ -10,6 +9,9 @@ in {
   };
 
   config = mkIf cfg.enable {
+    nixpkgs.overlays = [
+      inputs.nix-vscode-extensions.overlays.default
+    ];
     home-manager.users.${username} = {
       programs.vscode = {
         enable = true;
@@ -17,13 +19,13 @@ in {
         profiles.default = {
           enableUpdateCheck = false;
           enableExtensionUpdateCheck = false;
-          extensions = with pkgs.vscode-extensions; with custom-extensions; [
+          extensions = with pkgs.vscode-marketplace; [
+            github.copilot
+            ms-python.python
             jnoortheen.nix-ide
             rust-lang.rust-analyzer
-            ms-python.python
             mads-hartmann.bash-ide-vscode
-            github.copilot
-            lakshits11.monokai-pirokai
+            monokai.theme-monokai-pro-vscode
             arrterian.nix-env-selector
           ];
           userSettings = {
