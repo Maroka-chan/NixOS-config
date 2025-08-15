@@ -72,6 +72,9 @@
     vpn-confinement.url = "github:Maroka-chan/VPN-Confinement";
     yuttari.url = "git+ssh://git@github.com/Maroka-chan/yuttari-rs";
 
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
+    nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
+
     umu = {
       url = "github:Open-Wine-Components/umu-launcher?dir=packaging\/nix&submodules=1";
       inputs.nixpkgs.follows = "nixpkgs-master";
