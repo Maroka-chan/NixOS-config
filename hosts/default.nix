@@ -67,4 +67,5 @@ in inputs.nixpkgs.lib.mapAttrs mkSystem {
   };
   BMJ-Desktop = { username = "albmj"; useImpermanence = false; };
   BMJ-Duo = { username = "albmj"; useImpermanence = false; };
+  V00165 = { username = "albmj"; useImpermanence = false; };
 }
