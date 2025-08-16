@@ -67,6 +67,7 @@ in
       ".dart-tool"
       ".pub-cache"
       {directory = ".local/share/Steam"; method = "symlink";}
+      ".cache/yuttari"
     ];
   };
 

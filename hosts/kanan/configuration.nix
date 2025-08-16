@@ -1,4 +1,4 @@
-{ config, inputs, username, ... }:
+{ config, pkgs, inputs, username, ... }:
 {
   imports = [
     ./hardware-configuration.nix
@@ -8,8 +8,17 @@
     inputs.hoyonix.nixosModules.genshin
   ];
 
+  nix.settings.trusted-users = [ "maroka" ];
+
   impermanence.enable = true;
   filesystem.btrfs.enable = true;
+
+  xdg.portal.config.common."org.freedesktop.impl.portal.AppChooser" = "gtk";
+
+  services.tailscale = {
+    enable = true;
+    openFirewall = true;
+  };
 
   boot.plymouth = {
     enable = true;
@@ -17,20 +26,17 @@
     theme = "mikuboot";
   };
 
-  # Needed for uxplay
-  #services.avahi = {
-  #  nssmdns = true;
-  #  enable = true;
-  #  publish = {
-  #    enable = true;
-  #    userServices = true;
-  #    domain = true;
-  #  };
-  #};
+  fonts.packages = with pkgs; [
+    material-symbols
+    nerd-fonts.jetbrains-mono
+    ibm-plex
+  ];
 
   # Users
   age.secrets."${username}-password".file = ../../secrets/${username}-password.age;
-  users.users.${username}.hashedPasswordFile = config.age.secrets."${username}-password".path;
+  users.users.${username} = {
+    hashedPasswordFile = config.age.secrets."${username}-password".path;
+  };
 
   # Home Manager
   home-manager.users.${username} = {

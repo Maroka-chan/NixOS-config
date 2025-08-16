@@ -73,8 +73,17 @@
     virtualisation = {
       cores = 8;
       memorySize = 8096;
-      qemu.options = [ "-enable-kvm" "-vga virtio" "-display gtk,gl=on" ];
+      qemu.options = [
+        "-enable-kvm"
+        "-device" "virtio-gpu-gl"
+        "-display" "spice-app,gl=on"
+        "-vga" "none"
+        "-cpu" "host"
+        "-mem-prealloc"
+        "-spice" "unix=on,ipv4=off,ipv6=off,disable-ticketing=on"
+      ];
       writableStoreUseTmpfs = false;
+
 
       fileSystems."/var/log".neededForBoot = true;
       fileSystems."/swap".neededForBoot = true;
