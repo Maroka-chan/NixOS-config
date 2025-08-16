@@ -31,10 +31,6 @@ in {
     };
 
     environment.sessionVariables.NIXOS_OZONE_WL = "1";
-    environment.systemPackages = with pkgs; [
-      #hyprpolkitagent
-      #hyprsunset
-    ];
 
     # PAM
     security.pam.services.hyprlock = {};
@@ -43,11 +39,6 @@ in {
       noAutostart = true;
       storeOnly = true;
     };
-
-    # Networking
-    services.resolved.enable = true;
-    networking.networkmanager.enable = true;
-    users.users.${username}.extraGroups = [ "networkmanager" ];
 
     # Compositor
     programs.hyprland.enable = true;
@@ -121,10 +112,9 @@ in {
 
     # Nix Settings
     nix.settings = {
-      substituters = [ "https://hyprland.cachix.org" ];
-      trusted-public-keys = [
-        "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-      ];
+      substituters = ["https://hyprland.cachix.org"];
+      trusted-substituters = ["https://hyprland.cachix.org"];
+      trusted-public-keys = ["hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="];
     };
   })
   (mkIf config.impermanence.enable {

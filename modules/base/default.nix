@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, username, ... }:
 {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -14,17 +14,20 @@
   nixpkgs.config.allowUnfree = true;
 
   # Networking
-  networking = {
-    nameservers = [ "1.1.1.2" "1.0.0.2" ];
-    dhcpcd.extraConfig = "nohook resolv.conf";
-  };
-  systemd.services.NetworkManager-wait-online.enable = false;
-
+  services.resolved.enable = true;
   ## Remove fallbackDNS
   services.resolved.extraConfig =
   ''
     FallbackDNS=
   '';
+
+  networking = {
+    networkmanager.enable = true;
+    nameservers = [ "1.1.1.2" "1.0.0.2" ];
+    dhcpcd.extraConfig = "nohook resolv.conf";
+  };
+  systemd.services.NetworkManager-wait-online.enable = false;
+  users.users.${username}.extraGroups = [ "networkmanager" ];
 
   # Firewall
   networking.firewall = {
