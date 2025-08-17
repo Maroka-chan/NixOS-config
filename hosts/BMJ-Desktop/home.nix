@@ -17,6 +17,7 @@ in
     # Communication Clients
     vesktop   # Third-party Discord
     telegram-desktop # Telegram Client
+    signal-desktop # Signal
 
     # Creative Tools
     inkscape
