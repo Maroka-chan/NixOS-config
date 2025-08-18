@@ -27,10 +27,13 @@ in {
             mads-hartmann.bash-ide-vscode
             monokai.theme-monokai-pro-vscode
             arrterian.nix-env-selector
+            ms-vscode-remote.remote-ssh
+            yocto-project.yocto-bitbake
           ];
           userSettings = {
             "editor.fontFamily" = "'CaskaydiaCove Nerd Font', 'Droid Sans Mono', 'monospace', monospace";
             "nixEnvSelector.useFlakes" = true;
+            "github.copilot.nextEditSuggestions.enabled" = true;
           };
         };
       };
