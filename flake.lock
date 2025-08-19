@@ -912,11 +912,11 @@
     },
     "nixos-hardware-gpdduo": {
       "locked": {
-        "lastModified": 1752763639,
-        "narHash": "sha256-JBXQOipt1MwYyHacRyhtJPrmaqutGPmzhQD6Lel0owA=",
+        "lastModified": 1755619554,
+        "narHash": "sha256-rrFHnhc/HWTeQ9TMTo9TqoRV94SGnh0zWmTMe4dpaNk=",
         "owner": "AlexBMJ",
         "repo": "nixos-hardware",
-        "rev": "9050950382bc04ab79dcad229935061abd7b3f25",
+        "rev": "5c21eaaf3d1f423e22191d520b62f46518f82d01",
         "type": "github"
       },
       "original": {
