@@ -19,7 +19,7 @@ in {
         profiles.default = {
           enableUpdateCheck = false;
           enableExtensionUpdateCheck = false;
-          extensions = with pkgs.vscode-marketplace; [
+          extensions = with (pkgs.forVSCodeVersion "${pkgs.vscode.version}").vscode-marketplace; [
             github.copilot
             ms-python.python
             jnoortheen.nix-ide
