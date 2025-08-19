@@ -252,7 +252,6 @@ mkMerge [{
       # Animations
       animations {
         enabled = true
-        first_launch_animation = false
       }
       animation=workspaces,1,1,default
       animation=windows,1,1,default,slide
