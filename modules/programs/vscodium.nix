@@ -19,7 +19,7 @@ in {
         profiles.default = {
           enableUpdateCheck = false;
           enableExtensionUpdateCheck = false;
-          extensions = with pkgs.open-vsx; [
+          extensions = with (pkgs.forVSCodeVersion "${pkgs.vscodium.version}").open-vsx; [
             jnoortheen.nix-ide
             rust-lang.rust-analyzer
             detachhead.basedpyright
@@ -34,6 +34,7 @@ in {
             "workbench.settings.enableNaturalLanguageSearch" = false;
             "workbench.welcomePage.extraAnnouncements" = false;
             "workbench.colorTheme" = "Monokai Pro (Filter Spectrum)";
+            "workbench.iconTheme" = "Monokai Pro (Filter Spectrum) Icons";
             "window.menuBarVisibility" = "compact";
             "window.customTitleBarVisibility" = "never";
             "window.menuStyle" = "custom";
