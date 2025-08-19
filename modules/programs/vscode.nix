@@ -29,6 +29,7 @@ in {
             arrterian.nix-env-selector
             ms-vscode-remote.remote-ssh
             yocto-project.yocto-bitbake
+            (pkgs.forVSCodeVersion "1.103.0-20250728").vscode-marketplace.github.copilot-chat
           ];
           userSettings = {
             "editor.fontFamily" = "'CaskaydiaCove Nerd Font', 'Droid Sans Mono', 'monospace', monospace";
