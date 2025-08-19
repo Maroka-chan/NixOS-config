@@ -19,11 +19,11 @@ in
     # Communication Clients
     vesktop   # Third-party Discord
     telegram-desktop # Telegram Client
+    signal-desktop # Signal
 
     # Creative Tools
     inkscape
     gimp3-with-plugins
-    davinci-resolve
     blender-hip
     freecad-qt6
 
