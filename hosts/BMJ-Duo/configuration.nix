@@ -19,6 +19,7 @@
   home-manager.users.${username} = {
     imports = [
       ./home.nix
+      inputs.caelestia-shell.homeManagerModules.default
     ];
   };
 

@@ -1,4 +1,4 @@
-{ pkgs, lib, username, ... }:
+{ pkgs, lib, username, inputs, ... }:
 let
   homeDirectory = "/home/${username}";
 in
@@ -46,6 +46,7 @@ in
       silent = true;
     };
     obs-studio.enable = true;
+    caelestia.enable = true;
   };
 }
 
