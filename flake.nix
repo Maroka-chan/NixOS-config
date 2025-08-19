@@ -67,6 +67,9 @@
     ags.url = "github:Aylur/ags";
     ags.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
+    caelestia-shell.url = "github:caelestia-dots/shell";
+    caelestia-shell.inputs.nixpkgs.follows = "nixpkgs-unstable";
+
     walker.url = "github:abenz1267/walker/0.13.26";
     walker.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
