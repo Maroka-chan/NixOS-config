@@ -35,6 +35,10 @@
         PasswordAuthentication = false;
       };
     };
+    tailscale = {
+      enable = true;
+      openFirewall = true;
+    };
   };
 
   systemd.services.sshd.wantedBy = lib.mkForce [];
