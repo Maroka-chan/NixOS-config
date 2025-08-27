@@ -1,6 +1,5 @@
 {
   pkgs,
-  lib,
   username,
   ...
 }:
@@ -32,6 +31,9 @@ in
       enable = true;
       nix-direnv.enable = true;
       silent = true;
+    };
+    awscli = {
+      enable = true;
     };
     zsh.shellAliases = {
       assume = "source assume";
