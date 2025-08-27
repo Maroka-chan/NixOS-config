@@ -1,4 +1,9 @@
-{ pkgs, lib, username, ... }:
+{
+  pkgs,
+  lib,
+  username,
+  ...
+}:
 let
   homeDirectory = "/home/${username}";
 in
@@ -7,8 +12,8 @@ in
 
   home.packages = with pkgs; [
     # Tools
-    swaybg    # Wallpaper Tool
-    sshfs     # Remote filesystems over SSH
+    swaybg # Wallpaper Tool
+    sshfs # Remote filesystems over SSH
     wl-clipboard # Clipboard Manager
 
     zoom-us
@@ -26,8 +31,9 @@ in
       nix-direnv.enable = true;
       silent = true;
     };
+    zsh.shellAliases = {
+      assume = "source assume";
+    };
   };
 
-
 }
-
