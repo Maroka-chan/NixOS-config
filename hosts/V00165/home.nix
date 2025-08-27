@@ -18,6 +18,8 @@ in
 
     zoom-us
     slack
+
+    granted # AWS assume role
   ];
 
   programs = {
