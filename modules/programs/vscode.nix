@@ -1,9 +1,17 @@
-{ pkgs, lib, config, username, inputs, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  username,
+  inputs,
+  ...
+}:
 with lib;
 let
   module_name = "vscode";
   cfg = config.configured.programs."${module_name}";
-in {
+in
+{
   options.configured.programs."${module_name}" = {
     enable = mkEnableOption "Enable Visual Studio Code Editor";
   };
@@ -35,6 +43,21 @@ in {
             "editor.fontFamily" = "'CaskaydiaCove Nerd Font', 'Droid Sans Mono', 'monospace', monospace";
             "nixEnvSelector.useFlakes" = true;
             "github.copilot.nextEditSuggestions.enabled" = true;
+            "files.watcherExclude" = {
+              "build/sstate-cache/**" = true;
+              "build/downloads/**" = true;
+              "build/tmp/**" = true;
+            };
+            "search.exclude" = {
+              "build/sstate-cache/**" = true;
+              "build/downloads/**" = true;
+              "build/tmp/**" = true;
+            };
+            "files.exclude" = {
+              "build/sstate-cache/**" = true;
+              "build/downloads/**" = true;
+              "build/tmp/**" = true;
+            };
           };
         };
       };
