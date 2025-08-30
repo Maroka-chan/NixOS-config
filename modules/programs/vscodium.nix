@@ -1,9 +1,17 @@
-{ pkgs, lib, config, username, inputs, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  username,
+  inputs,
+  ...
+}:
 with lib;
 let
   module_name = "vscodium";
   cfg = config.configured.programs."${module_name}";
-in {
+in
+{
   options.configured.programs."${module_name}" = {
     enable = mkEnableOption "Enable Microsoft Free Visual Studio Code Editor";
   };
@@ -26,6 +34,7 @@ in {
             mads-hartmann.bash-ide-vscode
             monokai.theme-monokai-pro-vscode
             arrterian.nix-env-selector
+            dart-code.dart-code
           ];
           userSettings = {
             "telemetry.telemetryLevel" = "off";
@@ -47,4 +56,3 @@ in {
     };
   };
 }
-
