@@ -1,4 +1,9 @@
-{ config, pkgs, username, ... }:
+{
+  config,
+  pkgs,
+  username,
+  ...
+}:
 {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -7,7 +12,10 @@
   hardware.enableAllFirmware = true;
 
   # Fixes logitech scrollwheel when wireless
-  boot.blacklistedKernelModules = [ "hid_logitech_dj" "hid_logitech_hidpp" ];
+  boot.blacklistedKernelModules = [
+    "hid_logitech_dj"
+    "hid_logitech_hidpp"
+  ];
 
   time.timeZone = "Europe/Copenhagen";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -16,14 +24,16 @@
   # Networking
   services.resolved.enable = true;
   ## Remove fallbackDNS
-  services.resolved.extraConfig =
-  ''
+  services.resolved.extraConfig = ''
     FallbackDNS=
   '';
 
   networking = {
     networkmanager.enable = true;
-    nameservers = [ "1.1.1.2" "1.0.0.2" ];
+    nameservers = [
+      "1.1.1.2"
+      "1.0.0.2"
+    ];
     dhcpcd.extraConfig = "nohook resolv.conf";
   };
   systemd.services.NetworkManager-wait-online.enable = false;
@@ -46,11 +56,13 @@
 
   # Base packages
   environment.systemPackages = with pkgs; [
-    zip unzip
-    (btop.override {rocmSupport = true;})
-    comma
+    zip
+    unzip
+    (btop.override { rocmSupport = true; })
     spice-vdagent
   ];
+
+  programs.nix-index-database.comma.enable = true;
 
   # Remove sudo lectures
   security.sudo.extraConfig = ''
@@ -62,12 +74,14 @@
   services.thermald.enable = true;
 
   # Increase amount of files we can have open
-  security.pam.loginLimits = [{
-    domain = "*";
-    type = "soft";
-    item = "nofile";
-    value = "16384";
-  }];
+  security.pam.loginLimits = [
+    {
+      domain = "*";
+      type = "soft";
+      item = "nofile";
+      value = "16384";
+    }
+  ];
 
   # Configure Disko VM
   services.spice-vdagentd.enable = true;
@@ -78,15 +92,19 @@
       memorySize = 8096;
       qemu.options = [
         "-enable-kvm"
-        "-device" "virtio-gpu-gl"
-        "-display" "spice-app,gl=on"
-        "-vga" "none"
-        "-cpu" "host"
+        "-device"
+        "virtio-gpu-gl"
+        "-display"
+        "spice-app,gl=on"
+        "-vga"
+        "none"
+        "-cpu"
+        "host"
         "-mem-prealloc"
-        "-spice" "unix=on,ipv4=off,ipv6=off,disable-ticketing=on"
+        "-spice"
+        "unix=on,ipv4=off,ipv6=off,disable-ticketing=on"
       ];
       writableStoreUseTmpfs = false;
-
 
       fileSystems."/var/log".neededForBoot = true;
       fileSystems."/swap".neededForBoot = true;
