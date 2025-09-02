@@ -1,4 +1,10 @@
-{ username, lib, pkgs, inputs, ... }:
+{
+  username,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 {
   imports = [
     ./hardware-configuration.nix
@@ -77,7 +83,7 @@
     };
   };
 
-  systemd.services.tailscaled.wantedBy = lib.mkForce [];
+  systemd.services.tailscaled.wantedBy = lib.mkForce [ ];
 
   networking.firewall = {
     allowedTCPPorts = [ ];
@@ -92,6 +98,8 @@
   configured.programs.mullvad.enable = true;
   # Games
   programs.steam.enable = true;
+  # cnping
+  programs.cnping.enable = true;
 
   # Editors
   configured.programs.neovim = {
