@@ -3,6 +3,7 @@
   age.secrets.restic-env.file = ../../../../secrets/restic-env.age;
   age.secrets.restic-pass.file = ../../../../secrets/restic-pass.age;
   age.secrets.restic-repo.file = ../../../../secrets/restic-repo.age;
+  age.secrets.restic-media-repo.file = ../../../../secrets/restic-media-repo.age;
 
   services.restic = {
     backups = {
@@ -18,6 +19,20 @@
           "/data/networkshare/Pictures/Anime"
           "/data/networkshare/Videos/Memories"
           "/data/networkshare/Documents"
+        ];
+        timerConfig = {
+          OnCalendar = "00:05";
+          Persistent = true;
+          RandomizedDelaySec = "5h";
+        };
+      };
+      media = {
+        initialize = true;
+        repositoryFile = config.age.secrets.restic-media-repo.path;
+        passwordFile = config.age.secrets.restic-pass.path;
+        environmentFile = config.age.secrets.restic-env.path;
+        paths = [
+          "/data/media/owned_music"
         ];
         timerConfig = {
           OnCalendar = "00:05";
