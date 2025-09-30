@@ -1,4 +1,9 @@
-{ pkgs, inputs, username, ... }:
+{
+  pkgs,
+  inputs,
+  username,
+  ...
+}:
 let
   homeDirectory = "/home/${username}";
 in
@@ -6,14 +11,11 @@ in
   home = { inherit username homeDirectory; };
 
   home.packages = with pkgs; [
-    # Media players
-    jellyfin-media-player
-
-    swaybg    # Wallpaper Tool
+    swaybg # Wallpaper Tool
 
     osu-lazer-bin
-    sshfs     # Remote filesystems over SSH
-    vesktop   # Third-party Discord
+    sshfs # Remote filesystems over SSH
+    vesktop # Third-party Discord
 
     davinci-resolve
     bottles
@@ -66,10 +68,12 @@ in
       ".local/share/PrismLauncher"
       ".dart-tool"
       ".pub-cache"
-      {directory = ".local/share/Steam"; method = "symlink";}
+      {
+        directory = ".local/share/Steam";
+        method = "symlink";
+      }
       ".cache/yuttari"
     ];
   };
 
-  
 }

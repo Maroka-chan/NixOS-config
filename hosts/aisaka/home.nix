@@ -1,12 +1,10 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    # Media players
-    jellyfin-media-player
-    swaybg    # Wallpaper Tool
+    swaybg # Wallpaper Tool
 
-    sshfs       # Remote filesystems over SSH
-    webcord   # Third-party Discord
+    sshfs # Remote filesystems over SSH
+    webcord # Third-party Discord
   ];
 
   programs = {

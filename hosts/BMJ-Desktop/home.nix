@@ -1,4 +1,9 @@
-{ pkgs, lib, username, ... }:
+{
+  pkgs,
+  lib,
+  username,
+  ...
+}:
 let
   homeDirectory = "/home/${username}";
 in
@@ -6,16 +11,13 @@ in
   home = { inherit username homeDirectory; };
 
   home.packages = with pkgs; [
-    # Media Players
-    jellyfin-media-player
-
     # Tools
-    swaybg    # Wallpaper Tool
-    sshfs     # Remote filesystems over SSH
+    swaybg # Wallpaper Tool
+    sshfs # Remote filesystems over SSH
     wl-clipboard # Clipboard Manager
 
     # Communication Clients
-    vesktop   # Third-party Discord
+    vesktop # Third-party Discord
     telegram-desktop # Telegram Client
     signal-desktop # Signal
 
@@ -46,4 +48,3 @@ in
     obs-studio.enable = true;
   };
 }
-
