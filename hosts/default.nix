@@ -22,8 +22,10 @@ let
         home-manager.enable = true;
         users.users.${username} = {
           isNormalUser = true;
+          group = username;
           extraGroups = [ "wheel" ];
         };
+        users.groups.${username} = { };
       }
     )
   ];
@@ -72,6 +74,7 @@ inputs.nixpkgs.lib.mapAttrs mkSystem {
   v00334 = { }; # Work Laptop
   akebi = {
     # Home Server
+    username = "deploy";
     channel = inputs.nixpkgs-small;
     isServer = true;
   };

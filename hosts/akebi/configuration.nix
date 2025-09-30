@@ -1,7 +1,11 @@
-{ config, pkgs, inputs, ... }:
 {
-  imports =
-  [
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
+{
+  imports = [
     ./hardware-configuration.nix
     ./deployment-user.nix
     ./networkshare-user.nix
@@ -48,13 +52,28 @@
     ];
     wireguardConfigFile = config.age.secrets.vpn-wireguard.path;
     portMappings = [
-      { from = 9091; to = 9091; }
-      { from = 3000; to = 3000; }
-      { from = 11470; to = 11470; }
-      { from = 12470; to = 12470; }
+      {
+        from = 9091;
+        to = 9091;
+      }
+      {
+        from = 3000;
+        to = 3000;
+      }
+      {
+        from = 11470;
+        to = 11470;
+      }
+      {
+        from = 12470;
+        to = 12470;
+      }
     ];
     openVPNPorts = [
-      { port = 12340; protocol = "both"; }
+      {
+        port = 12340;
+        protocol = "both";
+      }
     ];
   };
 
@@ -71,7 +90,8 @@
       "/var/lib/acme/.lego/yuttari.moe"
       "/var/lib/acme/.lego/accounts"
     ];
-    files = [ # TODO: Are these needed here? Just read directly from /persist?
+    files = [
+      # TODO: Are these needed here? Just read directly from /persist?
       "/etc/ssh/ssh_host_ed25519_key"
       "/etc/ssh/ssh_host_ed25519_key.pub"
     ];
