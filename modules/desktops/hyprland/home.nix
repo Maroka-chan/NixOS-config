@@ -216,11 +216,6 @@ mkMerge [
           no_warps = true
         }
 
-        gestures {
-          workspace_swipe = true
-          workspace_swipe_create_new = false
-        }
-
         misc {
           disable_hyprland_logo = true
           disable_splash_rendering = true
