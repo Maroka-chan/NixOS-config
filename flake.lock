@@ -1086,6 +1086,30 @@
         "type": "github"
       }
     },
+    "noctalia": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ],
+        "quickshell": [
+          "quickshell"
+        ],
+        "systems": "systems_6"
+      },
+      "locked": {
+        "lastModified": 1759580192,
+        "narHash": "sha256-Y9VOkG9M3ltl7b9JJSA6yYR+mO8MeXFV/2i32bxBeGg=",
+        "owner": "noctalia-dev",
+        "repo": "noctalia-shell",
+        "rev": "f348505d2ae04781be5e39df8c1fa9f5dae1c747",
+        "type": "github"
+      },
+      "original": {
+        "owner": "noctalia-dev",
+        "repo": "noctalia-shell",
+        "type": "github"
+      }
+    },
     "nur": {
       "inputs": {
         "flake-parts": "flake-parts_4",
@@ -1130,6 +1154,26 @@
         "type": "github"
       }
     },
+    "quickshell": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs-unstable"
+        ]
+      },
+      "locked": {
+        "lastModified": 1759303785,
+        "narHash": "sha256-EUXrK7pUIzOQWR1dquZh26A6W8lsY2oiHEEZzQnsarM=",
+        "owner": "outfoxxed",
+        "repo": "quickshell",
+        "rev": "9662234759eb57f2a1057f2a1c667da1bf128c1c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "outfoxxed",
+        "repo": "quickshell",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "agenix": "agenix",
@@ -1149,7 +1193,9 @@
         "nixpkgs-small": "nixpkgs-small",
         "nixpkgs-stremio-server": "nixpkgs-stremio-server",
         "nixpkgs-unstable": "nixpkgs-unstable",
+        "noctalia": "noctalia",
         "nur": "nur",
+        "quickshell": "quickshell",
         "split-monitor-workspaces": "split-monitor-workspaces",
         "transmission_4_5": "transmission_4_5",
         "umu": "umu",
@@ -1273,6 +1319,21 @@
       }
     },
     "systems_6": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_7": {
       "locked": {
         "lastModified": 1689347949,
         "narHash": "sha256-12tWmuL2zgBgZkdoB6qXZsgJEH9LR3oUgpaQq2RbI80=",
@@ -1403,7 +1464,7 @@
         "nixpkgs": [
           "nixpkgs-unstable"
         ],
-        "systems": "systems_6"
+        "systems": "systems_7"
       },
       "locked": {
         "lastModified": 1755346790,

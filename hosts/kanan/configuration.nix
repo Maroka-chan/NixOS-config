@@ -52,13 +52,14 @@
   };
 
   # Desktop Environment
-  desktops.hyprland.enable = true;
-  desktops.hyprland.extraConfig = ''
-    monitor=DP-3,2560x1440@240,0x0,1
+  #desktops.hyprland.enable = true;
+  #desktops.hyprland.extraConfig = ''
+  #  monitor=DP-3,2560x1440@240,0x0,1
 
-    exec-once = swaybg -i ${../../dotfiles/wallpapers/makima.png} -m fill
-    exec-once = ags run --gtk 3
-  '';
+  #  exec-once = swaybg -i ${../../dotfiles/wallpapers/makima.png} -m fill
+  #  exec-once = ags run --gtk 3
+  #'';
+  desktops.niri.enable = true;
 
   # Git
   programs.git.config.user.signingkey = "6CF9E05D378A01C5";

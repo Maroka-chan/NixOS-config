@@ -18,7 +18,6 @@ in
     vesktop # Third-party Discord
 
     davinci-resolve
-    bottles
     inkscape
 
     prismlauncher # Minecraft Launcher
@@ -64,7 +63,6 @@ in
       ".local/state/nvim/shada"
       ".local/share/osu"
       ".local/share/DaVinciResolve"
-      ".local/share/bottles"
       ".local/share/PrismLauncher"
       ".dart-tool"
       ".pub-cache"
