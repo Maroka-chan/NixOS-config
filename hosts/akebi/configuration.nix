@@ -13,8 +13,6 @@
     ./services
     ./dns-test.nix
     inputs.vpn-confinement.nixosModules.default
-    #../../modules/disko/btrfs_luks_impermanence.nix
-    #(import ../../modules/disko/btrfs_luks_raid1.nix [ "/dev/sda" "/dev/sdb" "/dev/sdc" ])
   ];
 
   nix.settings.trusted-users = [ "deploy" ];
@@ -23,24 +21,6 @@
 
   impermanence.enable = true;
   filesystem.btrfs.enable = true;
-
-  #boot.initrd.luks.devices."crypt-data-1".device = lib.mkForce "/dev/disk/by-label/CRYPT_DATA_1";
-  #boot.initrd.luks.devices."crypt-data-2".device = lib.mkForce "/dev/disk/by-label/CRYPT_DATA_2";
-  #boot.initrd.luks.devices."crypt-data-3".device = lib.mkForce "/dev/disk/by-label/CRYPT_DATA_3";
-
-  #fileSystems."/data".device = lib.mkForce "/dev/disk/by-label/DATA";
-
-  #fileSystems."/".device = lib.mkForce "/dev/disk/by-label/NIXOS";
-  #fileSystems."/nix".device = lib.mkForce "/dev/disk/by-label/NIXOS";
-  #fileSystems."/persist".device = lib.mkForce "/dev/disk/by-label/NIXOS";
-  #fileSystems."/swap".device = lib.mkForce "/dev/disk/by-label/NIXOS";
-  #fileSystems."/var/log".device = lib.mkForce "/dev/disk/by-label/NIXOS";
-  #fileSystems."/boot".device = lib.mkForce "/dev/disk/by-label/BOOT";
-  #fileSystems."/data".device = lib.mkForce "/dev/disk/by-label/DATA";
-
-  #swapDevices = lib.mkForce [ { device = "/swap/swapfile"; } ];
-
-  #fileSystems."/data".device = lib.mkForce "/dev/disk/by-label/DATA";
 
   boot.kernel.sysctl."net.ipv4.ip_unprivileged_port_start" = 0;
 

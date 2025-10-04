@@ -1,4 +1,10 @@
-{ lib, pkgs, config, inputs, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  inputs,
+  ...
+}:
 {
   imports = [
   ];
@@ -21,9 +27,10 @@
       "mobile_app"
       "default_config"
     ];
-    extraPackages = python3Packages: with python3Packages; [
-      numpy
-    ];
+    extraPackages =
+      python3Packages: with python3Packages; [
+        numpy
+      ];
 
     #config = {
     #  homeassistant = {
@@ -38,6 +45,10 @@
   networking.firewall.allowedTCPPorts = [
     8123
   ];
+
+  environment.persistence."/persist" = {
+    directories = [
+      "/etc/home-assistant"
+    ];
+  };
 }
-
-
