@@ -505,11 +505,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1753225926,
-        "narHash": "sha256-3Elqkgkq+2jl5P/zbSprpw88ZpTDB/7e46eercQ2FOA=",
+        "lastModified": 1759671537,
+        "narHash": "sha256-aG0yUFPB0/5uLMDXqTq7bgs6E8SHr98vYxNql63D1zg=",
         "ref": "refs/heads/master",
-        "rev": "5fae8cab5453a298042ce9a7bcfec8b637db9112",
-        "revCount": 8,
+        "rev": "adcf17a8f2b79192a1e558a37859c45e9824b704",
+        "revCount": 10,
         "type": "git",
         "url": "ssh://git@github.com/Maroka-chan/hoyonix"
       },
