@@ -17,10 +17,6 @@ mkMerge [
       # Needed to make Vim use global clipboard
       wl-clipboard
 
-      # Backlight control
-      # TODO: mkIf laptop?
-      #light
-
       pavucontrol # Audio control gui
       imv # Image Viewer
       mpv # Media Player

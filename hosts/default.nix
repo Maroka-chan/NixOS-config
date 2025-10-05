@@ -17,7 +17,12 @@ let
     ../modules/development
     ../modules/edot.nix
     (
-      { username, ... }:
+      {
+        config,
+        lib,
+        username,
+        ...
+      }:
       {
         home-manager.enable = true;
         users.users.${username} = {
@@ -26,6 +31,17 @@ let
           extraGroups = [ "wheel" ];
         };
         users.groups.${username} = { };
+
+        # Git
+        programs.git = {
+          enable = true;
+          config = {
+            commit.gpgsign = builtins.any (
+              conf: lib.hasAttrByPath [ "user" "signingkey" ] conf
+            ) config.programs.git.config;
+            core.autocrlf = "input";
+          };
+        };
       }
     )
   ];

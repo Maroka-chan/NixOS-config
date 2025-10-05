@@ -6,10 +6,16 @@
   inputs,
   ...
 }:
-with lib;
 let
   module_name = "hyprland";
   cfg = config.desktops."${module_name}";
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    mkOption
+    types
+    mkMerge
+    ;
 in
 {
   options.desktops."${module_name}" = {
@@ -24,37 +30,20 @@ in
     ../../home-manager.nix
   ];
 
-  config = mkMerge [
-    (mkIf cfg.enable {
-      home-manager.extraSpecialArgs = {
-        extraHyprConfig = cfg.extraConfig;
-        useImpermanence = config.impermanence.enable;
-      };
-      home-manager.users.${username} = {
-        imports = [
-          inputs.hyprland.homeManagerModules.default
-          inputs.ags.homeManagerModules.default
-          inputs.walker.homeManagerModules.default
-          ./home.nix
-        ];
-      };
-
-      environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
-      # PAM
-      security.pam.services.hyprlock = { };
-      security.pam.services.greetd.gnupg = {
-        enable = true;
-        noAutostart = true;
-        storeOnly = true;
-      };
-
-      # Compositor
+  config = mkIf cfg.enable (mkMerge [
+    {
       programs.hyprland = {
         enable = true;
         package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
         portalPackage =
           inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+      };
+
+      # PAM
+      security.pam.services.greetd.gnupg = {
+        enable = true;
+        noAutostart = true;
+        storeOnly = true;
       };
 
       # Display Manager
@@ -78,19 +67,12 @@ in
       configured.programs.zsh.enable = true;
       # File Manager
       configured.programs.thunar.enable = true;
-      configured.programs.yazi.enable = true;
       # Pipewire
       configured.programs.pipewire.enable = true;
 
-      # Email Client
-      configured.programs.thunderbird.enable = true;
-      # Protonmail Bridge
-      systemd.user.services.protonmail-bridge.environment.PASSWORD_STORE_DIR =
-        "/home/${username}/.local/share/password-store";
-      services.protonmail-bridge = {
-        enable = true;
-        path = [ pkgs.pass ];
-      };
+      environment.systemPackages = with pkgs; [
+        material-design-icons # Icons
+      ];
 
       # NOTE: mkIf bluetooth?
       # Bluetooth
@@ -106,25 +88,18 @@ in
       # SSH
       programs.ssh.startAgent = true; # gpg-agent emulates ssh-agent. So we can use both SSH and GPG keys.
 
-      # Git
-      programs.git = {
-        enable = true;
-        config = {
-          commit.gpgsign = builtins.any (
-            conf: lib.hasAttrByPath [ "user" "signingkey" ] conf
-          ) config.programs.git.config;
-          core.autocrlf = "input";
-        };
+      home-manager.extraSpecialArgs = {
+        extraHyprConfig = cfg.extraConfig;
+        useImpermanence = config.impermanence.enable;
+      };
+      home-manager.users.${username} = {
+        imports = [
+          inputs.hyprland.homeManagerModules.default
+          ./home.nix
+        ];
       };
 
-      # Podman
-      virtualisation.containers.enable = true;
-      virtualisation.podman = {
-        enable = true;
-        dockerCompat = true;
-        dockerSocket.enable = true;
-        defaultNetwork.settings.dns_enabled = true;
-      };
+      environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
       # Nix Settings
       nix.settings = {
@@ -132,7 +107,7 @@ in
         trusted-substituters = [ "https://hyprland.cachix.org" ];
         trusted-public-keys = [ "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=" ];
       };
-    })
+    }
     (mkIf config.impermanence.enable {
       environment.persistence."/persist" = {
         directories = [
@@ -143,5 +118,5 @@ in
         ];
       };
     })
-  ];
+  ]);
 }
