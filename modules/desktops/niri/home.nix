@@ -3,6 +3,7 @@
   lib,
   username,
   useImpermanence,
+  extraConfig,
   ...
 }:
 let
@@ -110,7 +111,17 @@ mkMerge [
     #    --replace-fail "\''${wallpaper}" "${../../../dotfiles/wallpapers/miku_nakano.png}"
     #'';
 
-    xdg.configFile."niri/config.kdl".source = ./config.kdl;
+    xdg.configFile."niri/config.kdl".source = pkgs.runCommandNoCCLocal "niri-config" { } ''
+      cp ${./config.kdl} $out
+
+      chmod +w $out
+
+      cat <<'EOF' >> $out
+      ${extraConfig}
+      EOF
+    '';
+
+    #xdg.configFile."niri/config.kdl".source = ./config.kdl;
 
     programs.noctalia-shell = {
       enable = true;

@@ -60,6 +60,13 @@
   #  exec-once = ags run --gtk 3
   #'';
   desktops.niri.enable = true;
+  desktops.niri.extraConfig = ''
+    output "DP-3" {
+        mode "3840x2160@60.0"
+        scale 1
+        transform "normal"
+    }
+  '';
 
   # Git
   programs.git.config.user.signingkey = "6CF9E05D378A01C5";

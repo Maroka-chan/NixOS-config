@@ -9,11 +9,21 @@
 let
   module_name = "niri";
   cfg = config.desktops."${module_name}";
-  inherit (lib) mkIf mkMerge mkEnableOption;
+  inherit (lib)
+    mkIf
+    mkMerge
+    mkOption
+    mkEnableOption
+    types
+    ;
 in
 {
   options.desktops."${module_name}" = {
     enable = mkEnableOption "Enable the Niri Wayland Compositor";
+    extraConfig = mkOption {
+      type = types.str;
+      default = "";
+    };
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -67,6 +77,7 @@ in
 
       home-manager.extraSpecialArgs = {
         useImpermanence = config.impermanence.enable;
+        inherit (cfg) extraConfig;
       };
       home-manager.users.${username} = {
         imports = [

@@ -22,6 +22,7 @@ in
       enable = true;
       enableZshIntegration = true;
       nix-direnv.enable = true;
+      silent = true;
     };
   };
 
@@ -36,6 +37,7 @@ in
       ".local/share/direnv/allow"
       ".local/state/nvim/swap"
       ".local/state/nvim/shada"
+      ".cache/flashing-station-rs"
     ];
   };
 }

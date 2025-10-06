@@ -1,4 +1,9 @@
-{ username, lib, pkgs, ... }:
+{
+  username,
+  lib,
+  pkgs,
+  ...
+}:
 {
   imports = [
     ./hardware-configuration.nix
@@ -13,7 +18,10 @@
   users.mutableUsers = true;
   users.users.${username} = {
     initialPassword = "password";
-    extraGroups = [ "networkmanager" "dialout" ];
+    extraGroups = [
+      "networkmanager"
+      "dialout"
+    ];
   };
 
   nix.settings.trusted-users = [ "${username}" ];
@@ -41,7 +49,7 @@
     };
   };
 
-  systemd.services.sshd.wantedBy = lib.mkForce [];
+  systemd.services.sshd.wantedBy = lib.mkForce [ ];
 
   # Git
   #programs.git.config.user.signingkey = "6CF9E05D378A01C5";
@@ -61,7 +69,12 @@
 
   configured.programs.vscode.enable = true;
 
-  networking.firewall.allowedUDPPorts = [ 53 67 68 5353 ];
+  networking.firewall.allowedUDPPorts = [
+    53
+    67
+    68
+    5353
+  ];
 
   services.udev.extraRules = ''
     # Backlight
