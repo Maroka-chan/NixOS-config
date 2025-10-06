@@ -14,7 +14,7 @@
       mode = preferred
       position = 1920x560
     }
-    
+
     monitorv2 {
       output = desc:Lenovo Group Limited P27h-20 V90A9AL0
       mode = preferred
@@ -22,7 +22,7 @@
       position = 4480x0
     }
 
-    exec-once = swaybg -i ${../../dotfiles/wallpapers/island-coast.jpg} -m fill
+    exec-once = swaybg -i ${../../dotfiles/wallpapers/Veo_Wallpaper1.jpg} -m fill
     exec-once = ags run --gtk 3
   '';
 }
