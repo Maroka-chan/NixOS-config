@@ -10,7 +10,7 @@
     ../../modules/hardware/gpu/amd.nix
     ../../modules/development/default.nix
     ../../modules/disko/btrfs_luks.nix
-    ./hyprland.nix
+    ./niri.nix
   ];
 
   filesystem.btrfs.enable = true;
