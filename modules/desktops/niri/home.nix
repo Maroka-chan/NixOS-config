@@ -182,7 +182,7 @@ mkMerge [
         wallpaper = {
           enabled = false;
           directory = ../../../dotfiles/wallpapers;
-          defaultWallpaper = ../../../dotfiles/wallpapers/miku_nakano.png;
+          defaultWallpaper = wallpaper;
         };
         network.wifiEnabled = false;
         notifications.alwaysOnTop = true;
