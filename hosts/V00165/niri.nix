@@ -2,6 +2,7 @@
 {
   # Desktop Environment
   desktops.niri.enable = true;
+  desktops.niri.wallpaper = ../../dotfiles/wallpapers/Veo_Wallpaper1.jpg;
   desktops.niri.extraConfig = ''
     output "eDP-1" {
         mode "1920x1080@60"
