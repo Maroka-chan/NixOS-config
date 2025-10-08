@@ -24,6 +24,10 @@ in
       type = types.str;
       default = "";
     };
+    wallpaper = mkOption {
+      type = types.path;
+      default = ../../../dotfiles/wallpapers/miku_nakano.png;
+    };
   };
 
   config = mkIf cfg.enable (mkMerge [
@@ -77,7 +81,7 @@ in
 
       home-manager.extraSpecialArgs = {
         useImpermanence = config.impermanence.enable;
-        inherit (cfg) extraConfig;
+        inherit (cfg) extraConfig wallpaper;
       };
       home-manager.users.${username} = {
         imports = [

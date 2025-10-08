@@ -4,6 +4,7 @@
   username,
   useImpermanence,
   extraConfig,
+  wallpaper,
   ...
 }:
 let
@@ -116,6 +117,10 @@ mkMerge [
 
       chmod +w $out
 
+      substituteInPlace $out \
+        --replace-fail "\''${pkgs.swaybg}" "${pkgs.swaybg}/bin/swaybg" \
+        --replace-fail "\''${wallpaper}" "${wallpaper}"
+
       cat <<'EOF' >> $out
       ${extraConfig}
       EOF
@@ -175,7 +180,7 @@ mkMerge [
           name = "Copenhagen, Denmark";
         };
         wallpaper = {
-          enabled = true;
+          enabled = false;
           directory = ../../../dotfiles/wallpapers;
           defaultWallpaper = ../../../dotfiles/wallpapers/miku_nakano.png;
         };
