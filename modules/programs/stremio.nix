@@ -21,7 +21,8 @@ in
     })
     (mkIf config.impermanence.enable {
       home-manager.users.${username}.home.persistence."/persist/home/${username}".files = [
-        ".local/share/Smart Code ltd/Stremio"
+        ".local/share/stremio"
+        ".stremio-server"
       ];
     })
   ];
