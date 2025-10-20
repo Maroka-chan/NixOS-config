@@ -37,7 +37,7 @@
   desktops.niri.extraConfig = ''
     output "DP-3" {
         mode "3840x2160@60.0"
-        scale 1
+        scale 1.5
         transform "normal"
 
         // Position of the output in the global coordinate space.
@@ -65,7 +65,7 @@
         mode "3840x2160@60.0"
 
         // You can use integer or fractional scale, for example use 1.5 for 150% scale.
-        scale 1
+        scale 1.5
 
         // Transform allows to rotate the output counter-clockwise, valid values are:
         // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
@@ -80,7 +80,7 @@
         // so to put another output directly adjacent to it on the right, set its x to 1920.
         // If the position is unset or results in an overlap, the output is instead placed
         // automatically.
-        position x=-2160 y=0
+        position x=-1440 y=-560
     }
   '';
 
