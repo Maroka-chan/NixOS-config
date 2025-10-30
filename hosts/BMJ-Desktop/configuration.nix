@@ -5,6 +5,7 @@
     ../../modules/disko/btrfs.nix
     ../../modules/hardware/gpu/amd.nix
     ../../modules/development/default.nix
+    ./niri.nix
   ];
 
   filesystem.btrfs.enable = true;
@@ -20,16 +21,6 @@
       ./home.nix
     ];
   };
-
-  # Desktop Environment
-  desktops.hyprland.enable = true;
-  desktops.hyprland.extraConfig = ''
-    monitor=DP-3,2560x1440@144,2560x0,1
-    monitor=,2560x1440@60,0x230,1
-
-    exec-once = swaybg -i ${../../dotfiles/wallpapers/makima.png} -m fill
-    exec-once = ags run --gtk 3
-  '';
 
   configured.programs.firefox.enableLocalExtensions = false;
   configured.programs.firefox.maxSearchResults = 10;
