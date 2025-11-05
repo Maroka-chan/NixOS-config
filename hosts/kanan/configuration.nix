@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  inputs,
   username,
   ...
 }:
@@ -11,7 +10,6 @@
     ../../modules/disko/btrfs_luks_impermanence.nix
     ../../modules/hardware/gpu/amd.nix
     ../../modules/input/japanese.nix
-    inputs.hoyonix.nixosModules.genshin
   ];
 
   nix.settings.trusted-users = [ "maroka" ];
@@ -78,13 +76,6 @@
   configured.programs.stremio.enable = true;
   # Games
   programs.steam.enable = true;
-  programs.genshin = {
-    enable = true;
-    hdr.enable = true;
-    fpsunlock.enable = true;
-    mangohud.enable = true;
-  };
-  configured.programs.hoyoplay.enable = true;
 
   # Editor
   configured.programs.neovim = {
