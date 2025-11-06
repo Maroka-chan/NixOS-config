@@ -11,6 +11,7 @@
     ../../modules/disko/btrfs.nix
     ../../modules/hardware/gpu/amd.nix
     ../../modules/development/default.nix
+    ./niri.nix
     inputs.nixos-hardware-gpdduo.nixosModules.gpd-duo
   ];
 
@@ -27,26 +28,6 @@
       ./home.nix
     ];
   };
-
-  # Desktop Environment
-  desktops.hyprland.enable = true;
-  desktops.hyprland.extraConfig = ''
-    monitorv2 {
-      output = eDP-1
-      mode = preferred
-      transform = 2
-      scale = 2
-    }
-    monitorv2 {
-      output = DP-3
-      mode = preferred
-      position = auto-up
-      scale = 2
-    }
-
-    exec-once = swaybg -i ${../../dotfiles/wallpapers/makima.png} -m fill
-    exec-once = ags run --gtk 3
-  '';
 
   configured.programs.firefox.enableLocalExtensions = false;
   configured.programs.firefox.maxSearchResults = 10;
