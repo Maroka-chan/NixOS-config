@@ -13,9 +13,21 @@
   impermanence.enable = true;
   filesystem.btrfs.enable = true;
 
+  virtualisation = {
+    containers.enable = true;
+    podman = {
+      enable = true;
+      dockerCompat = true;
+      defaultNetwork.settings.dns_enabled = true;
+    };
+  };
+
   # Users
   age.secrets.v00334-password.file = ../../secrets/v00334-password.age;
-  users.users.${username}.hashedPasswordFile = config.age.secrets."v00334-password".path;
+  users.users.${username} = {
+    hashedPasswordFile = config.age.secrets."v00334-password".path;
+    extraGroups = [ "podman" ];
+  };
 
   # Home Manager
   home-manager.users.${username} = {
