@@ -132,6 +132,7 @@ mkMerge [
       enable = true;
       settings = {
         bar = {
+          outerCorners = false;
           widgets = {
             left = [
               {
@@ -170,11 +171,13 @@ mkMerge [
             ];
           };
         };
+        dock.enabled = false;
         colorSchemes.predefinedScheme = "Monochrome";
         general = {
           #avatarImage = "/home/drfoobar/.face";
           #radiusRatio = 0.2;
           dimDesktop = false;
+          enableShadows = false;
         };
         location = {
           name = "Copenhagen, Denmark";
