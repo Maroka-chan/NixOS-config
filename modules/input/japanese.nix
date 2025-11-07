@@ -2,12 +2,11 @@
 {
   i18n.inputMethod.enable = true;
   i18n.inputMethod.type = "fcitx5";
-  i18n.inputMethod.fcitx5.addons =
-    with pkgs; [
-      fcitx5-mozc
-      fcitx5-gtk
-      fcitx5-configtool
-    ];
+  i18n.inputMethod.fcitx5.addons = with pkgs; [
+    fcitx5-mozc
+    fcitx5-gtk
+    qt6Packages.fcitx5-configtool
+  ];
 
   environment.variables.GLFW_IM_MODULE = "fcitx";
 

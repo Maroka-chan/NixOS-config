@@ -112,7 +112,7 @@ mkMerge [
     #    --replace-fail "\''${wallpaper}" "${../../../dotfiles/wallpapers/miku_nakano.png}"
     #'';
 
-    xdg.configFile."niri/config.kdl".source = pkgs.runCommandNoCCLocal "niri-config" { } ''
+    xdg.configFile."niri/config.kdl".source = pkgs.runCommandLocal "niri-config" { } ''
       cp ${./config.kdl} $out
 
       chmod +w $out

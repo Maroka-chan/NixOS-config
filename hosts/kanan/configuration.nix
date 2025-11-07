@@ -19,6 +19,15 @@
 
   xdg.portal.config.common."org.freedesktop.impl.portal.AppChooser" = "gtk";
 
+  virtualisation = {
+    containers.enable = true;
+    podman = {
+      enable = true;
+      dockerCompat = true;
+      defaultNetwork.settings.dns_enabled = true; # Required for containers under podman-compose to be able to talk to each other.
+    };
+  };
+
   services.tailscale = {
     enable = true;
     openFirewall = true;
@@ -40,6 +49,9 @@
   age.secrets."${username}-password".file = ../../secrets/${username}-password.age;
   users.users.${username} = {
     hashedPasswordFile = config.age.secrets."${username}-password".path;
+    extraGroups = [
+      "podman"
+    ];
   };
 
   # Home Manager
