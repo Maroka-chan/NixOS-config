@@ -83,8 +83,8 @@
     neovim.url = "github:Maroka-chan/nvim-config";
     neovim.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
-    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
-    nix-vscode-extensions.inputs.nixpkgs.follows = "nixpkgs";
+    nix4vscode.url = "github:nix-community/nix4vscode";
+    nix4vscode.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     mikuboot.url = "gitlab:evysgarden/mikuboot";
     mikuboot.inputs.nixpkgs.follows = "nixpkgs-unstable";

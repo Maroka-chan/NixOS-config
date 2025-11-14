@@ -17,7 +17,7 @@ in
   };
   config = mkIf cfg.enable {
     nixpkgs.overlays = [
-      inputs.nix-vscode-extensions.overlays.default
+      inputs.nix4vscode.overlays.default
     ];
     home-manager.users.${username} = {
       programs.vscode = {
@@ -27,14 +27,14 @@ in
         profiles.default = {
           enableUpdateCheck = false;
           enableExtensionUpdateCheck = false;
-          extensions = with (pkgs.forVSCodeVersion "${pkgs.vscodium.version}").open-vsx; [
-            jnoortheen.nix-ide
-            rust-lang.rust-analyzer
-            detachhead.basedpyright
-            mads-hartmann.bash-ide-vscode
-            monokai.theme-monokai-pro-vscode
-            arrterian.nix-env-selector
-            dart-code.dart-code
+          extensions = pkgs.nix4vscode.forOpenVsxVersion "${pkgs.vscodium.version}" [
+            "jnoortheen.nix-ide"
+            "rust-lang.rust-analyzer"
+            "detachhead.basedpyright"
+            "mads-hartmann.bash-ide-vscode"
+            "monokai.theme-monokai-pro-vscode"
+            "arrterian.nix-env-selector"
+            "dart-code.dart-code"
           ];
           userSettings = {
             "telemetry.telemetryLevel" = "off";
