@@ -15,6 +15,7 @@ in
     swaybg # Wallpaper Tool
     sshfs # Remote filesystems over SSH
     wl-clipboard # Clipboard Manager
+    rquickshare # Quick Share client
 
     # Communication Clients
     vesktop # Third-party Discord

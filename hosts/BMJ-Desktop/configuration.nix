@@ -47,19 +47,31 @@
         hlsPartDuration = "1ms";
         hlsSegmentMaxSize = "10M";
         paths = {
-          stream = {};
+          stream = { };
         };
       };
     };
   };
 
-  systemd.services.sshd.wantedBy = lib.mkForce [];
-  systemd.services.tailscaled.wantedBy = lib.mkForce [];
-  systemd.services.mediamtx.wantedBy = lib.mkForce [];
+  systemd.services.sshd.wantedBy = lib.mkForce [ ];
+  systemd.services.tailscaled.wantedBy = lib.mkForce [ ];
 
   networking.firewall = {
-    allowedTCPPorts = [ 21412 8888 8890 8554 25565 ];
-    allowedUDPPorts = [ 21412 8888 8890 8554 25565 ];
+    allowedTCPPorts = [
+      21412
+      8888
+      8890
+      8554
+      25565
+      45555 # Quickshare
+    ];
+    allowedUDPPorts = [
+      21412
+      8888
+      8890
+      8554
+      25565
+    ];
   };
 
   # Git
