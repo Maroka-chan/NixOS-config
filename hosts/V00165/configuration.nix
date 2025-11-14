@@ -47,8 +47,15 @@
       enable = true;
       openFirewall = true;
     };
+    printing.enable = true;
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
+    };
   };
 
+  systemd.services.cups.wantedBy = lib.mkForce [ ];
   systemd.services.sshd.wantedBy = lib.mkForce [ ];
 
   # Git
@@ -73,7 +80,6 @@
     53
     67
     68
-    5353
   ];
 
   services.udev.extraRules = ''
