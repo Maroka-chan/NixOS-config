@@ -1,16 +1,34 @@
-{ config, lib, pkgs, ... }:
 {
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+let
+  kernelPackages = pkgs.linuxKernel.packages.linux_zen;
+in
+{
+  boot.initrd.availableKernelModules = [
+    "nvme"
+    "xhci_pci"
+    "ahci"
+    "usb_storage"
+    "usbhid"
+    "sd_mod"
+  ];
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
+  boot.kernelModules = [
+    "kvm-amd"
+    "ryzen-smu"
+  ];
+  boot.extraModulePackages = [ kernelPackages.ryzen-smu ];
+  boot.kernelPackages = kernelPackages;
 
   boot.plymouth = {
     enable = true;
     themePackages = [ pkgs.mikuboot ];
     theme = "mikuboot";
   };
-
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
