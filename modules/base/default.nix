@@ -2,13 +2,14 @@
   config,
   pkgs,
   username,
+  lib,
   ...
 }:
 {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
   hardware.enableAllFirmware = true;
 
   # Fixes logitech scrollwheel when wireless
