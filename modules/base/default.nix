@@ -59,7 +59,7 @@
   environment.systemPackages = with pkgs; [
     zip
     unzip
-    (btop.override { rocmSupport = true; })
+    btop
     spice-vdagent
   ];
 
