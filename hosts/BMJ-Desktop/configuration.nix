@@ -45,16 +45,10 @@
       enable = true;
       acceleration = "rocm";
     };
-    mediamtx = {
+    avahi = {
       enable = true;
-      settings = {
-        hlsSegmentDuration = "0.01s";
-        hlsPartDuration = "1ms";
-        hlsSegmentMaxSize = "10M";
-        paths = {
-          stream = { };
-        };
-      };
+      nssmdns4 = true;
+      openFirewall = true;
     };
   };
 
@@ -63,18 +57,10 @@
 
   networking.firewall = {
     allowedTCPPorts = [
-      21412
-      8888
-      8890
-      8554
       25565
       45555 # Quickshare
     ];
     allowedUDPPorts = [
-      21412
-      8888
-      8890
-      8554
       25565
     ];
   };
