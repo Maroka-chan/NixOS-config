@@ -1,12 +1,17 @@
-{ lib, pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 {
   imports = [
     ./mediamanager
     ./jellyfin
-    ./tailscale
+    #./tailscale
     ./samba
     ./restic
     ./home-assistant.nix
-    ./yuttari
+    #./yuttari
   ];
 }
