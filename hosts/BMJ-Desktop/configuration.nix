@@ -1,4 +1,9 @@
-{ username, lib, ... }:
+{
+  username,
+  lib,
+  pkgs,
+  ...
+}:
 {
   imports = [
     ./hardware-configuration.nix
@@ -80,8 +85,12 @@
   ### Programs ###
   # VPN
   configured.programs.mullvad.enable = true;
+
   # Games
-  programs.steam.enable = true;
+  programs.steam = {
+    enable = true;
+    extraCompatPackages = with pkgs; [ proton-ge-bin ];
+  };
 
   # Editors
   configured.programs.neovim = {
