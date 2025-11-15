@@ -8,7 +8,7 @@
   gtk3,
   mpv,
   libappindicator,
-  libcef,
+  cef-binary,
   makeWrapper,
   nodejs,
   # fetchurl,
@@ -19,15 +19,13 @@ let
   # Copied from https://github.com/NixOS/nixpkgs/pull/428206 because im lazy
   cef-path = stdenv.mkDerivation {
     pname = "cef-path";
-    version = libcef.version;
+    version = cef-binary.version;
     dontUnpack = true;
     installPhase = ''
       mkdir -p "$out"
-      find ${libcef}/lib -type f -name "*" -exec cp {} $out/ \;
-      find ${libcef}/libexec -type f -name "*" -exec cp {} $out/ \;
-      cp -r ${libcef}/share/cef/* $out/
-      mkdir -p "$out/include"
-      cp -r ${libcef}/include/* "$out/include/"
+      cp -r ${cef-binary}/Release/* $out
+      cp -r ${cef-binary}/Resources/* $out
+      cp -r ${cef-binary}/include $out
     '';
     postFixup = ''
       strip $out/*.so*
@@ -70,7 +68,7 @@ rustPlatform.buildRustPackage (finalAttrs: {
     openssl
     gtk3
     mpv
-    libcef
+    cef-binary
   ];
 
   nativeBuildInputs = [
