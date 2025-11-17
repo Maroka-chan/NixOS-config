@@ -52,6 +52,15 @@
     };
   };
 
+  virtualisation = {
+    containers.enable = true;
+    podman = {
+      enable = true;
+      dockerCompat = true;
+      defaultNetwork.settings.dns_enabled = true;
+    };
+  };
+
   systemd.services.sshd.wantedBy = lib.mkForce [ ];
   systemd.services.tailscaled.wantedBy = lib.mkForce [ ];
 
