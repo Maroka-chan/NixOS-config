@@ -1,10 +1,24 @@
-{ inputs, pkgs, lib, config, ... }:
+{
+  inputs,
+  pkgs,
+  lib,
+  config,
+  username,
+  ...
+}:
 let
   module_name = "neovim";
   cfg = config.configured.programs."${module_name}";
-  inherit (lib) mkEnableOption mkOverride mkOption mkIf;
+  inherit (lib)
+    mkEnableOption
+    mkOverride
+    mkMerge
+    mkOption
+    mkIf
+    ;
   inherit (lib.types) bool;
-in {
+in
+{
   options.configured.programs."${module_name}" = {
     enable = mkEnableOption "Enable Neovim";
 
@@ -33,16 +47,23 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
-    environment.systemPackages = [
-      inputs.neovim.packages.${pkgs.system}.default
-    ];
+  config = mkMerge [
+    (mkIf cfg.enable {
+      environment.systemPackages = [
+        inputs.neovim.packages.${pkgs.system}.default
+      ];
 
-    environment.variables.EDITOR = mkIf cfg.defaultEditor (mkOverride 900 "nvim");
+      environment.variables.EDITOR = mkIf cfg.defaultEditor (mkOverride 900 "nvim");
 
-    environment.shellAliases = {
-      vi = mkIf cfg.viAlias "nvim";
-      vim = mkIf cfg.vimAlias "nvim";
-    };
-  };
+      environment.shellAliases = {
+        vi = mkIf cfg.viAlias "nvim";
+        vim = mkIf cfg.vimAlias "nvim";
+      };
+    })
+    (mkIf config.impermanence.enable {
+      home-manager.users.${username}.home.persistence."/persist/home/${username}".files = [
+        ".config/github-copilot/apps.json"
+      ];
+    })
+  ];
 }
