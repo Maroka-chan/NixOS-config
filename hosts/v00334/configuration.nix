@@ -8,6 +8,7 @@
   imports = [
     ./hardware-configuration.nix
     ../../modules/disko/btrfs_luks_impermanence.nix
+    ../../modules/hardware/gpu/intel.nix
   ];
 
   impermanence.enable = true;

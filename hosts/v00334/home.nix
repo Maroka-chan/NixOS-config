@@ -6,7 +6,7 @@ in
   home = { inherit username homeDirectory; };
 
   home.packages = with pkgs; [
-    swaybg    # Wallpaper Tool
+    swaybg # Wallpaper Tool
     slack
 
     wl-clipboard
@@ -38,6 +38,7 @@ in
       ".local/state/nvim/swap"
       ".local/state/nvim/shada"
       ".cache/flashing-station-rs"
+      ".config/Slack"
     ];
   };
 }
