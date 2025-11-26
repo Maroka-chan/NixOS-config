@@ -201,6 +201,7 @@ mkMerge [
       allowOther = true;
       files = [
         ".pam-gnupg"
+        ".config/nix/nix.conf"
       ];
       directories = [
         "Downloads"
