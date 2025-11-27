@@ -88,7 +88,7 @@
   };
 
   # Editors
-  configured.programs.neovim = {
+  programs.neovim-monica = {
     enable = true;
     defaultEditor = true;
     viAlias = true;

@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   pkgs,
   username,
@@ -101,11 +102,13 @@
   programs.git.config.user.signingkey = "248853075BFB7C0E";
 
   # Editor
-  configured.programs.neovim = {
+  programs.neovim-monica = {
     enable = true;
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
+    colorschemePackage = pkgs.vimPlugins.tokyonight-nvim;
+    colorschemeName = "tokyonight-day";
   };
 
   # Power Management

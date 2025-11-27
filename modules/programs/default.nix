@@ -1,20 +1,18 @@
 { ... }:
 {
   imports = [
-   ./mullvad.nix
-   ./librewolf.nix
-   ./firefox
-   ./rofi.nix
-   ./zsh.nix
-   ./thunderbird.nix
-   ./thunar.nix
-   ./pipewire.nix
-   ./hoyoplay.nix
-   ./stremio.nix
-   ./neovim.nix
-   ./yazi.nix
-   ./vscode.nix
-   ./vscodium.nix
+    ./mullvad.nix
+    ./librewolf.nix
+    ./firefox
+    ./rofi.nix
+    ./zsh.nix
+    ./thunderbird.nix
+    ./thunar.nix
+    ./pipewire.nix
+    ./hoyoplay.nix
+    ./stremio.nix
+    ./yazi.nix
+    ./vscode.nix
+    ./vscodium.nix
   ];
 }
-

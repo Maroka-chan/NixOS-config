@@ -90,7 +90,7 @@
   programs.steam.enable = true;
 
   # Editor
-  configured.programs.neovim = {
+  programs.neovim-monica = {
     enable = true;
     defaultEditor = true;
     viAlias = true;

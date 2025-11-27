@@ -54,14 +54,6 @@ in
         {
           programs.firefox = {
             enable = true;
-            package =
-              let
-                firefox-stable = import inputs.nixpkgs {
-                  system = pkgs.stdenv.hostPlatform.system;
-                  config = config.nixpkgs.config;
-                };
-              in
-              firefox-stable.firefox;
 
             profiles.profile_0 = {
               id = 0;

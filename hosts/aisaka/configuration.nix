@@ -1,4 +1,9 @@
-{ config, pkgs, username, ... }:
+{
+  config,
+  pkgs,
+  username,
+  ...
+}:
 {
   imports = [
     ./hardware-configuration.nix
@@ -32,7 +37,7 @@
   programs.git.config.user.signingkey = "D86778C9EE6F81D3";
 
   # Editor
-  configured.programs.neovim = {
+  programs.neovim-monica = {
     enable = true;
     defaultEditor = true;
     viAlias = true;

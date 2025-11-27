@@ -67,7 +67,7 @@
   configured.programs.firefox.maxSearchResults = 10;
 
   # Editors
-  configured.programs.neovim = {
+  programs.neovim-monica = {
     enable = true;
     defaultEditor = true;
     viAlias = true;

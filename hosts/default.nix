@@ -7,6 +7,7 @@ let
     disko.nixosModules.disko
     home-manager.nixosModules.default
     hyprland.nixosModules.default
+    neovim.nixosModules.default
     nur.modules.nixos.default
     mikuboot.nixosModules.default
     nix-index-database.nixosModules.nix-index

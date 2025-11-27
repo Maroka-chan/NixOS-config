@@ -32,6 +32,7 @@ in
       ".cache/gitstatus/gitstatusd-linux-x86_64"
       ".config/btop/btop.conf"
       ".local/share/nvim/telescope_history"
+      ".config/github-copilot/apps.json"
     ];
     directories = [
       ".local/share/direnv/allow"
