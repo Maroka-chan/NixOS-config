@@ -107,8 +107,6 @@
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
-    colorschemePackage = pkgs.vimPlugins.tokyonight-nvim;
-    colorschemeName = "tokyonight-day";
   };
 
   # Power Management
