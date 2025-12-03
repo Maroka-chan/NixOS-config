@@ -59,3 +59,16 @@
 #tabbrowser-tabs .tabbrowser-tab:is([soundplaying]) .tab-background {
   background-color: var(--red);
 }
+
+#urlbar-container {
+  position: relative;
+  right: 0;
+  transition: width 0.35s;
+}
+
+#urlbar-container:hover {
+  width: calc(var(--urlbar-container-min-width) * 2 + 2 * (24px + 2 * var(--toolbarbutton-inner-padding))) !important;
+}
+#urlbar-container:focus-within {
+  width: calc(var(--urlbar-container-min-width) * 2 + 2 * (24px + 2 * var(--toolbarbutton-inner-padding))) !important;
+}
