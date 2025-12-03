@@ -28,23 +28,24 @@
 .tab-secondary-label,
 #urlbar .search-one-offs:not([hidden]),
 #alltabs-button,
-#back-button, #forward-button,
+#back-button,
+#forward-button,
 #stop-reload-button,
-#reader-mode-button, #star-button-box,
+#reader-mode-button,
+#star-button-box,
 #tracking-protection-icon-container,
 #picture-in-picture-button,
-#unified-extensions-button,
 #customizableui-special-spring1,
 #customizableui-special-spring2,
 #toolbar-menubar {
   display: none !important;
 }
 
-#identity-box.localResource,
+/* #identity-box.localResource,
 #PanelUI-button {
   visibility: hidden;
   max-width: 5px;
-}
+} */
 
 #TabsToolbar {
   align-items: center;
