@@ -30,6 +30,13 @@ mkMerge [
         icon = ./. + "/protonmail.ico";
         exec = "${pkgs.brave}/bin/brave --user-data-dir=${homeDirectory}/.config/chromium-mail --app=https://mail.proton.me";
       })
+
+      (makeDesktopItem {
+        name = "Linear";
+        desktopName = "Linear";
+        icon = ./. + "/linear.svg";
+        exec = "${pkgs.brave}/bin/brave --user-data-dir=${homeDirectory}/.config/chromium-linear --app=https://linear.app";
+      })
     ];
 
     # Terminal Emulator
