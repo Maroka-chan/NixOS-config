@@ -24,6 +24,10 @@ in
       type = types.str;
       default = "";
     };
+    avatarHash = mkOption {
+      type = types.str;
+      default = lib.fakeHash;
+    };
     wallpaper = mkOption {
       type = types.path;
       default = ../../../dotfiles/wallpapers/miku_nakano.png;
@@ -81,7 +85,7 @@ in
 
       home-manager.extraSpecialArgs = {
         useImpermanence = config.impermanence.enable;
-        inherit (cfg) extraConfig wallpaper;
+        inherit (cfg) extraConfig wallpaper avatarHash;
       };
       home-manager.users.${username} = {
         imports = [

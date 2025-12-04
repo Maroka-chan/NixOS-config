@@ -1,10 +1,12 @@
 {
+  config,
   pkgs,
   lib,
   username,
   useImpermanence,
   extraConfig,
   wallpaper,
+  avatarHash,
   ...
 }:
 let
@@ -181,7 +183,12 @@ mkMerge [
         dock.enabled = false;
         colorSchemes.predefinedScheme = "Monochrome";
         general = {
-          #avatarImage = "/home/drfoobar/.face";
+          avatarImage = lib.mkIf (lib.hasAttrByPath [ "user" "name" ] config.programs.git.settings) (
+            pkgs.lib.fetchGHUrl {
+              gh_username = config.programs.git.settings.user.name;
+              hash = avatarHash;
+            }
+          );
           #radiusRatio = 0.2;
           dimDesktop = false;
           enableShadows = false;

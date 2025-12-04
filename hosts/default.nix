@@ -70,6 +70,21 @@ let
             { lib, ... }:
             {
               imports = [ ./${name}/configuration.nix ];
+              nixpkgs.overlays = [
+                (final: prev: {
+                  lib = prev.lib // {
+                    fetchGHUrl = import ../lib/fetchGHUrl.nix {
+                      inherit (final)
+                        lib
+                        runCommand
+                        jq
+                        curl
+                        cacert
+                        ;
+                    };
+                  };
+                })
+              ];
               networking.hostName = name;
               impermanence.enable = lib.mkIf useImpermanence true;
               users.mutableUsers = lib.mkDefault false;
