@@ -25,7 +25,7 @@ in
     # Creative Tools
     inkscape
     gimp3-with-plugins
-    davinci-resolve
+    #davinci-resolve
     blender-hip
 
     # Machine Learning
