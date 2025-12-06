@@ -3,7 +3,6 @@
   lib,
   config,
   username,
-  inputs,
   ...
 }:
 let

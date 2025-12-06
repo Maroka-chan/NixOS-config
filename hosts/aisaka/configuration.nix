@@ -13,9 +13,22 @@
   impermanence.enable = true;
   filesystem.btrfs.enable = true;
 
+  virtualisation = {
+    containers.enable = true;
+    podman = {
+      enable = true;
+      dockerCompat = true;
+      defaultNetwork.settings.dns_enabled = true; # Required for containers under podman-compose to be able to talk to each other.
+    };
+  };
+
   # Users
   age.secrets.maroka-password.file = ../../secrets/maroka-password.age;
   users.users.maroka.hashedPasswordFile = config.age.secrets.maroka-password.path;
+  users.users.maroka.extraGroups = [
+    "podman"
+  ];
+
 
   # Home Manager
   home-manager.users.maroka = {
@@ -25,12 +38,13 @@
   };
 
   # Desktop Environment
-  desktops.hyprland.enable = true;
-  desktops.hyprland.extraConfig = ''
-    monitor=,preferred,auto,1
-
-    exec-once = swaybg -i ${../../dotfiles/wallpapers/makima.png} -m fill
-    exec-once = ags run --gtk 3
+  desktops.niri.enable = true;
+  desktops.niri.extraConfig = ''
+    output "DP-3" {
+        mode "1920x1200@60.00"
+        scale 1
+        transform "normal"
+    }
   '';
 
   # Git
