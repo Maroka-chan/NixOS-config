@@ -74,6 +74,9 @@
     vimAlias = true;
   };
 
+  # cnping
+  programs.cnping.enable = true;
+
   configured.programs.vscode.enable = true;
 
   networking.firewall.allowedUDPPorts = [
