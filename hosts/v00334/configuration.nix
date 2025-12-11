@@ -48,6 +48,7 @@
 
   # Desktop Environment
   desktops.niri.enable = true;
+  desktops.niri.avatarHash = "sha256-gr/MY41IW26UD48sAjR778ST6LvhnZhgwKRUV8csCCY=";
   desktops.niri.extraConfig = ''
     output "DP-3" {
         mode "3840x2160@60.0"

@@ -5,19 +5,18 @@
   username,
   inputs,
   ...
-}:
-let
+}: let
   module_name = "niri";
   cfg = config.desktops."${module_name}";
-  inherit (lib)
+  inherit
+    (lib)
     mkIf
     mkMerge
     mkOption
     mkEnableOption
     types
     ;
-in
-{
+in {
   options.desktops."${module_name}" = {
     enable = mkEnableOption "Enable the Niri Wayland Compositor";
     extraConfig = mkOption {
@@ -104,15 +103,15 @@ in
         ];
         config = {
           common = {
-            default = [ "gtk" ];
+            default = ["gtk"];
           };
           niri = {
             default = [
               "gtk"
               "gnome"
             ];
-            "org.freedesktop.impl.portal.ScreenCast" = [ "gnome" ];
-            "org.freedesktop.impl.portal.Screenshot" = [ "gnome" ];
+            "org.freedesktop.impl.portal.ScreenCast" = ["gnome"];
+            "org.freedesktop.impl.portal.Screenshot" = ["gnome"];
           };
         };
       };

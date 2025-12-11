@@ -277,7 +277,7 @@ spawn-at-startup "noctalia-shell"
 // To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
 // spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
 
-spawn-sh-at-startup "${pkgs.swaybg} -i ${wallpaper} -m fill"
+// spawn-sh-at-startup "${pkgs.swaybg} -i ${wallpaper} -m fill"
 
 hotkey-overlay {
     // Uncomment this line to disable the "Important Hotkeys" pop-up at startup.
@@ -377,6 +377,7 @@ binds {
     Mod+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "noctalia-shell" "ipc" "call" "lockScreen" "lock"; }
     Mod+S hotkey-overlay-title="Noctalia Control Center" { spawn "noctalia-shell" "ipc" "call" "controlCenter" "toggle"; }
     Mod+Ctrl+S hotkey-overlay-title="Noctalia Settings" { spawn "noctalia-shell" "ipc" "call" "settings" "toggle"; }
+    Mod+W hotkey-overlay-title="Wallpaper Manager" { spawn "noctalia-shell" "ipc" "call" "wallpaper" "toggle"; }
 
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
