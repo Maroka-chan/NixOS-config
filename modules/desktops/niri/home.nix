@@ -228,6 +228,7 @@ mkMerge [
         ".local/state/wireplumber"
         ".local/share/password-store"
         ".config/chromium-mail"
+        ".config/chromium-linear"
       ];
     };
   })
