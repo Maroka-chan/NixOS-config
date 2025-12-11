@@ -25,7 +25,7 @@ input {
         repeat-rate 25
 
         // Enable numlock on startup, omitting this setting disables it.
-        numlock
+        // numlock
     }
 
     // Next sections include libinput settings.
@@ -374,10 +374,9 @@ binds {
     // Noctalia Binds
     Mod+D hotkey-overlay-title="Application Launcher" { spawn "noctalia-shell" "ipc" "call" "launcher" "toggle"; }
     Mod+P hotkey-overlay-title="Power Menu" { spawn "noctalia-shell" "ipc" "call" "sessionMenu" "toggle"; }
-    Mod+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "noctalia-shell" "ipc" "call" "lockScreen" "toggle"; }
+    Mod+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "noctalia-shell" "ipc" "call" "lockScreen" "lock"; }
     Mod+S hotkey-overlay-title="Noctalia Control Center" { spawn "noctalia-shell" "ipc" "call" "controlCenter" "toggle"; }
     Mod+Ctrl+S hotkey-overlay-title="Noctalia Settings" { spawn "noctalia-shell" "ipc" "call" "settings" "toggle"; }
-    Mod+W hotkey-overlay-title="Wallpaper Manager" { spawn "noctalia-shell" "ipc" "call" "wallpaper" "toggle"; }
 
 
     // Use spawn-sh to run a shell command. Do this if you need pipes, multiple commands, etc.
