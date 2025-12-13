@@ -70,6 +70,7 @@
   #  exec-once = ags run --gtk 3
   #'';
   desktops.niri.enable = true;
+  desktops.niri.avatarHash = "sha256-gr/MY41IW26UD48sAjR778ST6LvhnZhgwKRUV8csCCY=";
   desktops.niri.extraConfig = ''
     output "DP-3" {
         mode "2560x1440@239.970"
