@@ -43,7 +43,6 @@
     };
     ollama = {
       enable = true;
-      acceleration = "rocm";
     };
     avahi = {
       enable = true;

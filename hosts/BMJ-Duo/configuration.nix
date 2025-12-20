@@ -60,7 +60,6 @@
 
     ollama = {
       enable = true;
-      acceleration = "rocm";
     };
   };
 
