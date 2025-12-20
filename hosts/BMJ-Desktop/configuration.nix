@@ -3,8 +3,7 @@
   lib,
   pkgs,
   ...
-}:
-{
+}: {
   imports = [
     ./hardware-configuration.nix
     ../../modules/disko/btrfs.nix
@@ -18,7 +17,7 @@
   users.mutableUsers = true;
   users.users.${username}.initialPassword = "test123";
 
-  nix.settings.trusted-users = [ "${username}" ];
+  nix.settings.trusted-users = ["${username}"];
 
   # Home Manager
   home-manager.users.${username} = {
@@ -43,6 +42,7 @@
     };
     ollama = {
       enable = true;
+      package = pkgs.ollama-rocm;
     };
     avahi = {
       enable = true;
@@ -60,8 +60,8 @@
     };
   };
 
-  systemd.services.sshd.wantedBy = lib.mkForce [ ];
-  systemd.services.tailscaled.wantedBy = lib.mkForce [ ];
+  systemd.services.sshd.wantedBy = lib.mkForce [];
+  systemd.services.tailscaled.wantedBy = lib.mkForce [];
 
   networking.firewall = {
     allowedTCPPorts = [
@@ -83,7 +83,7 @@
   # Games
   programs.steam = {
     enable = true;
-    extraCompatPackages = with pkgs; [ proton-ge-bin ];
+    extraCompatPackages = with pkgs; [proton-ge-bin];
   };
 
   # Editors

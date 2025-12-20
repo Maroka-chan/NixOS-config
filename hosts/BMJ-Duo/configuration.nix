@@ -4,8 +4,7 @@
   pkgs,
   inputs,
   ...
-}:
-{
+}: {
   imports = [
     ./hardware-configuration.nix
     ../../modules/disko/btrfs.nix
@@ -20,7 +19,7 @@
   users.mutableUsers = true;
   users.users.${username}.initialPassword = "password";
 
-  nix.settings.trusted-users = [ "${username}" ];
+  nix.settings.trusted-users = ["${username}"];
 
   # Home Manager
   home-manager.users.${username} = {
@@ -60,14 +59,15 @@
 
     ollama = {
       enable = true;
+      package = pkgs.ollama-rocm;
     };
   };
 
-  systemd.services.tailscaled.wantedBy = lib.mkForce [ ];
+  systemd.services.tailscaled.wantedBy = lib.mkForce [];
 
   networking.firewall = {
-    allowedTCPPorts = [ ];
-    allowedUDPPorts = [ ];
+    allowedTCPPorts = [];
+    allowedUDPPorts = [];
   };
 
   # Git

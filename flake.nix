@@ -1,44 +1,41 @@
 {
-  outputs =
-    inputs@{
-      self,
-      nixpkgs,
-      deploy-rs,
-      ...
-    }:
-    {
-      nixosConfigurations = import ./hosts inputs;
-      #homeConfigurations = {
-      #  "maroka@kanan" = inputs.home-manager.lib.homeManagerConfiguration {
-      #    pkgs = nixpkgs.legacyPackages.x86_64-linux;
-      #    extraSpecialArgs = { inherit inputs; username = "maroka"; };
-      #    modules = [
-      #      (self.nixosConfigurations.kanan.config.home-manager)
-      #    ];
-      #  };
-      #};
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    deploy-rs,
+    ...
+  }: {
+    nixosConfigurations = import ./hosts inputs;
+    #homeConfigurations = {
+    #  "maroka@kanan" = inputs.home-manager.lib.homeManagerConfiguration {
+    #    pkgs = nixpkgs.legacyPackages.x86_64-linux;
+    #    extraSpecialArgs = { inherit inputs; username = "maroka"; };
+    #    modules = [
+    #      (self.nixosConfigurations.kanan.config.home-manager)
+    #    ];
+    #  };
+    #};
 
-      deploy.nodes.akebi = {
-        hostname = "akebi";
-        remoteBuild = false;
-        profiles.system = {
-          user = "root";
-          sshUser = "deploy";
-          path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.akebi;
-        };
+    deploy.nodes.akebi = {
+      hostname = "akebi";
+      remoteBuild = false;
+      profiles.system = {
+        user = "root";
+        sshUser = "deploy";
+        path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.akebi;
       };
-
-      # This is highly advised, and will prevent many possible mistakes
-      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
-
-      devShells.x86_64-linux.default =
-        let
-          pkgs = nixpkgs.legacyPackages.x86_64-linux;
-        in
-        pkgs.mkShell {
-          packages = [ pkgs.deploy-rs ];
-        };
     };
+
+    # This is highly advised, and will prevent many possible mistakes
+    checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
+
+    devShells.x86_64-linux.default = let
+      pkgs = nixpkgs.legacyPackages.x86_64-linux;
+    in
+      pkgs.mkShell {
+        packages = [pkgs.deploy-rs];
+      };
+  };
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
