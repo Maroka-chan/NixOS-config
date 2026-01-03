@@ -1,14 +1,11 @@
 {
   pkgs,
-  lib,
   username,
   ...
-}:
-let
+}: let
   homeDirectory = "/home/${username}";
-in
-{
-  home = { inherit username homeDirectory; };
+in {
+  home = {inherit username homeDirectory;};
 
   home.packages = with pkgs; [
     # Tools
@@ -48,6 +45,12 @@ in
       nix-direnv.enable = true;
       silent = true;
     };
-    obs-studio.enable = true;
+    obs-studio = {
+      enable = true;
+      plugins = with pkgs.obs-studio-plugins; [
+        obs-pipewire-audio-capture
+        obs-vkcapture
+      ];
+    };
   };
 }
