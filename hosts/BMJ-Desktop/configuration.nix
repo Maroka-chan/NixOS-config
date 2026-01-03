@@ -67,9 +67,11 @@
     allowedTCPPorts = [
       25565
       45555 # Quickshare
+      8890 # SRT streaming
     ];
     allowedUDPPorts = [
       25565
+      8890 # SRT streaming
     ];
   };
 
