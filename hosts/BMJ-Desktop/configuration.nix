@@ -49,6 +49,9 @@
       nssmdns4 = true;
       openFirewall = true;
     };
+    udev.packages = with pkgs; [
+      platformio-core.udev
+    ];
   };
 
   virtualisation = {
