@@ -1,6 +1,10 @@
-{ lib, config, username, ... }:
-with lib;
-let
+{
+  lib,
+  config,
+  username,
+  ...
+}:
+with lib; let
   module_name = "thunderbird";
   cfg = config.configured.programs."${module_name}";
 in {
@@ -25,7 +29,7 @@ in {
     })
     (mkIf config.impermanence.enable {
       home-manager.users.${username}.home.persistence
-      ."/persist/home/${username}".directories = [
+      ."/persist".directories = [
         ".thunderbird"
       ];
     })

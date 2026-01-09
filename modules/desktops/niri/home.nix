@@ -206,8 +206,7 @@ in
     }
 
     (mkIf useImpermanence {
-      home.persistence."/persist${homeDirectory}" = {
-        allowOther = true;
+      home.persistence."/persist" = {
         files = [
           ".pam-gnupg"
           ".config/nix/nix.conf"

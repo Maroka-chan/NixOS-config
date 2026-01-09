@@ -1,6 +1,11 @@
-{ pkgs, lib, config, username, ... }:
-with lib;
-let
+{
+  pkgs,
+  lib,
+  config,
+  username,
+  ...
+}:
+with lib; let
   module_name = "mullvad";
   cfg = config.configured.programs."${module_name}";
 in {
@@ -22,10 +27,9 @@ in {
         ];
       };
       home-manager.users.${username}.home.persistence
-      ."/persist/home/${username}".files = [
+      ."/persist".files = [
         ".config/Mullvad VPN/gui_settings.json"
       ];
     })
   ];
 }
-

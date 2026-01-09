@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   home.packages = with pkgs; [
     swaybg # Wallpaper Tool
 
@@ -20,7 +19,7 @@
   };
 
   # Home Manager Persistence
-  home.persistence."/persist/home/maroka" = {
+  home.persistence."/persist" = {
     files = [
       ".p10k.zsh"
       ".cache/gitstatus/gitstatusd-linux-x86_64"

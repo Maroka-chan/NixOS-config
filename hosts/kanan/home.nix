@@ -3,12 +3,10 @@
   inputs,
   username,
   ...
-}:
-let
+}: let
   homeDirectory = "/home/${username}";
-in
-{
-  home = { inherit username homeDirectory; };
+in {
+  home = {inherit username homeDirectory;};
 
   home.packages = with pkgs; [
     swaybg # Wallpaper Tool
@@ -45,7 +43,7 @@ in
   };
 
   # Home Manager Persistence
-  home.persistence."/persist${homeDirectory}" = {
+  home.persistence."/persist" = {
     files = [
       ".cache/gitstatus/gitstatusd-linux-x86_64"
       ".config/btop/btop.conf"
@@ -73,5 +71,4 @@ in
       ".cache/yuttari"
     ];
   };
-
 }

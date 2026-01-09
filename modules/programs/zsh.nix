@@ -1,6 +1,11 @@
-{ pkgs, lib, config, username, ... }:
-with lib;
-let
+{
+  pkgs,
+  lib,
+  config,
+  username,
+  ...
+}:
+with lib; let
   module_name = "zsh";
   cfg = config.configured.programs."${module_name}";
 in {
@@ -11,7 +16,7 @@ in {
   config = mkMerge [
     (mkIf cfg.enable {
       programs.zsh.enable = true;
-      environment.pathsToLink = [ "/share/zsh" ]; # Needed for zsh completion for system packages
+      environment.pathsToLink = ["/share/zsh"]; # Needed for zsh completion for system packages
       users.defaultUserShell = pkgs.zsh;
 
       home-manager.users.${username} = {
@@ -41,11 +46,9 @@ in {
     })
     (mkIf config.impermanence.enable {
       home-manager.users.${username}.home.persistence
-      ."/persist/home/${username}".files = [
+      ."/persist".files = [
         ".p10k.zsh"
       ];
     })
   ];
 }
-
-

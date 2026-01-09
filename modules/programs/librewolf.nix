@@ -1,6 +1,10 @@
-{ lib, config, username, ... }:
-with lib;
-let
+{
+  lib,
+  config,
+  username,
+  ...
+}:
+with lib; let
   module_name = "librewolf";
   cfg = config.configured.programs."${module_name}";
 in {
@@ -21,17 +25,16 @@ in {
       };
 
       xdg.mime.defaultApplications = mkIf cfg.defaultBrowser {
-        "text/html"                     = [ "librewolf.desktop" ];
-        "x-scheme-handler/http"         = [ "librewolf.desktop" ];
-        "x-scheme-handler/https"        = [ "librewolf.desktop" ];
+        "text/html" = ["librewolf.desktop"];
+        "x-scheme-handler/http" = ["librewolf.desktop"];
+        "x-scheme-handler/https" = ["librewolf.desktop"];
       };
     })
     (mkIf config.impermanence.enable {
       home-manager.users.${username}.home.persistence
-        ."/persist/home/${username}".directories = [
-          ".librewolf"
-        ];
+        ."/persist".directories = [
+        ".librewolf"
+      ];
     })
   ];
 }
-
