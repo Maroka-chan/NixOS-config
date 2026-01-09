@@ -64,10 +64,7 @@ in {
       ".local/share/PrismLauncher"
       ".dart-tool"
       ".pub-cache"
-      {
-        directory = ".local/share/Steam";
-        method = "symlink";
-      }
+      ".local/share/Steam"
       ".cache/yuttari"
     ];
   };

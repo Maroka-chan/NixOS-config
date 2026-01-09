@@ -18,7 +18,7 @@ in {
       environment.systemPackages = [(pkgs.callPackage ../../pkgs/stremio-linux-shell.nix {})];
     })
     (mkIf config.impermanence.enable {
-      home-manager.users.${username}.home.persistence."/persist".files = [
+      home-manager.users.${username}.home.persistence."/persist".directories = [
         ".local/share/stremio"
         ".stremio-server"
       ];
