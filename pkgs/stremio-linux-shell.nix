@@ -1,122 +1,116 @@
 {
   lib,
-  stdenv,
+  symlinkJoin,
   rustPlatform,
-  fetchFromGitHub,
   openssl,
   pkg-config,
-  gtk3,
   mpv,
-  libappindicator,
-  cef-binary,
   makeWrapper,
   nodejs,
-  # fetchurl,
+  libadwaita,
+  libepoxy,
+  wrapGAppsHook4,
+  cef-binary,
+  libGL,
+  fetchFromGitHub,
+  windowDecor ? false,
   ...
-}:
-let
-  # cef-rs expects a specific directory layout
-  # Copied from https://github.com/NixOS/nixpkgs/pull/428206 because im lazy
-  cef-path = stdenv.mkDerivation {
-    pname = "cef-path";
-    version = cef-binary.version;
-    dontUnpack = true;
-    installPhase = ''
-      mkdir -p "$out"
-      cp -r ${cef-binary}/Release/* $out
-      cp -r ${cef-binary}/Resources/* $out
-      cp -r ${cef-binary}/include $out
-    '';
-    postFixup = ''
-      strip $out/*.so*
-    '';
+}: let
+  # Follow upstream
+  # https://github.com/Stremio/stremio-linux-shell/blob/f2499ad63f28858d913e2776befbcd029900fd5f/flatpak/com.stremio.Stremio.Devel.json#L143
+  cefPinned = cef-binary.override {
+    version = "143.0.9";
+    gitRevision = "e88e818";
+    chromiumVersion = "143.0.7499.40";
+
+    srcHashes = {
+      aarch64-linux = "";
+      x86_64-linux = "sha256-+UBlqf8xuriiqosQia/vUothSpSfkoupwZ1kTCkNlk8=";
+    };
   };
-
-  # NOTE stremio downloads server.js into XDG_DATA_DIR. Packaging it is not required.
-  # I'm patching this because I don't enjoy stremio downloading code at runtime.
-  # This and the postPatch are not needed if you're okay with stremio downloading server.js at runtime
-  # Latest server.js version found at https://www.strem.io/updater/server/check
-  # server = fetchurl rec {
-  #   pname = "stremio-server";
-  #   version = "4.20.11";
-  #   url = "https://dl.strem.io/server/v${version}/desktop/server.js";
-  #   hash = "sha256-2QCwUlusNTGqbOmOGjyKOx0bHaoGmn9vy93qViXx95E=";
-  #   meta.license = lib.licenses.unfree;
-  # };
-
+  # cef-rs expects the files in a specific layout
+  cefPath = symlinkJoin {
+    name = "stremio-cef-target";
+    paths = [
+      "${cefPinned}/Resources"
+      "${cefPinned}/Release"
+    ];
+  };
 in
-rustPlatform.buildRustPackage (finalAttrs: {
-  name = "stremio-linux-shell";
-  version = "1.0.0-beta.11";
+  rustPlatform.buildRustPackage (finalAttrs: {
+    pname = "stremio-linux-shell-rewrite";
+    src = fetchFromGitHub {
+      owner = "Stremio";
+      repo = "stremio-linux-shell";
+      #tag = "v${finalAttrs.version}";
+      #branch = "refactor/gtk4";
+      rev = "73c1e42323292b534b67f168987034812d5aa8b9";
+      fetchSubmodules = false;
+      hash = "sha256-+lB0tfzbENQfwNxaAWhLM3/Es5xdbODdyOxsR7AxnLU=";
+    };
+    version = "0-unstable-${builtins.substring 0 8 finalAttrs.src.rev}";
 
-  src = fetchFromGitHub {
-    owner = "Stremio";
-    repo = "stremio-linux-shell";
-    tag = "v${finalAttrs.version}";
-    hash = "sha256-FNAeur5esDqBoYlmjUO6jdi1eC83ynbLxbjH07QZ++E=";
-  };
+    cargoLock = {
+      lockFile = "${finalAttrs.src}/Cargo.lock";
+      outputHashes = {
+        # cef hash is missing because it's fetched at build time
+        "cef-143.1.0+143.0.10" = "sha256-EStyjg5z3Z4GafN2chbm5TVqZOxYgy3+PbB1ZxgGghg=";
+      };
+    };
 
-  cargoHash = "sha256-9/28BCG51jPnKXbbzzNp7KQLMkLEugFQfwszRR9kmUw=";
-
-  # The build scripts tries to download CEF binaries by default.
-  # Probably overkill since setting CEF_PATH should skip downloading binaries.
-  buildFeatures = [
-    "offline-build"
-  ];
-
-  buildInputs = [
-    openssl
-    gtk3
-    mpv
-    cef-binary
-  ];
-
-  nativeBuildInputs = [
-    makeWrapper
-    pkg-config
-  ];
-
-  #postPatch = ''
-  #  substituteInPlace ./src/config.rs \
-  #    --replace-fail \
-  #      'let file = data_dir.join(SERVER_FILE);' \
-  #      'let file = PathBuf::from(r"${server}");'
-
-  #  substituteInPlace ./src/server.rs \
-  #    --replace-fail \
-  #      'let should_download = self.config.version() != Some(latest_version.clone());' \
-  #      'let should_download = false;'
-  #'';
-
-  postInstall = ''
-    mkdir -p $out/share/applications
-    mkdir -p $out/share/icons/hicolor/scalable/apps
-
-    mv $out/bin/stremio-linux-shell $out/bin/stremio
-    cp $src/data/com.stremio.Stremio.desktop $out/share/applications/com.stremio.Stremio.desktop
-    cp $src/data/icons/com.stremio.Stremio.svg $out/share/icons/hicolor/scalable/apps/com.stremio.Stremio.svg
-
-
-    wrapProgram $out/bin/stremio \
-       --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ libappindicator ]} \
-       --prefix PATH : ${lib.makeBinPath [ nodejs ]}'';
-
-  env.CEF_PATH = cef-path;
-
-  meta = {
-    mainProgram = "stremio";
-    description = "Modern media center that gives you the freedom to watch everything you want";
-    homepage = "https://www.stremio.com/";
-    # (Server-side) 4.x versions of the web UI are closed-source
-    license = with lib.licenses; [
-      gpl3Only
-      # server.js is unfree
-      unfree
+    buildInputs = [
+      libadwaita
+      libepoxy
+      openssl
+      mpv
     ];
-    maintainers = with lib.maintainers; [
-      griffi-gh
-      { name = "nuko"; }
+
+    nativeBuildInputs = [
+      wrapGAppsHook4
+      makeWrapper
+      pkg-config
     ];
-    platforms = lib.platforms.linux;
-  };
-})
+
+    # Don't download CEF during build
+    buildFeatures = ["offline-build"];
+    # use packaged CEF
+    env.CEF_PATH = cefPath;
+
+    postInstall = ''
+      mkdir -p $out/share/applications
+      cp data/com.stremio.Stremio.desktop $out/share/applications/com.stremio.Stremio.desktop
+
+      mkdir -p $out/share/icons/hicolor/scalable/apps
+      cp data/icons/com.stremio.Stremio.svg $out/share/icons/hicolor/scalable/apps/com.stremio.Stremio.svg
+
+      mkdir -p $out/lib/stremio
+      cp data/server.js $out/lib/stremio/server.js
+
+      mv $out/bin/stremio-linux-shell $out/bin/stremio
+    '';
+
+    # Node.js is required to run `server.js`
+    # Add to `gappsWrapperArgs` to avoid two layers of wrapping.
+    preFixup = ''
+      gappsWrapperArgs+=(
+        --prefix LD_LIBRARY_PATH : "/run/opengl-driver/lib" \
+        --prefix LD_LIBRARY_PATH : "${lib.makeLibraryPath [libGL]}" \
+        --prefix PATH : "${lib.makeBinPath [nodejs]}" \
+        --set SERVER_PATH "$out/lib/stremio/server.js" \
+        ${lib.optionalString (!windowDecor) "--add-flags '--no-window-decorations'"}
+      )
+    '';
+
+    meta = {
+      mainProgram = "stremio";
+      description = "Modern media center that gives you the freedom to watch everything you want";
+      homepage = "https://github.com/Stremio/stremio-linux-shell";
+      license = with lib.licenses; [
+        gpl3Only
+        # server.js is unfree
+        unfree
+      ];
+      maintainers = lib.maintainers.fazzi;
+      platforms = lib.platforms.linux;
+    };
+  })
