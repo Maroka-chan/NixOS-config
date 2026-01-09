@@ -3,8 +3,7 @@
   pkgs,
   username,
   ...
-}:
-{
+}: {
   imports = [
     ./hardware-configuration.nix
     ../../modules/disko/btrfs_luks_impermanence.nix
@@ -12,7 +11,7 @@
     ../../modules/input/japanese.nix
   ];
 
-  nix.settings.trusted-users = [ "maroka" ];
+  nix.settings.trusted-users = ["maroka"];
 
   impermanence.enable = true;
   filesystem.btrfs.enable = true;
@@ -35,7 +34,7 @@
 
   boot.plymouth = {
     enable = true;
-    themePackages = [ pkgs.mikuboot ];
+    themePackages = [pkgs.mikuboot];
     theme = "mikuboot";
   };
 

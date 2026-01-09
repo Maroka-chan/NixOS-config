@@ -1,10 +1,10 @@
 {
   config,
   pkgs,
+  lib,
   inputs,
   ...
-}:
-{
+}: {
   imports = [
     ./hardware-configuration.nix
     ./deployment-user.nix
@@ -15,7 +15,7 @@
     inputs.vpn-confinement.nixosModules.default
   ];
 
-  nix.settings.trusted-users = [ "deploy" ];
+  nix.settings.trusted-users = ["deploy"];
   #documentation.nixos.includeAllModules = true;
   #documentation.nixos.extraModules = [inputs.vpn-confinement.nixosModules.default];
 

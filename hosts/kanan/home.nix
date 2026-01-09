@@ -9,22 +9,22 @@ in {
   home = {inherit username homeDirectory;};
 
   home.packages = with pkgs; [
-    swaybg # Wallpaper Tool
+    #swaybg # Wallpaper Tool
 
     osu-lazer-bin
     sshfs # Remote filesystems over SSH
     vesktop # Third-party Discord
 
-    davinci-resolve
-    inkscape
+    #davinci-resolve
+    #inkscape
 
     prismlauncher # Minecraft Launcher
 
     wl-clipboard
 
-    freecad-wayland
-    blender-hip
-    azpainter
+    #freecad-wayland
+    #blender-hip
+    #azpainter
   ];
 
   programs = {

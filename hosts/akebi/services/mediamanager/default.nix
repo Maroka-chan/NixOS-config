@@ -1,5 +1,9 @@
-{ pkgs, config, inputs, ... }:
 {
+  pkgs,
+  config,
+  inputs,
+  ...
+}: {
   age.secrets.transmission-settings.file = ../../../../secrets/transmission-settings.age;
   age.secrets.vpn-wireguard.file = ../../../../secrets/vpn-wireguard.age;
 
@@ -26,7 +30,7 @@
   services.transmission = {
     enable = true;
     group = "media";
-    package = (import inputs.transmission_4_5 { system = pkgs.system; }).transmission_4;
+    package = (import inputs.transmission_4_5 {system = pkgs.system;}).transmission_4;
     credentialsFile = config.age.secrets.transmission-settings.path;
     settings = {
       "download-dir" = "/data/media/downloads";
