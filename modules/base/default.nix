@@ -4,8 +4,7 @@
   username,
   lib,
   ...
-}:
-{
+}: {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -38,7 +37,7 @@
     dhcpcd.extraConfig = "nohook resolv.conf";
   };
   systemd.services.NetworkManager-wait-online.enable = false;
-  users.users.${username}.extraGroups = [ "networkmanager" ];
+  users.users.${username}.extraGroups = ["networkmanager"];
 
   # Firewall
   networking.firewall = {
@@ -83,6 +82,8 @@
       value = "16384";
     }
   ];
+
+  security.polkit.enable = true;
 
   # Configure Disko VM
   services.spice-vdagentd.enable = true;
