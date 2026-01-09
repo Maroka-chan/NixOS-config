@@ -4,8 +4,7 @@
   pkgs,
   username,
   ...
-}:
-{
+}: {
   imports = [
     ./hardware-configuration.nix
     ../../modules/disko/btrfs_luks_impermanence.nix
@@ -28,7 +27,7 @@
   age.secrets.v00334-password.file = ../../secrets/v00334-password.age;
   users.users.${username} = {
     hashedPasswordFile = config.age.secrets."v00334-password".path;
-    extraGroups = [ "podman" ];
+    #extraGroups = [ "podman" ];
   };
 
   # Home Manager
@@ -42,7 +41,7 @@
 
   boot.plymouth = {
     enable = true;
-    themePackages = [ pkgs.mikuboot ];
+    themePackages = [pkgs.mikuboot];
     theme = "mikuboot";
   };
 
@@ -138,6 +137,7 @@
 
     # FTDI
     SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="6011", MODE="0666"
+    SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="6001", MODE="0666"
 
     # Jetson
     SUBSYSTEM=="usb", ATTR{idVendor}=="0955", ATTR{idProduct}="7c18", MODE="0666"

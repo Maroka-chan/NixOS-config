@@ -224,6 +224,7 @@ in
           ".local/share/password-store"
           ".config/chromium-mail"
           ".config/chromium-linear"
+          ".logseq"
         ];
       };
     })
