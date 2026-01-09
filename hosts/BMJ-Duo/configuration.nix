@@ -7,7 +7,7 @@
 }: {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/disko/btrfs.nix
+    ../../modules/disko/btrfs_luks_impermanence.nix
     ../../modules/hardware/gpu/amd.nix
     ../../modules/development/default.nix
     ./niri.nix

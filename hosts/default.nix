@@ -123,7 +123,7 @@ in
     };
     BMJ-Duo = {
       username = "albmj";
-      useImpermanence = false;
+      useImpermanence = true;
     };
     V00165 = {
       username = "albmj";

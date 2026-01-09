@@ -3,12 +3,10 @@
   lib,
   username,
   ...
-}:
-let
+}: let
   homeDirectory = "/home/${username}";
-in
-{
-  home = { inherit username homeDirectory; };
+in {
+  home = {inherit username homeDirectory;};
 
   home.packages = with pkgs; [
     qbittorrent
@@ -27,7 +25,6 @@ in
     # Creative Tools
     inkscape
     gimp3-with-plugins
-    blender-hip
     freecad-qt6
 
     # Machine Learning
