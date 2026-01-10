@@ -3,6 +3,7 @@
   lib,
   pkgs,
   inputs,
+  config,
   ...
 }: {
   imports = [
@@ -16,8 +17,11 @@
 
   filesystem.btrfs.enable = true;
 
-  users.mutableUsers = true;
-  users.users.${username}.initialPassword = "password";
+  users.mutableUsers = false;
+  age.secrets."${username}-password".file = ../../secrets/${username}-password.age;
+  users.users.${username} = {
+    hashedPasswordFile = config.age.secrets."${username}-password".path;
+  };
 
   nix.settings.trusted-users = ["${username}"];
 
