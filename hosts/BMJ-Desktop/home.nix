@@ -23,7 +23,7 @@ in {
     inkscape
     gimp3-with-plugins
     #davinci-resolve
-    blender-hip
+    blender
 
     # Machine Learning
     ollama-rocm # LLM Runner
