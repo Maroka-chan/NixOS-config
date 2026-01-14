@@ -21,6 +21,7 @@
   age.secrets."${username}-password".file = ../../secrets/${username}-password.age;
   users.users.${username} = {
     hashedPasswordFile = config.age.secrets."${username}-password".path;
+    extraGroups = ["wireshark"];
   };
 
   nix.settings.trusted-users = ["${username}"];
@@ -91,6 +92,13 @@
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
+  };
+
+  programs.wireshark = {
+    enable = true;
+    package = pkgs.wireshark-qt;
+    usbmon.enable = true;
+    dumpcap.enable = true;
   };
 
   configured.programs.vscodium = {
