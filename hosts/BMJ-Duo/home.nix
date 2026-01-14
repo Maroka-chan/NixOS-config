@@ -75,6 +75,7 @@ in {
       ".local/share/osu"
       ".local/share/DaVinciResolve"
       ".local/share/PrismLauncher"
+      ".local/share/TelegramDesktop"
       ".dart-tool"
       ".pub-cache"
       ".local/share/Steam"
