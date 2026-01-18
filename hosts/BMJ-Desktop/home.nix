@@ -24,6 +24,7 @@ in {
     gimp3-with-plugins
     #davinci-resolve
     blender
+    godot
 
     # Machine Learning
     ollama-rocm # LLM Runner
