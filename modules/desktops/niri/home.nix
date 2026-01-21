@@ -194,7 +194,6 @@ in
           wallpaper = {
             enabled = true;
             directory = ../../../dotfiles/wallpapers;
-            defaultWallpaper = wallpaper;
           };
           network.wifiEnabled = false;
           notifications.alwaysOnTop = true;
@@ -202,6 +201,12 @@ in
         };
         # this may also be a string or a path to a JSON file,
         # but in this case must include *all* settings.
+      };
+
+      home.file.".cache/noctalia/wallpapers.json" = {
+        text = builtins.toJSON {
+          defaultWallpaper = wallpaper;
+        };
       };
     }
 
