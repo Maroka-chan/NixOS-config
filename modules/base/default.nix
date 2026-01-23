@@ -24,9 +24,9 @@
   # Networking
   services.resolved.enable = true;
   ## Remove fallbackDNS
-  services.resolved.extraConfig = ''
-    FallbackDNS=
-  '';
+  services.resolved.settings.Resolve = {
+    FallbackDNS = "";
+  };
 
   networking = {
     networkmanager.enable = true;
