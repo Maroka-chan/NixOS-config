@@ -57,9 +57,14 @@ in {
       ".cache/gstreamer-1.0/registry.x86_64.bin"
       ".config/btop/btop.conf"
       ".local/share/nvim/telescope_history"
+      ".local/state/comma/choices"
       ".config/vesktop/settings/settings.json"
       ".config/vesktop/settings.json"
       ".config/vesktop/state.json"
+      ".config/kdeconnect/certificate.pem"
+      ".config/kdeconnect/privateKey.pem"
+      ".config/kdeconnect/config"
+      ".config/kdeconnect/trusted_devices"
       ".flutter"
     ];
     directories = [

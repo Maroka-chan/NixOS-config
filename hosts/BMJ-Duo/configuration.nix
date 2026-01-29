@@ -83,8 +83,10 @@
   configured.programs.mullvad.enable = true;
   # Games
   programs.steam.enable = true;
-  # cnping
+
+  # Utils
   programs.cnping.enable = true;
+  programs.kdeconnect.enable = true;
 
   # Editors
   programs.neovim-monica = {
