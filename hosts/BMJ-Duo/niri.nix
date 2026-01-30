@@ -6,7 +6,6 @@
   desktops.niri.extraConfig = ''
     output "eDP-1" {
         scale 2
-        transform "180"
         position x=0 y=0
     }
 
