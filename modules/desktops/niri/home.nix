@@ -24,6 +24,7 @@ in
         imv # Image Viewer
         mpv # Media Player
         sioyek # Document Viewer
+        gpu-screen-recorder # Screen recorder
 
         (makeDesktopItem {
           name = "ProtonMail";
@@ -144,10 +145,21 @@ in
                   useDistroLogo = true;
                 }
                 {
-                  id = "ScreenRecorder";
+                  id = "Tray";
                 }
                 {
-                  id = "Tray";
+                  defaultSettings = {
+                    hideInactive = true;
+                    removeMargins = false;
+                  };
+                  id = "plugin:privacy-indicator";
+                }
+                {
+                  defaultSettings = {
+                    hideInactive = false;
+                    videoSource = "portal";
+                  };
+                  id = "plugin:screen-recorder";
                 }
               ];
               center = [
@@ -158,7 +170,7 @@ in
               ];
               right = [
                 {
-                  id = "WiFi";
+                  id = "Network";
                 }
                 {
                   id = "Bluetooth";
@@ -168,6 +180,11 @@ in
                 }
                 {
                   id = "NotificationHistory";
+                }
+                {
+                  id = "Battery";
+                  displayMode = "alwaysShow";
+                  warningThreshold = 20;
                 }
                 {
                   id = "Clock";
@@ -184,9 +201,10 @@ in
                 hash = avatarHash;
               }
             );
-            #radiusRatio = 0.2;
-            dimDesktop = false;
             enableShadows = false;
+            showChangelogOnStartup = false;
+            telemetryEnabled = false;
+            allowPasswordWithFprintd = true;
           };
           location = {
             name = "Copenhagen, Denmark";
@@ -196,13 +214,31 @@ in
             directory = ../../../dotfiles/wallpapers;
           };
           network.wifiEnabled = false;
-          notifications.alwaysOnTop = true;
           nightLight.enabled = true;
         };
-        # this may also be a string or a path to a JSON file,
-        # but in this case must include *all* settings.
+        plugins = {
+          sources = [
+            {
+              enabled = true;
+              name = "Official Noctalia Plugins";
+              url = "https://github.com/noctalia-dev/noctalia-plugins";
+            }
+          ];
+          states = {
+            privacy-indicator = {
+              enabled = true;
+              sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+            };
+            screen-recorder = {
+              enabled = true;
+              sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+            };
+          };
+        };
       };
 
+      # this may also be a string or a path to a JSON file,
+      # but in this case must include *all* settings.
       home.file.".cache/noctalia/wallpapers.json" = {
         text = builtins.toJSON {
           defaultWallpaper = wallpaper;
