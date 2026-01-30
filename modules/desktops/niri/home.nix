@@ -264,6 +264,8 @@ in
           ".local/share/password-store"
           ".config/chromium-mail"
           ".config/chromium-linear"
+          ".config/noctalia/plugins/screen-recorder"
+          ".config/noctalia/plugins/privacy-indicator"
           ".logseq"
         ];
       };
