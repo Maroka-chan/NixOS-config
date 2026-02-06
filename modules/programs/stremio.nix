@@ -20,7 +20,6 @@ in {
     (mkIf config.impermanence.enable {
       home-manager.users.${username}.home.persistence."/persist".directories = [
         ".local/share/stremio"
-        ".stremio-server"
       ];
     })
   ];
