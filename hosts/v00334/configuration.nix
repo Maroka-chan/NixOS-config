@@ -14,6 +14,8 @@
   impermanence.enable = true;
   filesystem.btrfs.enable = true;
 
+  nix.settings.trusted-users = [username];
+
   virtualisation = {
     containers.enable = true;
     podman = {
@@ -49,10 +51,10 @@
   desktops.niri.enable = true;
   desktops.niri.avatarHash = "sha256-gr/MY41IW26UD48sAjR778ST6LvhnZhgwKRUV8csCCY=";
   desktops.niri.extraConfig = ''
-    output "DP-3" {
-        mode "3840x2160@60.0"
-        scale 1.5
+    output "eDP-1" {
+        mode "1920x1200@60.0"
         transform "normal"
+        scale 1
 
         // Position of the output in the global coordinate space.
         // This affects directional monitor actions like "focus-monitor-left", and cursor movement.
@@ -64,6 +66,26 @@
         // If the position is unset or results in an overlap, the output is instead placed
         // automatically.
         //position x=1280 y=0
+        position x=320 y=1440
+
+    }
+
+    output "DP-3" {
+        mode "3840x2160@60.0"
+        scale 1.5
+        transform "90"
+
+        // Position of the output in the global coordinate space.
+        // This affects directional monitor actions like "focus-monitor-left", and cursor movement.
+        // The cursor can only move between directly adjacent outputs.
+        // Output scale and rotation has to be taken into account for positioning:
+        // outputs are sized in logical, or scaled, pixels.
+        // For example, a 3840×2160 output with scale 2.0 will have a logical size of 1920×1080,
+        // so to put another output directly adjacent to it on the right, set its x to 1920.
+        // If the position is unset or results in an overlap, the output is instead placed
+        // automatically.
+        //position x=1280 y=0
+        position x=-1440 y=-560
     }
 
     output "HDMI-A-1" {
@@ -83,7 +105,7 @@
 
         // Transform allows to rotate the output counter-clockwise, valid values are:
         // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
-        transform "90"
+        transform "normal"
 
         // Position of the output in the global coordinate space.
         // This affects directional monitor actions like "focus-monitor-left", and cursor movement.
@@ -94,7 +116,7 @@
         // so to put another output directly adjacent to it on the right, set its x to 1920.
         // If the position is unset or results in an overlap, the output is instead placed
         // automatically.
-        position x=-1440 y=-560
+        position x=0 y=0
     }
   '';
 
