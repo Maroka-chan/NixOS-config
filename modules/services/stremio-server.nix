@@ -39,8 +39,8 @@ in {
             hash = "sha256-pSfz3SDG57Nesgd868+FnLqBQGAvJvEPjonDwaCOrBM=";
           };
           pkgs_old = inputs.nixpkgs-stremio-server;
-          jellyfin-ffmpeg = pkgs_old.legacyPackages.${pkgs.system}.jellyfin-ffmpeg;
-          node_14 = pkgs_old.legacyPackages.${pkgs.system}.nodejs-14_x;
+          jellyfin-ffmpeg = pkgs_old.legacyPackages.${pkgs.stdenv.hostPlatform.system}.jellyfin-ffmpeg;
+          node_14 = pkgs_old.legacyPackages.${pkgs.stdenv.hostPlatform.system}.nodejs-14_x;
           launch_stremio = pkgs.writeShellApplication {
             name = "launch-stremio-server";
             runtimeInputs = [

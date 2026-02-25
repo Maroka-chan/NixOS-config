@@ -50,7 +50,7 @@ in
             name = module_name;
             runtimeInputs = [
               pkgs.p7zip
-              inputs.umu.packages.${pkgs.system}.umu-launcher
+              inputs.umu.packages.${pkgs.stdenv.hostPlatform.system}.umu-launcher
             ];
             text =
               let
@@ -85,7 +85,7 @@ in
                 launch = pkgs.writeShellApplication {
                   name = module_name;
                   runtimeInputs = [
-                    inputs.umu.packages.${pkgs.system}.umu-launcher
+                    inputs.umu.packages.${pkgs.stdenv.hostPlatform.system}.umu-launcher
                   ];
                   text =
                     let
