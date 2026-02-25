@@ -1,8 +1,13 @@
-{ config, lib, OSDisk ? "/dev/nvme0n1", ... }: let
+{
+  config,
+  lib,
+  OSDisk ? "/dev/nvme0n1",
+  ...
+}: let
   inherit (lib) mkIf;
 in {
   disko.devices = {
-    disk.daanixos = {
+    disk.nixos = {
       type = "disk";
       device = OSDisk;
       content.type = "gpt";
@@ -10,14 +15,14 @@ in {
 
       content.partitions.ESP = {
         type = "EF00";
-        size = "550M";
+        size = "1G";
         label = "BOOT";
         content = {
           type = "filesystem";
           format = "vfat";
           mountpoint = "/boot";
-          extraArgs = [ "-n" "BOOT" ];
-          mountOptions = [ "umask=0077" ];
+          extraArgs = ["-n" "BOOT"];
+          mountOptions = ["umask=0077"];
         };
       };
 
@@ -38,7 +43,7 @@ in {
 
         content.content = {
           type = "btrfs";
-          extraArgs = [ "-f" "-L" "NIXOS" ];
+          extraArgs = ["-f" "-L" "NIXOS"];
 
           # Create snapshot regardless of if impermanence is enabled
           # This way we can enable impermanence later on if we want
@@ -50,19 +55,30 @@ in {
           '';
 
           subvolumes = let
-            mountOptions = [ "compress=zstd" "noatime" "ssd" "autodefrag" "discard=async" ];
+            mountOptions = ["compress=zstd" "noatime" "ssd" "autodefrag" "discard=async"];
           in {
-            "root"     = { mountpoint = "/";        inherit mountOptions; };
-            "nix"      = { mountpoint = "/nix";     inherit mountOptions; };
-            "persist"  = { mountpoint = "/persist"; inherit mountOptions; };
-            "log"      = { mountpoint = "/var/log"; inherit mountOptions; };
+            "root" = {
+              mountpoint = "/";
+              inherit mountOptions;
+            };
+            "nix" = {
+              mountpoint = "/nix";
+              inherit mountOptions;
+            };
+            "persist" = {
+              mountpoint = "/persist";
+              inherit mountOptions;
+            };
+            "log" = {
+              mountpoint = "/var/log";
+              inherit mountOptions;
+            };
             "swap" = {
               mountpoint = "/swap";
-              mountOptions = [ "subvol=swap" "noatime" ];
+              mountOptions = ["subvol=swap" "noatime"];
               swap.swapfile.size = "4G";
             };
           };
-
         };
       };
     };
@@ -72,4 +88,3 @@ in {
   fileSystems."/var/log".neededForBoot = true;
   fileSystems."/swap".neededForBoot = true;
 }
-
