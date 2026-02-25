@@ -3,8 +3,7 @@
   pkgs,
   username,
   ...
-}:
-{
+}: {
   imports = [
     ./hardware-configuration.nix
     ../../modules/disko/btrfs_luks_impermanence.nix
@@ -28,7 +27,6 @@
   users.users.maroka.extraGroups = [
     "podman"
   ];
-
 
   # Home Manager
   home-manager.users.maroka = {
@@ -81,7 +79,7 @@
     };
   };
 
-  services.logind.lidSwitch = "suspend";
+  services.logind.settings.Login.HandleLidSwitch = "suspend";
   services.upower.enable = true;
 
   # VPN

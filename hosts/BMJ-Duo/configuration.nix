@@ -53,7 +53,7 @@
       };
     };
     upower.enable = true;
-    logind.lidSwitch = "suspend";
+    logind.settings.Login.HandleLidSwitch = "suspend";
 
     fprintd.enable = true;
 
