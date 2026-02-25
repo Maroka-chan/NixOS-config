@@ -17,8 +17,10 @@ in {
   programs = {
     git = {
       enable = true;
-      userName = "Maroka-chan";
-      userEmail = "64618598+Maroka-chan@users.noreply.github.com";
+      settings = {
+        user.name = "Maroka-chan";
+        user.email = "64618598+Maroka-chan@users.noreply.github.com";
+      };
     };
     direnv = {
       enable = true;

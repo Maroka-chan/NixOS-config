@@ -39,8 +39,10 @@ in {
   programs = {
     git = {
       enable = true;
-      userName = "AlexBMJ";
-      userEmail = "33891167+AlexBMJ@users.noreply.github.com";
+      settings = {
+        user.name = "AlexBMJ";
+        user.email = "33891167+AlexBMJ@users.noreply.github.com";
+      };
     };
     direnv = {
       enable = true;
