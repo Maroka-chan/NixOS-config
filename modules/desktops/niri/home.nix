@@ -193,7 +193,11 @@ in
             };
           };
           dock.enabled = false;
-          colorSchemes.predefinedScheme = "Monochrome";
+          colorSchemes = {
+            useWallpaperColors = true;
+            generationMethod = "rainbow";
+            darkMode = true;
+          };
           general = {
             avatarImage = lib.mkIf (lib.hasAttrByPath ["user" "name"] config.programs.git.settings) (
               pkgs.lib.fetchGHUrl {
