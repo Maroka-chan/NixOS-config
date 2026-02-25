@@ -1,6 +1,11 @@
-{ inputs, pkgs, lib, config, username, ... }:
-with lib;
-let
+{
+  pkgs,
+  lib,
+  config,
+  username,
+  ...
+}:
+with lib; let
   module_name = "thunar";
   cfg = config.configured.programs."${module_name}";
 in {
@@ -11,7 +16,7 @@ in {
   config = mkIf cfg.enable {
     programs.thunar = {
       enable = true;
-      plugins = with pkgs.xfce; [
+      plugins = with pkgs; [
         tumbler
         thunar-archive-plugin
         thunar-media-tags-plugin
