@@ -31,6 +31,9 @@ in {
 
     # Games
     prismlauncher # Minecraft Launcher
+
+    # Media
+    jellyfin-desktop
   ];
 
   programs = {
