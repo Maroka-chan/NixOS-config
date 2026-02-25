@@ -128,4 +128,8 @@ in
       username = "albmj";
       useImpermanence = false;
     };
+    V00652 = {
+      username = "albmj";
+      useImpermanence = false;
+    };
   }
