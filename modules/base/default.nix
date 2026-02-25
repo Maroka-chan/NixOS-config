@@ -24,9 +24,21 @@
   # Networking
   services.resolved.enable = true;
   ## Remove fallbackDNS
-  services.resolved.settings.Resolve = {
-    FallbackDNS = "";
-  };
+  imports = [
+    (
+      if (lib.versionOlder lib.version "26.05")
+      then {
+        services.resolved.extraConfig = ''
+          FallbackDNS=
+        '';
+      }
+      else {
+        services.resolved.settings.Resolve = {
+          FallbackDNS = "";
+        };
+      }
+    )
+  ];
 
   networking = {
     networkmanager.enable = true;

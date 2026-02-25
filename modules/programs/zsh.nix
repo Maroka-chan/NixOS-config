@@ -44,11 +44,5 @@ in {
         programs.starship.enableTransience = true;
       };
     })
-    (mkIf config.impermanence.enable {
-      home-manager.users.${username}.home.persistence
-      ."/persist".files = [
-        ".p10k.zsh"
-      ];
-    })
   ];
 }

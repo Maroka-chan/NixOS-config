@@ -5,7 +5,6 @@ inputs: let
     agenix.nixosModules.default
     disko.nixosModules.disko
     home-manager.nixosModules.default
-    hyprland.nixosModules.default
     neovim.nixosModules.default
     nur.modules.nixos.default
     mikuboot.nixosModules.default

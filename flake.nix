@@ -54,22 +54,13 @@
     nixos-hardware-gpdduo.url = "github:AlexBMJ/nixos-hardware/gpd-duo";
 
     impermanence.url = "github:nix-community/impermanence";
+    impermanence.inputs.nixpkgs.follows = "";
+    impermanence.inputs.home-manager.follows = "";
     agenix.url = "github:ryantm/agenix";
+    agenix.inputs.nixpkgs.follows = "";
 
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
-
-    # We break binary cache if hyprland follows our nixpkgs
-    hyprland.url = "github:hyprwm/Hyprland";
-
-    split-monitor-workspaces.url = "github:Duckonaut/split-monitor-workspaces";
-    split-monitor-workspaces.inputs.hyprland.follows = "hyprland";
-
-    ags.url = "github:Aylur/ags";
-    ags.inputs.nixpkgs.follows = "nixpkgs-unstable";
-
-    walker.url = "github:abenz1267/walker/0.13.26";
-    walker.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
     disko.url = "github:nix-community/disko";
     disko.inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -94,9 +85,7 @@
     yuttari.url = "git+ssh://git@github.com/Maroka-chan/yuttari-rs";
     yuttari.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
-    noctalia = {
-      url = "github:noctalia-dev/noctalia-shell";
-      inputs.nixpkgs.follows = "nixpkgs-unstable";
-    };
+    noctalia.url = "github:noctalia-dev/noctalia-shell";
+    noctalia.inputs.nixpkgs.follows = "nixpkgs-unstable";
   };
 }

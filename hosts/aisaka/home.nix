@@ -21,9 +21,7 @@
   # Home Manager Persistence
   home.persistence."/persist" = {
     files = [
-      ".p10k.zsh"
       ".cache/gitstatus/gitstatusd-linux-x86_64"
-      ".config/Mullvad VPN/gui_settings.json"
       ".config/btop/btop.conf"
       ".config/cat_installer/ca.pem" # eduroam wifi certificate
       ".local/share/nvim/telescope_history"
