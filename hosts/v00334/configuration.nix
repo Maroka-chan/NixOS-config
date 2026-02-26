@@ -39,8 +39,6 @@
     ];
   };
 
-  networking.firewall.enable = pkgs.lib.mkForce false;
-
   boot.plymouth = {
     enable = true;
     themePackages = [pkgs.mikuboot];
@@ -54,68 +52,14 @@
     output "eDP-1" {
         mode "1920x1200@60.0"
         transform "normal"
-        scale 1
-
-        // Position of the output in the global coordinate space.
-        // This affects directional monitor actions like "focus-monitor-left", and cursor movement.
-        // The cursor can only move between directly adjacent outputs.
-        // Output scale and rotation has to be taken into account for positioning:
-        // outputs are sized in logical, or scaled, pixels.
-        // For example, a 3840×2160 output with scale 2.0 will have a logical size of 1920×1080,
-        // so to put another output directly adjacent to it on the right, set its x to 1920.
-        // If the position is unset or results in an overlap, the output is instead placed
-        // automatically.
-        //position x=1280 y=0
-        position x=320 y=1440
-
+        scale 1.0
+        position x=-1920 y=120
     }
 
-    output "DP-3" {
-        mode "3840x2160@60.0"
-        scale 1.5
-        transform "90"
-
-        // Position of the output in the global coordinate space.
-        // This affects directional monitor actions like "focus-monitor-left", and cursor movement.
-        // The cursor can only move between directly adjacent outputs.
-        // Output scale and rotation has to be taken into account for positioning:
-        // outputs are sized in logical, or scaled, pixels.
-        // For example, a 3840×2160 output with scale 2.0 will have a logical size of 1920×1080,
-        // so to put another output directly adjacent to it on the right, set its x to 1920.
-        // If the position is unset or results in an overlap, the output is instead placed
-        // automatically.
-        //position x=1280 y=0
-        position x=-1440 y=-560
-    }
-
-    output "HDMI-A-1" {
-        // Uncomment this line to disable this output.
-        // off
-
-        // Resolution and, optionally, refresh rate of the output.
-        // The format is "<width>x<height>" or "<width>x<height>@<refresh rate>".
-        // If the refresh rate is omitted, niri will pick the highest refresh rate
-        // for the resolution.
-        // If the mode is omitted altogether or is invalid, niri will pick one automatically.
-        // Run `niri msg outputs` while inside a niri instance to list all outputs and their modes.
-        mode "3840x2160@60.0"
-
-        // You can use integer or fractional scale, for example use 1.5 for 150% scale.
-        scale 1.5
-
-        // Transform allows to rotate the output counter-clockwise, valid values are:
-        // normal, 90, 180, 270, flipped, flipped-90, flipped-180 and flipped-270.
+    output "Dell Inc. DELL P3425WE 9XJNY54" {
+        mode "3440x1440@99.982"
+        scale 1.0
         transform "normal"
-
-        // Position of the output in the global coordinate space.
-        // This affects directional monitor actions like "focus-monitor-left", and cursor movement.
-        // The cursor can only move between directly adjacent outputs.
-        // Output scale and rotation has to be taken into account for positioning:
-        // outputs are sized in logical, or scaled, pixels.
-        // For example, a 3840×2160 output with scale 2.0 will have a logical size of 1920×1080,
-        // so to put another output directly adjacent to it on the right, set its x to 1920.
-        // If the position is unset or results in an overlap, the output is instead placed
-        // automatically.
         position x=0 y=0
     }
   '';
