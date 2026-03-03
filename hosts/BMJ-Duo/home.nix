@@ -40,8 +40,8 @@ in {
     git = {
       enable = true;
       settings = {
-        user.name = "AlexBMJ";
-        user.email = "33891167+AlexBMJ@users.noreply.github.com";
+        user.name = "Alexander Jacobsen";
+        user.email = "dev@alexbmj.com";
       };
     };
     direnv = {

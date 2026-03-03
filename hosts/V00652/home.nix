@@ -26,8 +26,8 @@ in
       enable = true;
       settings = {
         user = {
-          name = "AlexBMJ";
-          email = "33891167+AlexBMJ@users.noreply.github.com";
+          name = "Alexander Jacobsen";
+          email = "dev@alexbmj.com";
         };
       };
     };
