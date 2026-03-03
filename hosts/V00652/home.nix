@@ -2,18 +2,17 @@
   pkgs,
   username,
   ...
-}:
-let
+}: let
   homeDirectory = "/home/${username}";
-in
-{
-  home = { inherit username homeDirectory; };
+in {
+  home = {inherit username homeDirectory;};
 
   home.packages = with pkgs; [
     # Tools
     swaybg # Wallpaper Tool
     sshfs # Remote filesystems over SSH
     wl-clipboard # Clipboard Manager
+    opencode # LLM Agent
 
     zoom-us
     slack
@@ -43,5 +42,4 @@ in
       assume = "source assume";
     };
   };
-
 }
