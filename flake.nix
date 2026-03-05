@@ -85,7 +85,15 @@
     yuttari.url = "git+ssh://git@github.com/Maroka-chan/yuttari-rs";
     yuttari.inputs.nixpkgs.follows = "nixpkgs-unstable";
 
+<<<<<<< Updated upstream
     noctalia.url = "github:noctalia-dev/noctalia-shell";
     noctalia.inputs.nixpkgs.follows = "nixpkgs-unstable";
+=======
+    noctalia = {
+      #url = "github:noctalia-dev/noctalia-shell";
+      url = "path:///home/albmj/Downloads/noctalia-shell/";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+>>>>>>> Stashed changes
   };
 }

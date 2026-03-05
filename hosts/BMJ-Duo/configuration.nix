@@ -21,7 +21,7 @@
   age.secrets."${username}-password".file = ../../secrets/${username}-password.age;
   users.users.${username} = {
     hashedPasswordFile = config.age.secrets."${username}-password".path;
-    extraGroups = ["wireshark"];
+    extraGroups = ["wireshark" "i2c"];
   };
 
   nix.settings.trusted-users = ["${username}"];
@@ -53,8 +53,13 @@
       };
     };
     upower.enable = true;
+<<<<<<< Updated upstream
     logind.settings.Login.HandleLidSwitch = "suspend";
 
+=======
+    logind.lidSwitch = "suspend";
+    ddccontrol.enable = true;
+>>>>>>> Stashed changes
     fprintd.enable = true;
 
     tailscale = {

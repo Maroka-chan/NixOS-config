@@ -412,17 +412,23 @@
         ]
       },
       "locked": {
+<<<<<<< Updated upstream
         "lastModified": 1772023201,
         "narHash": "sha256-ubbo1zWZVK2qwtGeTq+oH56okUvf2p1JjpubdAqHSdI=",
         "owner": "noctalia-dev",
         "repo": "noctalia-shell",
         "rev": "f5ad38234b76c069858775f019123b8201bac454",
         "type": "github"
+=======
+        "lastModified": 1769959215,
+        "narHash": "sha256-mRzHH/duHY9w7MR8yWkd+ENVvRwwJZiBy++5FMAe6Pk=",
+        "path": "/home/albmj/Downloads/noctalia-shell/",
+        "type": "path"
+>>>>>>> Stashed changes
       },
       "original": {
-        "owner": "noctalia-dev",
-        "repo": "noctalia-shell",
-        "type": "github"
+        "path": "/home/albmj/Downloads/noctalia-shell/",
+        "type": "path"
       }
     },
     "nur": {
