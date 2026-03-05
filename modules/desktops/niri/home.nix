@@ -6,6 +6,7 @@
   useImpermanence,
   extraConfig,
   wallpaper,
+  githubUsername,
   avatarHash,
   ...
 }: let
@@ -201,7 +202,7 @@ in
           general = {
             avatarImage = lib.mkIf (lib.hasAttrByPath ["user" "name"] config.programs.git.settings) (
               pkgs.lib.fetchGHUrl {
-                gh_username = config.programs.git.settings.user.name;
+                gh_username = githubUsername;
                 hash = avatarHash;
               }
             );

@@ -23,6 +23,10 @@ in {
       type = types.str;
       default = "";
     };
+    githubUsername = mkOption {
+      type = types.str;
+      default = "";
+    };
     avatarHash = mkOption {
       type = types.str;
       default = lib.fakeHash;
@@ -84,7 +88,7 @@ in {
 
       home-manager.extraSpecialArgs = {
         useImpermanence = config.impermanence.enable;
-        inherit (cfg) extraConfig wallpaper avatarHash;
+        inherit (cfg) extraConfig wallpaper githubUsername avatarHash;
       };
       home-manager.users.${username} = {
         imports = [

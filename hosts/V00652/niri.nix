@@ -1,7 +1,7 @@
-{ ... }:
-{
+{...}: {
   # Desktop Environment
   desktops.niri.enable = true;
+  desktops.niri.githubUsername = "AlexBMJ";
   desktops.niri.avatarHash = "sha256-S7mpUOUJ9lshVShSeqLImLGryVUzrWHjQUpE3buTSnk=";
   desktops.niri.wallpaper = ../../dotfiles/wallpapers/Veo_Wallpaper1.jpg;
   desktops.niri.extraConfig = ''
