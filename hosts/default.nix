@@ -33,6 +33,7 @@ inputs: let
         # Git
         programs.git = {
           enable = true;
+          lfs.enable = true;
           config = {
             commit.gpgsign =
               builtins.any (
