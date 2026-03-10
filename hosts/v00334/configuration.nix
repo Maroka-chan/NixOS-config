@@ -25,6 +25,9 @@
     };
   };
 
+  # Needed for Noctalia to detect battery.
+  services.upower.enable = true;
+
   # Users
   age.secrets.v00334-password.file = ../../secrets/v00334-password.age;
   users.users.${username} = {
