@@ -33,6 +33,7 @@
   };
 
   services.resolved.enable = true;
+  services.upower.enable = true;
   networking.networkmanager.enable = true;
 
   services = {
