@@ -37,6 +37,24 @@
   networking.networkmanager.enable = true;
 
   services = {
+    auto-cpufreq = {
+      enable = true;
+      settings = {
+        battery = {
+          energy_performance_preference = "performance";
+          governor = "performance";
+          turbo = "always";
+          enable_thresholds = true;
+          start_threshold = 60;
+          stop_threshold = 80;
+        };
+        charger = {
+          energy_performance_preference = "performance";
+          governor = "performance";
+          turbo = "always";
+        };
+      };
+    };
     openssh = {
       enable = true;
       settings = {
