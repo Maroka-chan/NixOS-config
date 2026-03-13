@@ -243,11 +243,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1772193909,
-        "narHash": "sha256-1R4vShs0uJqKnmdVnVDHZXuvfL48Caa5fa70GJEOYpY=",
+        "lastModified": 1773240225,
+        "narHash": "sha256-7mDUkTMNG0Dz19Ky4XOwvvG8dOjFtpRK0saptEUnsjc=",
         "owner": "Maroka-chan",
         "repo": "nvim-config",
-        "rev": "a3577c0240540db56deaebf200b5b44ebfea9d95",
+        "rev": "808f028ed8eb2028880b8cb89f310cf23913503c",
         "type": "github"
       },
       "original": {
