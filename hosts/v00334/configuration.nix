@@ -100,6 +100,84 @@
   #  enable = true;
   #};
 
+  networking.firewall.interfaces."usb+".allowedUDPPorts = [67];
+  networking.networkmanager.ensureProfiles.profiles.usb-dhcp = {
+    connection = {
+      id = "usb-dhcp";
+      type = "ethernet";
+      autoconnect = true;
+    };
+    match = {
+      driver = "cdc_ether";
+      interface-name = "usb*";
+    };
+    ipv4 = {
+      method = "shared";
+      address1 = "10.1.42.1/24";
+    };
+  };
+
+  #systemd.services."usb-dhcp@" = {
+  #  description = "USB DHCP for %i";
+  #  after = ["network.target"];
+  #  bindsTo = ["sys-subsystem-net-devices-%i.device"];
+
+  #  serviceConfig = {
+  #    Type = "forking";
+  #    RuntimeDirectory = "usb-dhcp-%i";
+
+  #    ExecStart = "${pkgs.writeShellApplication {
+  #      name = "usb-dhcp-add";
+  #      runtimeInputs = with pkgs; [dnsmasq iproute2 iptables procps logger];
+  #      text = ''
+  #        IFACE="$1"
+  #        HOST_IP="10.1.42.1"
+  #        CLIENT_IP="10.1.42.100"
+  #        MASK="255.255.255.0"
+  #        LEASE_TIME="1h"
+
+  #        log() { logger -t usb-dhcp "$@"; }
+
+  #        log "Interface $IFACE appeared, starting DHCP"
+
+  #        # Kill any previous instance for this interface
+  #        pkill -f "dnsmasq.*--interface=$IFACE" || true
+  #        sleep 1
+
+  #        ip addr replace "$HOST_IP/24" dev "$IFACE"
+  #        ip link set "$IFACE" up
+  #        iptables -I INPUT -i "$IFACE" -p udp --dport 67 -j ACCEPT
+
+  #        dnsmasq --no-resolv --no-hosts \
+  #          --port=0 \
+  #          --interface="$IFACE" \
+  #          --bind-interfaces \
+  #          --dhcp-authoritative \
+  #          --dhcp-range="$CLIENT_IP,$CLIENT_IP,$MASK,$LEASE_TIME" \
+  #          --dhcp-leasefile=/run/usb-dhcp-"$IFACE"/leases
+
+  #        log "dnsmasq started on $IFACE"
+  #      '';
+  #    }}/bin/usb-dhcp-add %i";
+
+  #    ExecStop = "${pkgs.writeShellApplication {
+  #      name = "usb-dhcp-remove";
+  #      runtimeInputs = with pkgs; [dnsmasq iproute2 iptables procps];
+  #      text = ''
+  #        IFACE="$1"
+  #        HOST_IP="10.1.42.1"
+
+  #        log() { logger -t usb-dhcp "$@"; }
+  #        log "Interface $IFACE removed, cleaning up"
+
+  #        pkill -f "dnsmasq.*--interface=$IFACE" || true
+  #        ip addr del "$HOST_IP/24" dev "$IFACE" 2>/dev/null || true
+  #        iptables -D INPUT -i "$IFACE" -p udp --dport 67 -j ACCEPT 2>/dev/null || true
+  #      '';
+  #    }}/bin/usb-dhcp-remove $i";
+  #  };
+  #};
+
   # Udev rules
   ## Brightness
   services.udev.extraRules = ''
@@ -108,10 +186,15 @@
     # FTDI
     SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="6011", MODE="0666"
     SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="6001", MODE="0666"
+    SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6011", MODE="0666"
+    SUBSYSTEM=="tty", ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6001", MODE="0666"
 
     # Jetson
-    SUBSYSTEM=="usb", ATTR{idVendor}=="0955", ATTR{idProduct}="7c18", MODE="0666"
+    SUBSYSTEM=="usb", ATTR{idVendor}=="0955", ATTR{idProduct}=="7c18", MODE="0666"
+
   '';
+  #  # Ethernet over USB
+  #  ACTION=="add", SUBSYSTEM=="net", DRIVERS=="cdc_ether", TAG+="systemd", ENV{SYSTEMD_WANTS}="usb-dhcp@%k.service"
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "23.11";
