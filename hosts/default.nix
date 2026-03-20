@@ -117,6 +117,12 @@ in
       channel = inputs.nixpkgs-small;
       isServer = true;
     };
+    nagato = {
+      username = "deploy";
+      channel = inputs.nixpkgs-small;
+      isServer = true;
+      useImpermanence = false;
+    };
     BMJ-Desktop = {
       username = "albmj";
       useImpermanence = false;
