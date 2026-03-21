@@ -171,6 +171,9 @@ in
               ];
               right = [
                 {
+                  id = "plugin:network-manager-vpn";
+                }
+                {
                   id = "Network";
                 }
                 {
@@ -238,6 +241,10 @@ in
               enabled = true;
               sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
             };
+            network-manager-vpn = {
+              enabled = true;
+              sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+            };
           };
         };
       };
@@ -272,6 +279,7 @@ in
           ".config/chromium-linear"
           ".config/noctalia/plugins/screen-recorder"
           ".config/noctalia/plugins/privacy-indicator"
+          ".config/noctalia/plugins/network-manager-vpn"
           ".logseq"
         ];
       };
