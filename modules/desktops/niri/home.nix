@@ -222,6 +222,7 @@ in
             directory = ../../../dotfiles/wallpapers;
           };
           network.wifiEnabled = false;
+          sessionMenu.largeButtonsStyle = false;
           nightLight.enabled = true;
         };
         plugins = {
