@@ -89,12 +89,12 @@
   programs.kdeconnect.enable = true;
 
   # Editors
-  programs.neovim-monica = {
-    enable = true;
-    defaultEditor = true;
-    viAlias = true;
-    vimAlias = true;
-  };
+  #programs.neovim-monica = {
+  #  enable = true;
+  #  defaultEditor = true;
+  #  viAlias = true;
+  #  vimAlias = true;
+  #};
 
   programs.wireshark = {
     enable = true;

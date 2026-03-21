@@ -10,6 +10,7 @@ in {
 
   home.packages = with pkgs; [
     qbittorrent
+    vim
 
     # Tools
     swaybg # Wallpaper Tool
