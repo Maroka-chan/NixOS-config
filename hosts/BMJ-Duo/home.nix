@@ -76,6 +76,7 @@ in {
       ".config/vesktop/sessionData/Local Storage/leveldb"
       ".config/darktable"
       ".config/blender"
+      ".config/Signal"
       ".local/share/direnv/allow"
       ".local/state/nvim/swap"
       ".local/state/nvim/shada"
