@@ -106,6 +106,7 @@
       id = "usb-dhcp";
       type = "ethernet";
       autoconnect = true;
+      multi-connect = "3";
     };
     match = {
       driver = "cdc_ether";
@@ -113,7 +114,7 @@
     };
     ipv4 = {
       method = "shared";
-      address1 = "10.1.42.1/24";
+      #address1 = "10.42.0.1/24";
     };
   };
 
