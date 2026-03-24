@@ -12,7 +12,11 @@ in {
     slack
 
     wl-clipboard
+    # Needed for KDE Connect
+    kdePackages.qttools
   ];
+
+  services.kdeconnect.enable = true;
 
   programs = {
     git = {

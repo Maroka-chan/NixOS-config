@@ -42,6 +42,11 @@
     ];
   };
 
+  services.tailscale = {
+    enable = true;
+    openFirewall = true;
+  };
+
   boot.plymouth = {
     enable = true;
     themePackages = [pkgs.mikuboot];
@@ -100,7 +105,7 @@
   #  enable = true;
   #};
 
-  networking.firewall.interfaces."usb+".allowedUDPPorts = [67];
+  networking.firewall.interfaces."jetson+".allowedUDPPorts = [67];
   networking.networkmanager.ensureProfiles.profiles.usb-dhcp = {
     connection = {
       id = "usb-dhcp";
@@ -110,11 +115,10 @@
     };
     match = {
       driver = "cdc_ether";
-      interface-name = "usb*";
+      interface-name = "jetson*";
     };
     ipv4 = {
       method = "shared";
-      #address1 = "10.42.0.1/24";
     };
   };
 
@@ -192,6 +196,7 @@
 
     # Jetson
     SUBSYSTEM=="usb", ATTR{idVendor}=="0955", ATTR{idProduct}=="7c18", MODE="0666"
+    SUBSYSTEM=="net", ACTION=="add", ENV{ID_USB_DRIVER}=="cdc_ether", ENV{ID_USB_VENDOR}=="NVIDIA", ENV{ID_USB_MODEL}=="Linux_for_Tegra", NAME="jetson%n"
 
   '';
   #  # Ethernet over USB
