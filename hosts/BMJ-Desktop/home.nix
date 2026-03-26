@@ -18,6 +18,7 @@ in {
     vesktop # Third-party Discord
     telegram-desktop # Telegram Client
     signal-desktop # Signal
+    tutanota-desktop # Mail & Calendar
 
     # Creative Tools
     inkscape
