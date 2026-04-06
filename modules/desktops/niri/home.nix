@@ -84,6 +84,7 @@ in
 
       # GPG & Password Store
       programs.password-store.enable = true;
+      programs.password-store.settings = {PASSWORD_STORE_DIR = "$XDG_DATA_HOME/password-store";};
       programs.gpg.enable = true;
       services.pass-secret-service.enable = true;
       services.gpg-agent = {
@@ -97,6 +98,7 @@ in
 
       gtk = {
         enable = true;
+        gtk4.theme = config.gtk.theme;
         theme = {
           package = pkgs.dracula-theme;
           name = "Dracula";
