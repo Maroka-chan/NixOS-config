@@ -10,7 +10,7 @@
 
     package = pkgs.caddy.withPlugins {
       plugins = ["github.com/caddy-dns/porkbun@v0.3.1"];
-      hash = "sha256-cM9ez2i9ZADbXSI7KNZlBCe1F1vpX5fH++qKILaHguA=";
+      hash = "sha256-GKtPd73R/7ggu3fBFilkhyKi45lkAAQFsftwg5pmWW4=";
     };
 
     virtualHosts."immich.home.alexbmj.com" = {
