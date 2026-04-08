@@ -3,10 +3,14 @@
   pkgs,
   username,
   lib,
+  inputs,
   ...
 }: {
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  nix.package = inputs.nixpkgs-small.legacyPackages.${pkgs.stdenv.hostPlatform.system}.nix;
+  nix.settings.allowed-users = ["@wheel"];
 
   boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
   hardware.enableAllFirmware = true;
