@@ -6,12 +6,10 @@
   inputs,
   ...
 }:
-with lib;
-let
+with lib; let
   module_name = "vscode";
   cfg = config.configured.programs."${module_name}";
-in
-{
+in {
   options.configured.programs."${module_name}" = {
     enable = mkEnableOption "Enable Visual Studio Code Editor";
   };
@@ -41,6 +39,11 @@ in
           ];
           userSettings = {
             "editor.fontFamily" = "'CaskaydiaCove Nerd Font', 'Droid Sans Mono', 'monospace', monospace";
+            "telemetry.telemetryLevel" = "off";
+            "telemetry.feedback.enabled" = false;
+            "workbench.welcomePage.extraAnnouncements" = false;
+            "workbench.colorTheme" = "Monokai Pro (Filter Spectrum)";
+            "workbench.iconTheme" = "Monokai Pro (Filter Spectrum) Icons";
             "nixEnvSelector.useFlakes" = true;
             "github.copilot.nextEditSuggestions.enabled" = true;
             "files.watcherExclude" = {
