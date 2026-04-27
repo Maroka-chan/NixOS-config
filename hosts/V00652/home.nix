@@ -1,9 +1,11 @@
 {
   pkgs,
   username,
+  inputs,
   ...
 }: let
   homeDirectory = "/home/${username}";
+  unstable-pkgs = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   home = {inherit username homeDirectory;};
 
@@ -12,7 +14,7 @@ in {
     swaybg # Wallpaper Tool
     sshfs # Remote filesystems over SSH
     wl-clipboard # Clipboard Manager
-    opencode # LLM Agent
+    unstable-pkgs.opencode # LLM Agent
 
     zoom-us
     slack
