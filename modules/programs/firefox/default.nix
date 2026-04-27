@@ -114,7 +114,7 @@ in {
               "${profilesPath}/${profile.path}/user.js".text = readFile (
                 builtins.fetchurl {
                   url = "https://github.com/arkenfox/user.js/raw/refs/heads/master/user.js";
-                  sha256 = "sha256:067bfw8zm6gi82a79cfb3y6hgqf5bsykx1k4z31nby320j4ch74g";
+                  sha256 = "sha256:0gp3wyxljzly37qmgyfqhz48mw6pl9bhwph3yxf1g6a8j7337az4";
                 }
               );
             }

@@ -49,7 +49,7 @@ in
           font = "monospace:size=11";
           dpi-aware = "yes";
         };
-        colors-dark = {
+        colors = {
           alpha = 0.9;
 
           # Kanagawa Dragon

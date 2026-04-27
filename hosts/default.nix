@@ -52,7 +52,7 @@ inputs: let
 
   mkSystem = name: {
     system ? "x86_64-linux",
-    channel ? inputs.nixpkgs-unstable,
+    channel ? inputs.nixpkgs,
     useImpermanence ? true,
     isServer ? false,
     username ? "maroka",

@@ -53,13 +53,13 @@
     nixpkgs-small.url = "github:NixOS/nixpkgs/nixos-25.11-small";
 
     nix-index-database.url = "github:nix-community/nix-index-database";
-    nix-index-database.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
 
     nixpkgs-stremio-server.url = "github:NixOS/nixpkgs/aae94e56a7b905281f007a5b70aa7ffff89aee57";
     transmission_4_5.url = "github:NixOS/nixpkgs/0c19708cf035f50d28eb4b2b8e7a79d4dc52f6bb";
 
     nur.url = "github:nix-community/NUR";
-    nur.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    nur.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware-gpdduo.url = "github:AlexBMJ/nixos-hardware/gpd-duo";
 
@@ -69,33 +69,33 @@
     agenix.url = "github:ryantm/agenix";
     agenix.inputs.nixpkgs.follows = "";
 
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    home-manager.url = "github:nix-community/home-manager/release-25.11";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     disko.url = "github:nix-community/disko";
-    disko.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    disko.inputs.nixpkgs.follows = "nixpkgs";
 
     deploy-rs.url = "github:serokell/deploy-rs";
-    deploy-rs.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    deploy-rs.inputs.nixpkgs.follows = "nixpkgs";
 
     neovim.url = "github:Maroka-chan/nvim-config";
-    neovim.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    neovim.inputs.nixpkgs.follows = "nixpkgs";
 
     nix4vscode.url = "github:nix-community/nix4vscode";
-    nix4vscode.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    nix4vscode.inputs.nixpkgs.follows = "nixpkgs";
 
     mikuboot.url = "gitlab:evysgarden/mikuboot";
-    mikuboot.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    mikuboot.inputs.nixpkgs.follows = "nixpkgs";
 
     umu.url = "github:Open-Wine-Components/umu-launcher?dir=packaging\/nix&submodules=1";
-    umu.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    umu.inputs.nixpkgs.follows = "nixpkgs";
 
     vpn-confinement.url = "github:Maroka-chan/VPN-Confinement";
 
     yuttari.url = "git+ssh://git@github.com/Maroka-chan/yuttari-rs";
-    yuttari.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    yuttari.inputs.nixpkgs.follows = "nixpkgs";
 
     noctalia.url = "github:noctalia-dev/noctalia-shell";
-    noctalia.inputs.nixpkgs.follows = "nixpkgs-unstable";
+    noctalia.inputs.nixpkgs.follows = "nixpkgs";
   };
 }
