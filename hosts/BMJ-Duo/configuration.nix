@@ -21,7 +21,7 @@
   age.secrets."${username}-password".file = ../../secrets/${username}-password.age;
   users.users.${username} = {
     hashedPasswordFile = config.age.secrets."${username}-password".path;
-    extraGroups = ["wireshark"];
+    extraGroups = ["wireshark" "dialout"];
   };
 
   nix.settings.trusted-users = ["${username}"];
@@ -72,7 +72,7 @@
 
   networking.firewall = {
     allowedTCPPorts = [];
-    allowedUDPPorts = [];
+    allowedUDPPorts = [53 67 68];
   };
 
   # Git
@@ -109,6 +109,9 @@
 
   services.udev.extraRules = ''
     ACTION=="add", SUBSYSTEM=="backlight", KERNEL=="amdgpu_bl1", MODE="0666", RUN+="${pkgs.coreutils}/bin/chmod a+w /sys/class/backlight/%k/brightness"
+
+    # Jetson
+    SUBSYSTEM=="usb", ATTR{idVendor}=="0955", ATTR{idProduct}="7c18", MODE="0666"
   '';
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
