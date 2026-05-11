@@ -40,6 +40,7 @@ in {
     awscli = {
       enable = true;
     };
+    gh.enable = true;
     zsh.shellAliases = {
       assume = "source assume";
     };
