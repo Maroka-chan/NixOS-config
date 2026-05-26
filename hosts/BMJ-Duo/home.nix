@@ -67,6 +67,7 @@ in {
       ".config/kdeconnect/privateKey.pem"
       ".config/kdeconnect/config"
       ".config/kdeconnect/trusted_devices"
+      ".config/opencode/opencode.json"
       ".flutter"
     ];
     directories = [
@@ -84,6 +85,7 @@ in {
       ".local/share/DaVinciResolve"
       ".local/share/PrismLauncher"
       ".local/share/TelegramDesktop"
+      ".local/share/opencode"
       ".dart-tool"
       ".pub-cache"
       ".local/share/Steam"
