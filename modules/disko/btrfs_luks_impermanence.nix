@@ -33,11 +33,9 @@ in {
         content = {
           type = "luks";
           name = "crypt-nixos";
+          enrollFido2 = true;
           settings = {
             allowDiscards = true;
-            keyFileSize = 4096;
-            keyFile = "/dev/disk/by-partlabel/CRYPTKEY";
-            fallbackToPassword = true;
           };
         };
 
