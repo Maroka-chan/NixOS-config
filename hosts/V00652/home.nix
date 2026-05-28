@@ -30,6 +30,7 @@ in {
           name = "Alexander Jacobsen";
           email = "dev@alexbmj.com";
         };
+        http.followRedirects = true;
       };
     };
     direnv = {
