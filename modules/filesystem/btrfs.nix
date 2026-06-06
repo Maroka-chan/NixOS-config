@@ -33,25 +33,43 @@ in {
     })
     (mkIf config.impermanence.enable {
       # Wipe the root subvolume on boot.
-      boot.initrd.postDeviceCommands = lib.mkBefore ''
-        mkdir -p /mnt
+      # FIDO2 LUKS unlock forces systemd stage-1 initrd (set by disko), which is
+      # incompatible with boot.initrd.postDeviceCommands, so we use a systemd
+      # initrd service that runs after the device is unlocked.
+      boot.initrd.systemd.services.rollback = {
+        description = "Rollback BTRFS root subvolume to a pristine state";
+        wantedBy = [
+          "initrd.target"
+        ];
+        after = [
+          # LUKS/FIDO2 unlock must complete first
+          "systemd-cryptsetup@crypt\\x2dnixos.service"
+        ];
+        before = [
+          "sysroot.mount"
+        ];
+        unitConfig.DefaultDependencies = "no";
+        serviceConfig.Type = "oneshot";
+        script = ''
+          mkdir -p /mnt
 
-        mount -t btrfs ${cfg.impermanence.root} /mnt
+          mount -t btrfs ${cfg.impermanence.root} /mnt
 
-        btrfs subvolume list -o /mnt/${cfg.impermanence.root-subvol} |
-        cut -f9 -d' ' |
-        while read subvolume; do
-        echo "deleting /$subvolume subvolume..."
-        btrfs subvolume delete "/mnt/$subvolume"
-        done &&
-        echo "deleting /${cfg.impermanence.root-subvol} subvolume..." &&
-        btrfs subvolume delete /mnt/${cfg.impermanence.root-subvol}
+          btrfs subvolume list -o /mnt/${cfg.impermanence.root-subvol} |
+          cut -f9 -d' ' |
+          while read subvolume; do
+          echo "deleting /$subvolume subvolume..."
+          btrfs subvolume delete "/mnt/$subvolume"
+          done &&
+          echo "deleting /${cfg.impermanence.root-subvol} subvolume..." &&
+          btrfs subvolume delete /mnt/${cfg.impermanence.root-subvol}
 
-        echo "restoring blank /${cfg.impermanence.root-subvol} subvolume..."
-        btrfs subvolume snapshot /mnt/${cfg.impermanence.blank-root-subvol} /mnt/${cfg.impermanence.root-subvol}
+          echo "restoring blank /${cfg.impermanence.root-subvol} subvolume..."
+          btrfs subvolume snapshot /mnt/${cfg.impermanence.blank-root-subvol} /mnt/${cfg.impermanence.root-subvol}
 
-        umount /mnt
-      '';
+          umount /mnt
+        '';
+      };
 
       # Create directories
       systemd.tmpfiles.rules = [
