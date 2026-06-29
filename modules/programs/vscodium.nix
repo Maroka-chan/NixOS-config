@@ -6,12 +6,10 @@
   inputs,
   ...
 }:
-with lib;
-let
+with lib; let
   module_name = "vscodium";
   cfg = config.configured.programs."${module_name}";
-in
-{
+in {
   options.configured.programs."${module_name}" = {
     enable = mkEnableOption "Enable Microsoft Free Visual Studio Code Editor";
   };
@@ -35,6 +33,7 @@ in
             "monokai.theme-monokai-pro-vscode"
             "arrterian.nix-env-selector"
             "dart-code.dart-code"
+            "ziglang.vscode-zig"
           ];
           userSettings = {
             "telemetry.telemetryLevel" = "off";
@@ -50,6 +49,7 @@ in
             "window.titleBarStyle" = "native";
             "editor.fontFamily" = "'CaskaydiaCove Nerd Font', 'Droid Sans Mono', 'monospace', monospace";
             "nixEnvSelector.useFlakes" = true;
+            "zig.zls.enabled" = "on";
           };
         };
       };
