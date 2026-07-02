@@ -16,7 +16,7 @@ in {
   config = mkIf cfg.enable {
     programs.thunar = {
       enable = true;
-      plugins = with pkgs.xfce; [
+      plugins = with pkgs; [
         tumbler
         thunar-archive-plugin
         thunar-media-tags-plugin

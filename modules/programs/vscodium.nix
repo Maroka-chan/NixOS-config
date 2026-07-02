@@ -18,10 +18,9 @@ in {
       inputs.nix4vscode.overlays.default
     ];
     home-manager.users.${username} = {
-      programs.vscode = {
+      programs.vscodium = {
         enable = true;
         mutableExtensionsDir = false;
-        package = pkgs.vscodium;
         profiles.default = {
           enableUpdateCheck = false;
           enableExtensionUpdateCheck = false;

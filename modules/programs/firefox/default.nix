@@ -52,6 +52,10 @@ in {
         programs.firefox = {
           enable = true;
 
+          # pin pre-26.05 default (stateVersion 25.05)
+          # impermanence persists ~/.mozilla/firefox.
+          configPath = ".mozilla/firefox";
+
           profiles.profile_0 = {
             id = 0;
             name = "profile_0";
