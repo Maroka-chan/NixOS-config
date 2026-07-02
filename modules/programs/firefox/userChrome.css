@@ -10,9 +10,7 @@
 }
 
 #navigator-toolbox {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: flex; flex-direction: row; flex-wrap: wrap;
 }
 
 /* Make bookmarks wrap to be below nav-bar */
@@ -68,8 +66,8 @@
 }
 
 #urlbar-container:hover {
-  width: calc(var(--urlbar-container-min-width) * 2 + 2 * (24px + 2 * var(--toolbarbutton-inner-padding))) !important;
+  width: calc(var(--urlbar-container-min-width) * 2 + 2 * (24px + 2 * var(--toolbarbutton-padding-inner))) !important;
 }
 #urlbar-container:focus-within {
-  width: calc(var(--urlbar-container-min-width) * 2 + 2 * (24px + 2 * var(--toolbarbutton-inner-padding))) !important;
+  width: calc(var(--urlbar-container-min-width) * 2 + 2 * (24px + 2 * var(--toolbarbutton-padding-inner))) !important;
 }
