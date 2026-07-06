@@ -2,8 +2,11 @@
   username,
   lib,
   pkgs,
+  inputs,
   ...
-}: {
+}: let
+  unstable-pkgs = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+in {
   imports = [
     ./hardware-configuration.nix
     ../../modules/disko/btrfs.nix
@@ -42,7 +45,7 @@
     };
     ollama = {
       enable = true;
-      package = pkgs.ollama-rocm;
+      package = unstable-pkgs.ollama-rocm;
     };
     avahi = {
       enable = true;
