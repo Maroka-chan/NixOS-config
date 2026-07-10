@@ -44,8 +44,8 @@
       settings = {
         battery = {
           energy_performance_preference = "performance";
-          governor = "performance";
-          turbo = "always";
+          governor = "powersave";
+          turbo = "auto";
           enable_thresholds = true;
           start_threshold = 60;
           stop_threshold = 80;
