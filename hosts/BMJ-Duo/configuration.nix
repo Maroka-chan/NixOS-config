@@ -37,6 +37,7 @@
   configured.programs.firefox.maxSearchResults = 10;
 
   services = {
+    hardware.bolt.enable = true;
     auto-cpufreq = {
       enable = true;
       settings = {
