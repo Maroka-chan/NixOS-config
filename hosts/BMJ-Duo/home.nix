@@ -32,6 +32,9 @@ in {
     # Machine Learning
     ollama-rocm # LLM Runner
 
+    # Media Players
+    jellyfin-desktop
+
     # Games
     prismlauncher # Minecraft Launcher
   ];
