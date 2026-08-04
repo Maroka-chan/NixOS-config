@@ -104,6 +104,12 @@
     dumpcap.enable = true;
   };
 
+  programs.ghidra = {
+    enable = false;
+    gdb = true;
+    package = pkgs.ghidra.withExtensions (p: with p; [ghidra-firmware-utils lightkeeper machinelearning gnudisassembler kaiju findcrypt ret-sync]);
+  };
+
   configured.programs.vscodium = {
     enable = true;
   };
