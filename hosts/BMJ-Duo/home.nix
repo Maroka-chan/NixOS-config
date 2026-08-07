@@ -91,6 +91,7 @@ in {
       ".local/share/opencode"
       ".dart-tool"
       ".pub-cache"
+      ".steam"
       ".local/share/Steam"
       ".cache/mesa_shader_cache"
       ".cache/thumbnails/normal"
