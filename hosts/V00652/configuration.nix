@@ -22,6 +22,7 @@
       "networkmanager"
       "dialout"
       "podman"
+      "wireshark"
     ];
   };
 
@@ -101,6 +102,13 @@
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
+  };
+
+  programs.wireshark = {
+    enable = true;
+    package = pkgs.wireshark;
+    usbmon.enable = true;
+    dumpcap.enable = true;
   };
 
   # cnping
