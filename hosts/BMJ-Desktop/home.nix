@@ -23,9 +23,10 @@ in {
     # Creative Tools
     inkscape
     gimp3-with-plugins
-    #davinci-resolve
     blender
     godot
+    freecad
+    #davinci-resolve
 
     # Machine Learning
     ollama-rocm # LLM Runner
