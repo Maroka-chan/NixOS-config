@@ -26,6 +26,7 @@ in {
     blender
     godot
     freecad
+    prusa-slicer
     #davinci-resolve
 
     # Machine Learning
