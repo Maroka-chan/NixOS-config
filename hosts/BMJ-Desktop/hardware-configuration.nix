@@ -3,11 +3,9 @@
   lib,
   pkgs,
   ...
-}:
-let
-  kernelPackages = pkgs.linuxKernel.packages.linux_zen;
-in
-{
+}: let
+  kernelPackages = pkgs.linuxPackages;
+in {
   boot.initrd.availableKernelModules = [
     "nvme"
     "xhci_pci"
@@ -16,17 +14,17 @@ in
     "usbhid"
     "sd_mod"
   ];
-  boot.initrd.kernelModules = [ ];
+  boot.initrd.kernelModules = [];
   boot.kernelModules = [
     "kvm-amd"
     "ryzen-smu"
   ];
-  boot.extraModulePackages = [ kernelPackages.ryzen-smu ];
+  boot.extraModulePackages = [kernelPackages.ryzen-smu];
   boot.kernelPackages = kernelPackages;
 
   boot.plymouth = {
     enable = true;
-    themePackages = [ pkgs.mikuboot ];
+    themePackages = [pkgs.mikuboot];
     theme = "mikuboot";
   };
 
