@@ -50,6 +50,7 @@
       enable = true;
       settings = {
         PasswordAuthentication = false;
+        KbdInteractiveAuthentication = false;
       };
     };
     tailscale = {
@@ -65,7 +66,6 @@
   };
 
   systemd.services.cups.wantedBy = lib.mkForce [];
-  systemd.services.sshd.wantedBy = lib.mkForce [];
 
   virtualisation = {
     containers.enable = true;
