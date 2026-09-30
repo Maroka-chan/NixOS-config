@@ -9,4 +9,6 @@
     open = lib.mkDefault false;
     modesetting.enable = true;
   };
+
+  nixpkgs.config.cudaSupport = true;
 }
