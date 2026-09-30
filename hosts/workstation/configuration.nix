@@ -2,8 +2,14 @@
   username,
   lib,
   pkgs,
+  inputs,
   ...
-}: {
+}: let
+  unstable-pkgs = import inputs.nixpkgs-unstable {
+    inherit (pkgs.stdenv.hostPlatform) system;
+    config.allowUnfree = true;
+  };
+in {
   imports = [
     ./hardware-configuration.nix
     ../../modules/hardware/gpu/nvidia.nix
@@ -62,6 +68,10 @@
       enable = true;
       nssmdns4 = true;
       openFirewall = true;
+    };
+    ollama = {
+      enable = true;
+      package = unstable-pkgs.ollama-cuda;
     };
   };
 
