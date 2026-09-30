@@ -16,6 +16,8 @@ in {
     wl-clipboard # Clipboard Manager
     unstable-pkgs.opencode # LLM Agent
 
+    slack
+
     granted # AWS assume role
   ];
 
