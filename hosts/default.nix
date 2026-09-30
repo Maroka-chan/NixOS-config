@@ -139,4 +139,8 @@ in
       username = "albmj";
       useImpermanence = false;
     };
+    workstation = {
+      username = "albmj";
+      useImpermanence = false;
+    };
   }

@@ -1,4 +1,4 @@
-{...}: {
+{lib, ...}: {
   # NVIDIA proprietary drivers
   services.xserver.videoDrivers = ["nvidia"];
 
@@ -6,7 +6,7 @@
 
   hardware.nvidia = {
     # Set to true for Turing+ GPUs, false for Pascal and older
-    open = false;
+    open = lib.mkDefault false;
     modesetting.enable = true;
   };
 }
