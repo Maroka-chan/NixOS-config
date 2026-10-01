@@ -22,8 +22,10 @@ in {
   boot.kernelModules = [
     "kvm-amd"
     "ryzen-smu"
+    "i2c-dev"
+    "ddcci_backlight"
   ];
-  boot.extraModulePackages = [kernelPackages.ryzen-smu];
+  boot.extraModulePackages = [kernelPackages.ryzen-smu kernelPackages.ddcci-driver];
   boot.kernelPackages = kernelPackages;
 
   boot.plymouth = {
@@ -42,4 +44,5 @@ in {
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.i2c.enable = true;
 }
