@@ -73,7 +73,7 @@ in {
       environment.systemPackages = with pkgs; [
         material-design-icons # Icons
 
-        inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default # Quickshell bar
+        inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default # Noctalia shell
         xwayland-satellite # Niri uses xwayland-satellite for Xwayland
       ];
 
