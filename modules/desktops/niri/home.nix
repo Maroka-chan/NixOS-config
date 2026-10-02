@@ -8,6 +8,7 @@
   wallpaper,
   githubUsername,
   avatarHash,
+  inputs,
   ...
 }: let
   homeDirectory = "/home/${username}";
@@ -136,127 +137,86 @@ in
 
       #xdg.configFile."niri/config.kdl".source = ./config.kdl;
 
-      programs.noctalia-shell = {
+      # Noctalia v5 - written to ~/.config/noctalia/config.toml.
+      # GUI changes are stored separately in ~/.local/state/noctalia/settings.toml
+      # and take precedence over these values.
+      programs.noctalia = {
         enable = true;
         settings = {
           bar = {
-            outerCorners = false;
-            widgets = {
-              left = [
-                {
-                  id = "ControlCenter";
-                  useDistroLogo = true;
-                }
-                {
-                  id = "Tray";
-                }
-                {
-                  defaultSettings = {
-                    hideInactive = true;
-                    removeMargins = false;
-                  };
-                  id = "plugin:privacy-indicator";
-                }
-                {
-                  defaultSettings = {
-                    hideInactive = false;
-                    videoSource = "portal";
-                  };
-                  id = "plugin:screen-recorder";
-                }
-              ];
-              center = [
-                {
-                  id = "Workspace";
-                  labelMode = "none";
-                }
-              ];
-              right = [
-                {
-                  id = "plugin:network-manager-vpn";
-                }
-                {
-                  id = "Network";
-                }
-                {
-                  id = "Bluetooth";
-                }
-                {
-                  id = "Volume";
-                }
-                {
-                  id = "NotificationHistory";
-                }
-                {
-                  id = "Battery";
-                  displayMode = "alwaysShow";
-                  warningThreshold = 20;
-                }
-                {
-                  id = "Clock";
-                }
-              ];
+            default = {
+              concave_edge_corners = false;
+              shadow = false;
+              start = ["control-center" "tray" "privacy" "screen_recorder"];
+              center = ["workspaces"];
+              end = ["network" "bluetooth" "volume" "notifications" "battery" "clock"];
             };
           };
-          dock.enabled = false;
-          colorSchemes = {
-            useWallpaperColors = true;
-            generationMethod = "rainbow";
-            darkMode = true;
+
+          widget = {
+            control-center = {
+              # v5 has no distro-logo option; use the NixOS snowflake instead.
+              custom_image = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake-white.svg";
+              custom_image_colorize = true;
+            };
+            privacy.hide_inactive = true;
+            screen_recorder.type = "noctalia/screen_recorder:recorder";
+            workspaces.show_labels = false;
+            # Replaces the network-manager-vpn plugin.
+            network.vpn_status = "both";
           };
-          general = {
-            avatarImage = lib.mkIf (lib.hasAttrByPath ["user" "name"] config.programs.git.settings) (
+
+          plugins = {
+            # Declaring any source replaces the built-in git sources (official/community),
+            # so plugins only come from the flake-pinned, read-only store path.
+            source = [
+              {
+                name = "nix-official";
+                kind = "path";
+                location = "${inputs.noctalia-plugins}";
+                enabled = true;
+              }
+            ];
+            auto_update = "none";
+            enabled = ["noctalia/screen_recorder"];
+          };
+          plugin_settings."noctalia/screen_recorder" = {
+            video_source = "portal";
+            hide_inactive = false;
+          };
+
+          battery.warning_threshold = 20;
+          dock.enabled = false;
+
+          theme = {
+            mode = "dark";
+            source = "wallpaper";
+            wallpaper_scheme = "m3-rainbow";
+          };
+
+          shell = {
+            avatar_path = lib.mkIf (lib.hasAttrByPath ["user" "name"] config.programs.git.settings) "${
               pkgs.lib.fetchGHUrl {
                 gh_username = githubUsername;
                 hash = avatarHash;
               }
-            );
-            enableShadows = false;
-            showChangelogOnStartup = false;
-            telemetryEnabled = false;
-            allowPasswordWithFprintd = true;
+            }";
+            telemetry_enabled = false;
+            popup_shadows = false;
+            panel.shadow = false;
           };
-          location = {
-            name = "Copenhagen, Denmark";
-          };
+
+          lockscreen.fingerprint = true;
+
+          location.address = "Copenhagen, Denmark";
+
           wallpaper = {
             enabled = true;
-            directory = ../../../dotfiles/wallpapers;
+            directory = "${../../../dotfiles/wallpapers}";
+            default.path = "${wallpaper}";
           };
-          network.wifiEnabled = false;
-          sessionMenu.largeButtonsStyle = false;
-          nightLight.enabled = true;
-        };
-        plugins = {
-          sources = [
-            {
-              enabled = true;
-              name = "Official Noctalia Plugins";
-              url = "https://github.com/noctalia-dev/noctalia-plugins";
-            }
-          ];
-          states = {
-            privacy-indicator = {
-              enabled = true;
-              sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-            };
-            screen-recorder = {
-              enabled = true;
-              sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-            };
-            network-manager-vpn = {
-              enabled = true;
-              sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-            };
-          };
-        };
-      };
 
-      # this may also be a string or a path to a JSON file,
-      # but in this case must include *all* settings.
-      home.file.".cache/noctalia/wallpapers.json" = {
-        text = builtins.toJSON {
-          defaultWallpaper = wallpaper;
+          nightlight.enabled = true;
         };
       };
     }
@@ -266,7 +226,6 @@ in
         files = [
           ".pam-gnupg"
           ".config/nix/nix.conf"
-          ".config/noctalia/colors.json"
         ];
         directories = [
           "Downloads"
@@ -280,9 +239,8 @@ in
           ".local/share/password-store"
           ".config/chromium-mail"
           ".config/chromium-linear"
-          ".config/noctalia/plugins/screen-recorder"
-          ".config/noctalia/plugins/privacy-indicator"
-          ".config/noctalia/plugins/network-manager-vpn"
+          # Noctalia GUI overrides, UI state, plugin caches and plugin settings
+          ".local/state/noctalia"
           ".logseq"
         ];
       };

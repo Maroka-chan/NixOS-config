@@ -95,7 +95,9 @@
     yuttari.url = "git+ssh://git@github.com/Maroka-chan/yuttari-rs";
     yuttari.inputs.nixpkgs.follows = "nixpkgs";
 
-    noctalia.url = "github:noctalia-dev/noctalia/legacy-v4";
+    noctalia.url = "github:noctalia-dev/noctalia";
     noctalia.inputs.nixpkgs.follows = "nixpkgs";
+    noctalia-plugins.url = "github:noctalia-dev/official-plugins";
+    noctalia-plugins.flake = false;
   };
 }
