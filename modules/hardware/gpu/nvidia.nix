@@ -12,6 +12,14 @@
 
   nixpkgs.config.cudaSupport = true;
 
+  nixpkgs.overlays = [
+    (final: prev: {
+      firefox-unwrapped = prev.firefox-unwrapped.override {
+        onnxruntime = prev.onnxruntime.override {cudaSupport = false;};
+      };
+    })
+  ];
+
   # Binary cache for CUDA-enabled packages
   nix.settings = {
     substituters = [
