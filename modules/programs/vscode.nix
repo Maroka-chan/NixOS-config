@@ -26,8 +26,6 @@ in {
           enableUpdateCheck = false;
           enableExtensionUpdateCheck = false;
           extensions = pkgs.nix4vscode.forVscodeVersion "${pkgs.vscode.version}" [
-            "github.copilot"
-            "github.copilot-chat"
             "ms-python.python"
             "jnoortheen.nix-ide"
             "rust-lang.rust-analyzer"
@@ -45,7 +43,6 @@ in {
             "workbench.colorTheme" = "Monokai Pro (Filter Spectrum)";
             "workbench.iconTheme" = "Monokai Pro (Filter Spectrum) Icons";
             "nixEnvSelector.useFlakes" = true;
-            "github.copilot.nextEditSuggestions.enabled" = true;
             "files.watcherExclude" = {
               "build/sstate-cache/**" = true;
               "build/downloads/**" = true;
