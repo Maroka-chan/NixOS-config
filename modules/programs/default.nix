@@ -14,5 +14,6 @@
     ./yazi.nix
     ./vscode.nix
     ./vscodium.nix
+    ./btop.nix
   ];
 }
