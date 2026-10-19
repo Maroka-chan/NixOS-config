@@ -1,4 +1,8 @@
 {pkgs, ...}: {
+  imports = [
+    ./segger.nix
+  ];
+
   environment.systemPackages = with pkgs; [
     nil # Nix LSP
     nixpkgs-fmt # Nix Formatter

@@ -120,6 +120,8 @@ in {
     68
   ];
 
+  configured.development.segger.enable = true;
+
   services.udev.extraRules = ''
     # FTDI
     SUBSYSTEM=="usb", ATTR{idVendor}=="0403", ATTR{idProduct}=="6011", MODE="0666"
