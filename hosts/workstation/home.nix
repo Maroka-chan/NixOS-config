@@ -15,6 +15,7 @@ in {
     sshfs # Remote filesystems over SSH
     wl-clipboard # Clipboard Manager
     unstable-pkgs.opencode # LLM Agent
+    unstable-pkgs.codegraph # Code knowledge graph
 
     slack
 
