@@ -55,6 +55,8 @@
     };
     upower.enable = true;
     logind.settings.Login.HandleLidSwitch = "suspend";
+    # The second screen (DP-3) makes logind consider the laptop always docked
+    logind.settings.Login.HandleLidSwitchDocked = "suspend";
 
     fprintd.enable = true;
 
