@@ -15,10 +15,12 @@
   boot.kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
   hardware.enableAllFirmware = true;
 
-  # Fixes logitech scrollwheel when wireless
   boot.blacklistedKernelModules = [
+    # Fixes logitech scrollwheel when wireless
     "hid_logitech_dj"
     "hid_logitech_hidpp"
+    # Disable binds to acpi-button that sends SIGRTMIN+4 (poweroff)
+    "tiny_power_button"
   ];
 
   time.timeZone = "Europe/Copenhagen";
