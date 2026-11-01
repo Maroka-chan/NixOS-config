@@ -72,6 +72,7 @@
   };
 
   systemd.services.tailscaled.wantedBy = lib.mkForce [];
+  systemd.services.ollama.wantedBy = lib.mkForce [];
 
   networking.firewall = {
     allowedTCPPorts = [];
