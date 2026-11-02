@@ -3,25 +3,26 @@
   pkgs,
   lib,
   config,
+  inputs,
   ...
 }: let
   module_name = "segger";
   cfg = config.configured.development."${module_name}";
   inherit (lib) mkEnableOption mkIf;
+  unstable-pkgs = import inputs.nixpkgs-unstable {
+    inherit (pkgs.stdenv.hostPlatform) system;
+    config.allowUnfree = true;
+    config.segger-jlink.acceptLicense = true;
+  };
 in {
   options.configured.development."${module_name}" = {
     enable = mkEnableOption "Enable Segger J-Link tools and probe udev rules";
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
-      segger-jlink
+    environment.systemPackages = with unstable-pkgs; [
+      segger-jlink-headless
     ];
-
-    nixpkgs.config.permittedInsecurePackages = [
-      "segger-jlink-qt4-874"
-    ];
-    nixpkgs.config.segger-jlink.acceptLicense = true;
 
     services.udev.extraRules = ''
       # --- BEGIN 99-jlink.rules ---
