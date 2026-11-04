@@ -18,7 +18,9 @@ in {
     "usbhid"
     "sd_mod"
   ];
-  boot.initrd.kernelModules = [];
+  boot.initrd.kernelModules = ["nvidia" "nvidia_modeset" "nvidia_uvm" "nvidia_drm"];
+  # GSP firmware makes each kernel+initrd ~156MB on the 1GB ESP, keep /boot from filling up
+  boot.loader.systemd-boot.configurationLimit = 5;
   boot.kernelModules = [
     "kvm-amd"
     "ryzen-smu"
