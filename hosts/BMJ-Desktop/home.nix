@@ -1,9 +1,11 @@
 {
+  inputs,
   pkgs,
   username,
   ...
 }: let
   homeDirectory = "/home/${username}";
+  unstable-pkgs = inputs.nixpkgs-unstable.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   home = {inherit username homeDirectory;};
 
@@ -13,6 +15,7 @@ in {
     sshfs # Remote filesystems over SSH
     wl-clipboard # Clipboard Manager
     rquickshare # Quick Share client
+    unstable-pkgs.opencode # LLM Harness
 
     # Communication Clients
     vesktop # Third-party Discord
@@ -26,7 +29,7 @@ in {
     blender
     godot
     freecad
-    prusa-slicer
+    unstable-pkgs.prusa-slicer
     #davinci-resolve
 
     # Machine Learning
